@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <title>Countdowns</title>
+    <meta charset="UTF-8">
+    <title>Countdown Wallpaper</title>
     <style>
       body {
         background-color: #000;
-        color: #fff;
+        color: white;
         font-family: sans-serif;
         text-align: center;
         padding-top: 20%;
       }
       .event {
-        font-size: 1.8em;
+        font-size: 2em;
         margin: 20px 0;
       }
     </style>
   </head>
   <body>
-    <h1>⏳ Live Countdowns</h1>
+    <h1>⏳ Countdowns</h1>
     <div class="event">
-      Birthday: <span id="count1"></span>
+      Trip to Madrid: <span id="count1"></span>
     </div>
     <div class="event">
-      Exam Day: <span id="count2"></span>
+      Final Exam: <span id="count2"></span>
     </div>
     <script>
       function countdown(targetDate, elementId) {
@@ -44,8 +44,9 @@
         update();
         setInterval(update, 1000);
       }
-      countdown("2025-12-01T09:00:00", "count1");
-      countdown("2025-08-14T08:00:00", "count2");
+
+      countdown("2025-08-01T12:00:00", "count1"); // Replace with your date
+      countdown("2025-08-14T09:00:00", "count2"); // Replace with your date
     </script>
   </body>
 </html>
