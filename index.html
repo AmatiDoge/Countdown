@@ -1,52 +1,102 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Countdown Wallpaper</title>
-    <style>
-      body {
-        background-color: #000;
-        color: white;
-        font-family: sans-serif;
-        text-align: center;
-        padding-top: 20%;
-      }
-      .event {
-        font-size: 2em;
-        margin: 20px 0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>⏳ Countdowns</h1>
-    <div class="event">
-      Trip to Madrid: <span id="count1"></span>
-    </div>
-    <div class="event">
-      Final Exam: <span id="count2"></span>
-    </div>
-    <script>
-      function countdown(targetDate, elementId) {
-        const el = document.getElementById(elementId);
-        function update() {
-          const now = new Date();
-          const diff = new Date(targetDate) - now;
-          if (diff <= 0) {
-            el.textContent = "🎉 It's time!";
-            return;
-          }
-          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-          const minutes = Math.floor((diff / (1000 * 60)) % 60);
-          const seconds = Math.floor((diff / 1000) % 60);
-          el.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
-        update();
-        setInterval(update, 1000);
-      }
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ספירה לאחור</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff7e5f, #feb47b, #86fde8, #acb6e5);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 5%;
+      direction: rtl;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    h1 {
+      font-size: 2.8em;
+      margin-bottom: 40px;
+    }
+    .event {
+      font-size: 1.6em;
+      margin: 20px auto;
+      background-color: rgba(0,0,0,0.3);
+      padding: 20px;
+      border-radius: 16px;
+      width: fit-content;
+    }
+    .time {
+      font-weight: bold;
+      display: block;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📚 לוח זמנים לקיץ</h1>
 
-      countdown("2025-08-01T12:00:00", "count1"); // Replace with your date
-      countdown("2025-08-14T09:00:00", "count2"); // Replace with your date
-    </script>
-  </body>
+  <div class="event">
+    פסיכולוגיה התפתחותית - מועד הגשה
+    <span class="time" id="count1"></span>
+  </div>
+
+  <div class="event">
+    מבוא לפסיכולוגיה - מועד הגשה
+    <span class="time" id="count2"></span>
+  </div>
+
+  <div class="event">
+    מבחן ב-JASP
+    <span class="time" id="count3"></span>
+  </div>
+
+  <div class="event">
+    פסיכולוגיה קוגניטיבית - מועד הגשה
+    <span class="time" id="count4"></span>
+  </div>
+
+  <div class="event">
+    פסיכולוגיה חברתית - מועד הגשה
+    <span class="time" id="count5"></span>
+  </div>
+
+  <div class="event">
+    מבוא לסטטיסטיקה ב׳ - מועד ב׳
+    <span class="time" id="count6"></span>
+  </div>
+
+  <script>
+    function countdown(targetDate, elementId) {
+      const el = document.getElementById(elementId);
+      function update() {
+        const now = new Date();
+        const diff = new Date(targetDate) - now;
+        if (diff <= 0) {
+          el.textContent = "🎉 הגיע הזמן!";
+          return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        el.textContent = `${days} ימים ${hours} שעות ${minutes} דקות ${seconds} שניות`;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    countdown("2025-07-27T23:55:00", "count1");
+    countdown("2025-07-30T23:55:00", "count2");
+    countdown("2025-07-31T15:45:00", "count3");
+    countdown("2025-08-07T23:55:00", "count4");
+    countdown("2025-08-12T23:55:00", "count5");
+    countdown("2025-08-18T09:45:00", "count6");
+  </script>
+</body>
 </html>
