@@ -10,66 +10,52 @@
       animation: gradientBG 15s ease infinite;
       color: #ffffff;
       font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0 10px;
       text-align: center;
-      padding-top: 5%;
-      direction: rtl;
     }
+
     @keyframes gradientBG {
       0% {background-position: 0% 50%;}
       50% {background-position: 100% 50%;}
       100% {background-position: 0% 50%;}
     }
+
     h1 {
-      font-size: 2.8em;
-      margin-bottom: 40px;
+      font-size: 2em;
+      margin-bottom: 30px;
     }
+
     .event {
-      font-size: 1.6em;
-      margin: 20px auto;
-      background-color: rgba(0,0,0,0.3);
-      padding: 20px;
-      border-radius: 16px;
-      width: fit-content;
+      font-size: 1.2em;
+      margin: 10px 0;
+      padding: 10px 20px;
+      background-color: rgba(0, 0, 0, 0.25);
+      border-radius: 12px;
+      max-width: 90vw;
     }
+
     .time {
-      font-weight: bold;
       display: block;
-      margin-top: 8px;
+      margin-top: 6px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>📚 לוח זמנים לקיץ</h1>
+  <h1>⏳ לוח זמנים לקיץ</h1>
 
-  <div class="event">
-    פסיכולוגיה התפתחותית - מועד הגשה
-    <span class="time" id="count1"></span>
-  </div>
-
-  <div class="event">
-    מבוא לפסיכולוגיה - מועד הגשה
-    <span class="time" id="count2"></span>
-  </div>
-
-  <div class="event">
-    מבחן ב-JASP
-    <span class="time" id="count3"></span>
-  </div>
-
-  <div class="event">
-    פסיכולוגיה קוגניטיבית - מועד הגשה
-    <span class="time" id="count4"></span>
-  </div>
-
-  <div class="event">
-    פסיכולוגיה חברתית - מועד הגשה
-    <span class="time" id="count5"></span>
-  </div>
-
-  <div class="event">
-    מבוא לסטטיסטיקה ב׳ - מועד ב׳
-    <span class="time" id="count6"></span>
-  </div>
+  <div class="event">פסיכולוגיה התפתחותית - מועד הגשה <span class="time" id="count1"></span></div>
+  <div class="event">מבוא לפסיכולוגיה - מועד הגשה <span class="time" id="count2"></span></div>
+  <div class="event">מבחן ב-JASP <span class="time" id="count3"></span></div>
+  <div class="event">פסיכולוגיה קוגניטיבית - מועד הגשה <span class="time" id="count4"></span></div>
+  <div class="event">פסיכולוגיה חברתית - מועד הגשה <span class="time" id="count5"></span></div>
+  <div class="event">מבוא לסטטיסטיקה ב׳ - מועד ב׳ <span class="time" id="count6"></span></div>
 
   <script>
     function countdown(targetDate, elementId) {
