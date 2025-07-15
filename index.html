@@ -1,1 +1,51 @@
-https://YOUR_USERNAME.github.io/countdown-wallpaper/
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Countdowns</title>
+    <style>
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: sans-serif;
+        text-align: center;
+        padding-top: 20%;
+      }
+      .event {
+        font-size: 1.8em;
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>⏳ Live Countdowns</h1>
+    <div class="event">
+      Birthday: <span id="count1"></span>
+    </div>
+    <div class="event">
+      Exam Day: <span id="count2"></span>
+    </div>
+    <script>
+      function countdown(targetDate, elementId) {
+        const el = document.getElementById(elementId);
+        function update() {
+          const now = new Date();
+          const diff = new Date(targetDate) - now;
+          if (diff <= 0) {
+            el.textContent = "🎉 It's time!";
+            return;
+          }
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
+          el.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        update();
+        setInterval(update, 1000);
+      }
+      countdown("2025-12-01T09:00:00", "count1");
+      countdown("2025-08-14T08:00:00", "count2");
+    </script>
+  </body>
+</html>
