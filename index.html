@@ -5,10 +5,9 @@
   <title>ספירה לאחור</title>
   <style>
     body {
-      background: linear-gradient(135deg, #ff7e5f, #feb47b, #86fde8, #acb6e5);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      color: #ffffff;
+      background: url('34E5FF.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #000;
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
@@ -20,22 +19,19 @@
       text-align: center;
     }
 
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
     h1 {
       font-size: 2em;
       margin-bottom: 30px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px 20px;
+      border-radius: 10px;
     }
 
     .event {
       font-size: 1.2em;
       margin: 10px 0;
       padding: 10px 20px;
-      background-color: rgba(0, 0, 0, 0.25);
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 12px;
       max-width: 90vw;
     }
@@ -50,10 +46,10 @@
 <body>
   <h1>⏳ לוח זמנים לקיץ</h1>
 
-  <div class="event">פסיכולוגיה קוגניטיבית - מועד הגשה <span class="time" id="count4"></span></div>
-  <div class="event">פסיכולוגיה חברתית - מועד הגשה <span class="time" id="count5"></span></div>
-  <div class="event">מבוא לסטטיסטיקה ב׳ - מועד ב׳ <span class="time" id="count6"></span></div>
-  <div class="event">JASP - מועד ב׳ <span class="time" id="count7"></span></div>
+  <div class="event">פסיכולוגיה קוגניטיבית - מועד הגשה <span class="time" id="count1"></span></div>
+  <div class="event">פסיכולוגיה חברתית - מועד הגשה <span class="time" id="count2"></span></div>
+  <div class="event">מבוא לסטטיסטיקה ב׳ - מועד ב׳ <span class="time" id="count3"></span></div>
+  <div class="event">JASP - מועד ב׳ <span class="time" id="count4"></span></div>
 
   <script>
     function countdown(targetDate, elementId) {
@@ -75,10 +71,10 @@
       setInterval(update, 1000);
     }
 
-    countdown("2025-08-07T23:55:00", "count4");
-    countdown("2025-08-12T23:55:00", "count5");
-    countdown("2025-08-18T09:45:00", "count6");
-    countdown("2025-09-04T15:45:00", "count7");
+    countdown("2025-08-07T23:55:00", "count1");
+    countdown("2025-08-12T23:55:00", "count2");
+    countdown("2025-08-18T09:45:00", "count3");
+    countdown("2025-09-04T15:45:00", "count4");
   </script>
 </body>
 </html>
