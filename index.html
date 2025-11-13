@@ -35,25 +35,29 @@
   </style>
 </head>
 <body>
-  <h1>📅 לוח מועדים - סמסטר חדש</h1>
+  <h1>📅 לוח מועדים - סמסטר חדש (מסודר כרונולוגית)</h1>
 
-  <div class="event">שיטות מחקר והערכה – הגשת מטלה <span class="time" id="methods"></span></div>
-  <div class="event">בסיס ביולוגי – בוחן 1 <span class="time" id="bio1"></span></div>
-  <div class="event">תהליכים קוגנטיביים ב׳ – בוחן 1 <span class="time" id="cog1"></span></div>
-  <div class="event">בסיס ביולוגי – בוחן 3 <span class="time" id="bio3"></span></div>
-  <div class="event">תיאוריות באישיות – הגשת תמלול <span class="time" id="personality1"></span></div>
-  <div class="event">בסיס ביולוגי – בוחן 2 <span class="time" id="bio2"></span></div>
-  <div class="event">תיאוריות באישיות – הגשה סופית <span class="time" id="personality2"></span></div>
-  <div class="event">הגשת מועמדות לתוכנית Honors <span class="time" id="honors"></span></div>
-  <div class="event">תהליכים קוגנטיביים ב׳ – בוחן 2 <span class="time" id="cog2"></span></div>
+  <div id="events-container"></div>
 
   <script>
-    function countdown(dateStr, elementId) {
+    const events = [
+      { id: "methods", title: "שיטות מחקר והערכה – הגשת מטלה", date: "2025-11-27T09:00:00" },
+      { id: "bio1", title: "בסיס ביולוגי של ההתנהגות – בוחן 1", date: "2025-12-02T13:45:00" },
+      { id: "cog1", title: "תהליכים קוגנטיביים ב׳ – בוחן 1", date: "2025-12-07T13:45:00" },
+      { id: "bio2", title: "בסיס ביולוגי של ההתנהגות – בוחן 2", date: "2025-12-20T13:45:00" },
+      { id: "personality1", title: "תיאוריות באישיות – הגשת תמלול", date: "2025-12-22T23:55:00" },
+      { id: "bio3", title: "בסיס ביולוגי של ההתנהגות – בוחן 3", date: "2025-12-30T13:45:00" },
+      { id: "personality2", title: "תיאוריות באישיות – הגשה סופית", date: "2025-12-30T23:55:00" },
+      { id: "cog2", title: "תהליכים קוגנטיביים ב׳ – בוחן 2", date: "2026-01-18T13:45:00" }
+    ];
+
+    events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    function countdown(targetDate, elementId) {
       const el = document.getElementById(elementId);
       function update() {
         const now = new Date();
-        const target = new Date(dateStr);
-        const diff = target - now;
+        const diff = new Date(targetDate) - now;
         if (diff <= 0) {
           el.textContent = "🎉 הגיע הזמן!";
           return;
@@ -68,15 +72,14 @@
       setInterval(update, 1000);
     }
 
-    countdown("2025-11-27T09:00:00", "methods");
-    countdown("2025-12-02T13:45:00", "bio1");
-    countdown("2025-12-07T13:45:00", "cog1");
-    countdown("2025-12-20T13:45:00", "bio3");
-    countdown("2025-12-22T23:55:00", "personality1");
-    countdown("2025-12-28T00:00:00", "honors");
-    countdown("2025-12-30T13:45:00", "bio2");
-    countdown("2025-12-30T23:55:00", "personality2");
-    countdown("2026-01-18T13:45:00", "cog2");
+    const container = document.getElementById("events-container");
+    events.forEach(event => {
+      const div = document.createElement("div");
+      div.className = "event";
+      div.innerHTML = `${event.title}<span class="time" id="${event.id}"></span>`;
+      container.appendChild(div);
+      countdown(event.date, event.id);
+    });
   </script>
 </body>
 </html>
