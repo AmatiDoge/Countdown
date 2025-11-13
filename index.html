@@ -37,14 +37,14 @@
 <body>
   <h1>📅 לוח מועדים - סמסטר חדש</h1>
 
-  <div class="event">תהליכים קוגנטיביים ב׳ – בוחן 1 <span class="time" id="cog1"></span></div>
-  <div class="event">תהליכים קוגנטיביים ב׳ – בוחן 2 <span class="time" id="cog2"></span></div>
+  <div class="event">שיטות מחקר והערכה – הגשת מטלה <span class="time" id="methods"></span></div>
   <div class="event">בסיס ביולוגי – בוחן 1 <span class="time" id="bio1"></span></div>
-  <div class="event">בסיס ביולוגי – בוחן 2 <span class="time" id="bio2"></span></div>
+  <div class="event">תהליכים קוגנטיביים ב׳ – בוחן 1 <span class="time" id="cog1"></span></div>
   <div class="event">בסיס ביולוגי – בוחן 3 <span class="time" id="bio3"></span></div>
   <div class="event">תיאוריות באישיות – הגשת תמלול <span class="time" id="personality1"></span></div>
+  <div class="event">בסיס ביולוגי – בוחן 2 <span class="time" id="bio2"></span></div>
   <div class="event">תיאוריות באישיות – הגשה סופית <span class="time" id="personality2"></span></div>
-  <div class="event">שיטות מחקר והערכה – הגשת מטלה <span class="time" id="methods"></span></div>
+  <div class="event">תהליכים קוגנטיביים ב׳ – בוחן 2 <span class="time" id="cog2"></span></div>
 
   <script>
     function countdown(dateStr, elementId) {
@@ -67,14 +67,14 @@
       setInterval(update, 1000);
     }
 
-    countdown("2025-12-07T13:45:00", "cog1");
-    countdown("2026-01-18T13:45:00", "cog2");
-    countdown("2025-12-02T13:45:00", "bio1");
-    countdown("2025-12-20T13:45:00", "bio3");
-    countdown("2025-12-30T13:45:00", "bio2");
-    countdown("2025-12-22T23:55:00", "personality1");
-    countdown("2025-12-30T23:55:00", "personality2");
     countdown("2025-11-27T09:00:00", "methods");
+    countdown("2025-12-02T13:45:00", "bio1");
+    countdown("2025-12-07T13:45:00", "cog1");
+    countdown("2025-12-20T13:45:00", "bio3");
+    countdown("2025-12-22T23:55:00", "personality1");
+    countdown("2025-12-30T13:45:00", "bio2");
+    countdown("2025-12-30T23:55:00", "personality2");
+    countdown("2026-01-18T13:45:00", "cog2");
   </script>
 </body>
 </html>
