@@ -2,62 +2,57 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>ספירה לאחור</title>
+  <title>לוח זמנים סמסטרלי</title>
   <style>
     body {
       background: url('34E5FF.png') no-repeat center center fixed;
       background-size: cover;
-      color: #000;
       font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      padding: 0 10px;
+      color: #000;
       text-align: center;
+      padding: 50px 10px;
+      margin: 0;
     }
-
     h1 {
-      font-size: 2em;
-      margin-bottom: 30px;
       background-color: rgba(255,255,255,0.7);
-      padding: 10px 20px;
+      padding: 15px;
       border-radius: 12px;
+      display: inline-block;
     }
-
     .event {
-      font-size: 1.2em;
-      margin: 10px 0;
-      padding: 10px 20px;
-      background-color: rgba(255,255,255,0.8);
+      background-color: rgba(255,255,255,0.85);
+      margin: 20px auto;
+      padding: 15px 20px;
       border-radius: 12px;
-      max-width: 90vw;
+      max-width: 600px;
+      font-size: 1.2em;
     }
-
     .time {
       display: block;
-      margin-top: 6px;
+      margin-top: 5px;
       font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>⏳ לוח זמנים לקיץ</h1>
+  <h1>📅 לוח מועדים - סמסטר חדש</h1>
 
-  <div class="event">פסיכולוגיה קוגניטיבית - מועד הגשה <span class="time" id="count4"></span></div>
-  <div class="event">פסיכולוגיה חברתית - מועד הגשה <span class="time" id="count5"></span></div>
-  <div class="event">מבוא לסטטיסטיקה ב׳ - מועד ב׳ <span class="time" id="count6"></span></div>
-  <div class="event">JASP - מועד ב׳ <span class="time" id="count7"></span></div>
-  <div class="event">הגשת מועמדות לתוכנית Honors <span class="time" id="count8"></span></div>
+  <div class="event">תהליכים קוגנטיביים ב׳ – בוחן 1 <span class="time" id="cog1"></span></div>
+  <div class="event">תהליכים קוגנטיביים ב׳ – בוחן 2 <span class="time" id="cog2"></span></div>
+  <div class="event">בסיס ביולוגי – בוחן 1 <span class="time" id="bio1"></span></div>
+  <div class="event">בסיס ביולוגי – בוחן 2 <span class="time" id="bio2"></span></div>
+  <div class="event">בסיס ביולוגי – בוחן 3 <span class="time" id="bio3"></span></div>
+  <div class="event">תיאוריות באישיות – הגשת תמלול <span class="time" id="personality1"></span></div>
+  <div class="event">תיאוריות באישיות – הגשה סופית <span class="time" id="personality2"></span></div>
+  <div class="event">שיטות מחקר והערכה – הגשת מטלה <span class="time" id="methods"></span></div>
 
   <script>
-    function countdown(targetDate, elementId) {
+    function countdown(dateStr, elementId) {
       const el = document.getElementById(elementId);
       function update() {
         const now = new Date();
-        const diff = new Date(targetDate) - now;
+        const target = new Date(dateStr);
+        const diff = target - now;
         if (diff <= 0) {
           el.textContent = "🎉 הגיע הזמן!";
           return;
@@ -72,11 +67,14 @@
       setInterval(update, 1000);
     }
 
-    countdown("2025-08-07T23:55:00", "count4");
-    countdown("2025-08-12T23:55:00", "count5");
-    countdown("2025-08-18T09:45:00", "count6");
-    countdown("2025-09-04T15:45:00", "count7");
-    countdown("2025-08-28T00:00:00", "count8");
+    countdown("2025-12-07T13:45:00", "cog1");
+    countdown("2026-01-18T13:45:00", "cog2");
+    countdown("2025-12-02T13:45:00", "bio1");
+    countdown("2025-12-20T13:45:00", "bio3");
+    countdown("2025-12-30T13:45:00", "bio2");
+    countdown("2025-12-22T23:55:00", "personality1");
+    countdown("2025-12-30T23:55:00", "personality2");
+    countdown("2025-11-27T09:00:00", "methods");
   </script>
 </body>
 </html>
