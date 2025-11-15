@@ -1,132 +1,134 @@
-<style>
-  body {
-    font-family: sans-serif;
-    background-color: #f0f8ff;
-    margin: 20px;
-  }
-  h2 {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  .tables {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  table {
-    border-collapse: collapse;
-    width: 440px;
-    background-color: #f9fbfd;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 12px;
-    overflow: hidden;
-    direction: rtl;
-  }
-  th {
-    background-color: #cbe5ff;
-    padding: 12px;
-    font-size: 18px;
-  }
-  td {
-    padding: 10px 16px;
-    border-top: 1px solid #e0e0e0;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .countdown {
-    font-weight: bold;
-    font-family: monospace;
-    direction: ltr;
-  }
-  .row-icon {
-    margin: 0 10px;
-  }
-  .green { background-color: #e5fbe5; }
-  .yellow { background-color: #fffbe5; }
-  .red { background-color: #ffe5e5; }
-  .gray { background-color: #eeeeee; }
-</style>
-
-<h2>לוח זמנים - סמסטר א' ותוכנית המצטיינים</h2>
-<div class="tables">
-
-<table id="mainTable">
-  <thead>
-    <tr><th>אירוע</th><th>ספירה לאחור</th></tr>
-  </thead>
-  <tbody id="mainEvents"></tbody>
-</table>
-
-<table id="honorsTable">
-  <thead>
-    <tr><th>Honors Event</th><th>Countdown</th></tr>
-  </thead>
-  <tbody id="honorsEvents"></tbody>
-</table>
-
-</div>
-
-<script>
-const mainEvents = [
-  { title: 'שיטות מחקר והערכה - הגשת מטלה', date: '2025-11-27T09:00:00', icon: '📘' },
-  { title: 'בסיס ביולוגי של ההתנהגות - בוחן', date: '2025-12-02T13:45:00', icon: '🧠' },
-  { title: 'תהליכים קוגנטיביים ב׳ - בוחן', date: '2025-12-07T13:45:00', icon: '🧩' },
-  { title: 'בסיס ביולוגי של ההתנהגות - בוחן', date: '2025-12-20T13:45:00', icon: '🧠' },
-  { title: 'תאוריות באישיות - הגשת תמלול', date: '2025-12-22T23:59:00', icon: '📝' },
-  { title: 'בסיס ביולוגי של ההתנהגות - בוחן', date: '2025-12-30T13:45:00', icon: '🧠' },
-  { title: 'תאוריות באישיות - הגשה סופית', date: '2025-12-30T23:59:00', icon: '📝' },
-  { title: 'תהליכים קוגנטיביים ב׳ - בוחן', date: '2026-01-18T13:45:00', icon: '🧩' },
-];
-
-const honorsEvents = [
-  { title: '1st Research Proposal Deadline', date: '2025-11-25T23:59:00', icon: '🎯' },
-  { title: '2nd Research Proposal Deadline', date: '2025-12-16T23:59:00', icon: '🎯' },
-  { title: '3rd Research Proposal Deadline', date: '2026-01-06T23:59:00', icon: '🎯' },
-  { title: 'Presentation Prof. Shachar Ayal', date: '2026-01-06T13:00:00', icon: '🎤' },
-  { title: '4th Research Proposal Deadline', date: '2026-01-17T23:59:00', icon: '🎯' },
-  { title: 'Prep With Saar', date: '2026-01-20T10:00:00', icon: '🧑‍🏫' },
-];
-
-function getRemainingTime(dateStr) {
-  const now = new Date();
-  const then = new Date(dateStr);
-  const diff = then - now;
-  if (diff <= 0) return { text: 'עבר', class: 'gray' };
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  return {
-    text: `${days} ימים ${hours} שעות`,
-    class: days > 7 ? 'green' : days > 3 ? 'yellow' : 'red'
-  };
-}
-
-function renderEvents(events, tableId, isRTL = true) {
-  const sorted = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
-  const container = document.getElementById(tableId);
-  sorted.forEach(event => {
-    const { text, class: urgency } = getRemainingTime(event.date);
-    const row = document.createElement('tr');
-    row.className = urgency;
-    const iconCell = `<span class="row-icon">${event.icon}</span>`;
-    if (isRTL) {
-      row.innerHTML = `<td>${iconCell}${event.title}</td><td class="countdown">${text}</td>`;
-    } else {
-      row.innerHTML = `<td class="countdown">${text}</td><td>${event.title}${iconCell}</td>`;
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ספירה לאחור - סמסטר</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+      direction: rtl;
     }
-    container.appendChild(row);
-  });
-}
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .table-container {
+      width: 480px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+    th {
+      background-color: #34E5FF;
+    }
+    .red {
+      background-color: #ffcccc;
+    }
+    .yellow {
+      background-color: #fff3cd;
+    }
+    .green {
+      background-color: #d4edda;
+    }
+    .gray {
+      background-color: #e2e3e5;
+    }
+    .icon {
+      font-size: 18px;
+    }
+    .ltr {
+      direction: ltr;
+    }
+  </style>
+</head>
+<body>
+<h1>לוח זמנים - סמסטר א׳</h1>
+<div class="container">
+  <div class="table-container">
+    <table id="courseTable">
+      <tr><th>🧠 קורסים</th><th>זמן שנותר</th></tr>
+    </table>
+  </div>
+  <div class="table-container">
+    <table id="honorsTable">
+      <tr><th class="ltr">Honors 🎓</th><th class="ltr">Time Left</th></tr>
+    </table>
+  </div>
+</div>
+<script>
+  const courseEvents = [
+    { name: "📊 שיטות מחקר והערכה - הגשת מטלה", date: "2025-11-27T09:00:00" },
+    { name: "🧬 בסיס ביולוגי - בוחן", date: "2025-12-02T13:45:00" },
+    { name: "🧠 תהליכים קוגניטיביים ב׳ - בוחן", date: "2025-12-07T13:45:00" },
+    { name: "🧬 בסיס ביולוגי - בוחן", date: "2025-12-20T13:45:00" },
+    { name: "🧬 בסיס ביולוגי - בוחן", date: "2025-12-30T13:45:00" },
+    { name: "📄 תאוריות באישיות - הגשת תמלול", date: "2025-12-22T23:59:00" },
+    { name: "📄 תאוריות באישיות - הגשה סופית", date: "2025-12-30T23:59:00" },
+    { name: "🧠 תהליכים קוגניטיביים ב׳ - בוחן", date: "2026-01-18T13:45:00" },
+  ];
 
-renderEvents(mainEvents, 'mainEvents', true);
-renderEvents(honorsEvents, 'honorsEvents', false);
+  const honorsEvents = [
+    { name: "1st Research Proposal Deadline 📅", date: "2025-11-25T23:59:00" },
+    { name: "2nd Research Proposal Deadline 📅", date: "2025-12-16T23:59:00" },
+    { name: "3rd Research Proposal Deadline 📅", date: "2026-01-06T23:59:00" },
+    { name: "Presentation Prof. Shachar Ayal 🗣️", date: "2026-01-06T13:45:00" },
+    { name: "4th Research Proposal Deadline 📅", date: "2026-01-17T23:59:00" },
+    { name: "Prep With Saar 👨‍🏫", date: "2026-01-20T13:45:00" },
+  ];
 
-setInterval(() => {
-  document.getElementById('mainEvents').innerHTML = '';
-  document.getElementById('honorsEvents').innerHTML = '';
-  renderEvents(mainEvents, 'mainEvents', true);
-  renderEvents(honorsEvents, 'honorsEvents', false);
-}, 60000);
+  function getColorClass(timeLeft) {
+    const days = timeLeft / (1000 * 60 * 60 * 24);
+    if (days < 0) return 'gray';
+    if (days < 3) return 'red';
+    if (days < 7) return 'yellow';
+    return 'green';
+  }
+
+  function formatTime(ms) {
+    const totalMinutes = Math.floor(ms / 60000);
+    const days = Math.floor(totalMinutes / 1440);
+    const hours = Math.floor((totalMinutes % 1440) / 60);
+    const minutes = totalMinutes % 60;
+    return `${days} ימים ${hours} שעות ${minutes} דקות`;
+  }
+
+  function insertRows(tableId, events, rtl) {
+    const table = document.getElementById(tableId);
+    events.sort((a, b) => new Date(a.date) - new Date(b.date));
+    events.forEach(e => {
+      const now = new Date();
+      const timeLeft = new Date(e.date) - now;
+      const row = table.insertRow(-1);
+      row.className = getColorClass(timeLeft);
+      const nameCell = row.insertCell(0);
+      const countdownCell = row.insertCell(1);
+      nameCell.textContent = e.name;
+      countdownCell.textContent = formatTime(timeLeft);
+      if (!rtl) {
+        nameCell.classList.add('ltr');
+        countdownCell.classList.add('ltr');
+      }
+    });
+  }
+
+  insertRows('courseTable', courseEvents, true);
+  insertRows('honorsTable', honorsEvents, false);
 </script>
+</body>
+</html>
