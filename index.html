@@ -1,156 +1,104 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he">
 <head>
   <meta charset="UTF-8">
-  <title>לוח זמנים סמסטרלי</title>
+  <title>לוח זמנים אוניברסיטה</title>
   <style>
     body {
-      background: url('34E5FF.png') no-repeat center center fixed;
-      background-size: cover;
-      font-family: Arial, sans-serif;
-      color: #000;
-      text-align: center;
-      padding: 50px 10px;
-      margin: 0;
       direction: rtl;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f8f8f8;
     }
-    h1 {
-      background-color: rgba(255,255,255,0.7);
-      padding: 15px;
-      border-radius: 12px;
-      display: inline-block;
+
+    .container {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
+
+    .column {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      min-width: 320px;
+      max-width: 400px;
+    }
+
     h2 {
-      margin-top: 60px;
-      background-color: rgba(255,255,255,0.5);
-      padding: 10px 20px;
-      border-radius: 12px;
-      display: inline-block;
+      margin-top: 0;
+      text-align: center;
+      font-size: 1.4rem;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
     }
+
     .event {
-      background-color: rgba(255,255,255,0.85);
-      margin: 20px auto;
-      padding: 15px 20px;
-      border-radius: 12px;
-      max-width: 600px;
-      font-size: 1.2em;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
     }
+
     .time {
       display: block;
-      margin-top: 5px;
+      font-size: 1.5rem;
       font-weight: bold;
+      color: #FF5722;
     }
-    #main-events, #honors-events {
-      display: inline-block;
-      vertical-align: top;
-      width: 48%;
-    }
-    @media (max-width: 768px) {
-      #main-events, #honors-events {
-        width: 100%;
-        display: block;
-      }
-    }
-<style>
-  body {
-    direction: rtl;
-    font-family: Arial, sans-serif;
-    padding: 40px;
-    background-color: #f8f8f8;
-  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- טיימרים רגילים -->
+    <div class="column">
+      <h2>🔷 מועדים כלליים</h2>
+      <div class="event">שיטות מחקר והערכה - הגשת מטלה עד ה־27.11 בשעה 9:00 <span class="time" data-time="2025-11-27T09:00:00"></span></div>
+      <div class="event">בסיס ביולוגי - בוחן ב־02.12 בשעה 13:45 <span class="time" data-time="2025-12-02T13:45:00"></span></div>
+      <div class="event">תהליכים קוגניטיביים ב׳ - בוחן ב־07.12 בשעה 13:45 <span class="time" data-time="2025-12-07T13:45:00"></span></div>
+      <div class="event">בסיס ביולוגי - בוחן ב־20.12 בשעה 13:45 <span class="time" data-time="2025-12-20T13:45:00"></span></div>
+      <div class="event">תיאוריות באישיות - תמלול עד ה־22.12 <span class="time" data-time="2025-12-22T23:55:00"></span></div>
+      <div class="event">בסיס ביולוגי - בוחן ב־30.12 בשעה 13:45 <span class="time" data-time="2025-12-30T13:45:00"></span></div>
+      <div class="event">תיאוריות באישיות - סופית עד ה־30.12 <span class="time" data-time="2025-12-30T23:55:00"></span></div>
+      <div class="event">תהליכים קוגניטיביים ב׳ - בוחן ב־18.01 בשעה 13:45 <span class="time" data-time="2026-01-18T13:45:00"></span></div>
+    </div>
 
-  .container {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .column {
-    background: white;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    min-width: 320px;
-    max-width: 400px;
-  }
-
-  h2 {
-    margin-top: 0;
-    text-align: center;
-    font-size: 1.4rem;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 10px;
-  }
-
-  .event {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-  }
-
-  .time {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #FF5722;
-  }
-</style>
-
+    <!-- Honors -->
+    <div class="column">
+      <h2>🔶 Honors</h2>
+      <div class="event">1st Research Proposal Deadline <span class="time" data-time="2025-11-25T23:55:00"></span></div>
+      <div class="event">2nd Research Proposal Deadline <span class="time" data-time="2025-12-16T23:55:00"></span></div>
+      <div class="event">3rd Research Proposal Deadline <span class="time" data-time="2026-01-06T23:55:00"></span></div>
+      <div class="event">Presentation Prof. Shachar Ayal <span class="time" data-time="2026-01-06T10:00:00"></span></div>
+      <div class="event">4th Research Proposal Deadline <span class="time" data-time="2026-01-17T23:55:00"></span></div>
+      <div class="event">Prep with Saar <span class="time" data-time="2026-01-20T10:00:00"></span></div>
+    </div>
+  </div>
 
   <script>
-    const mainEvents = [
-      { id: "methods", title: "שיטות מחקר והערכה – הגשת מטלה", date: "2025-11-27T09:00:00" },
-      { id: "bio1", title: "בסיס ביולוגי של ההתנהגות – בוחן 1", date: "2025-12-02T13:45:00" },
-      { id: "cog1", title: "תהליכים קוגנטיביים ב׳ – בוחן 1", date: "2025-12-07T13:45:00" },
-      { id: "bio2", title: "בסיס ביולוגי של ההתנהגות – בוחן 2", date: "2025-12-20T13:45:00" },
-      { id: "personality1", title: "תיאוריות באישיות – הגשת תמלול", date: "2025-12-22T23:55:00" },
-      { id: "bio3", title: "בסיס ביולוגי של ההתנהגות – בוחן 3", date: "2025-12-30T13:45:00" },
-      { id: "personality2", title: "תיאוריות באישיות – הגשה סופית", date: "2025-12-30T23:55:00" },
-      { id: "cog2", title: "תהליכים קוגנטיביים ב׳ – בוחן 2", date: "2026-01-18T13:45:00" }
-    ];
+    function updateTimers() {
+      const timers = document.querySelectorAll('.time');
+      const now = new Date();
 
-    const honorsEvents = [
-      { id: "honors1", title: "1st Research Proposal Deadline", date: "2025-11-25T23:59:00" },
-      { id: "honors2", title: "2nd Research Proposal Deadline", date: "2025-12-16T23:59:00" },
-      { id: "honors3", title: "3rd Research Proposal Deadline", date: "2026-01-06T23:59:00" },
-      { id: "honors4", title: "4th Research Proposal Deadline", date: "2026-01-17T23:59:00" },
-      { id: "honors5", title: "Presentation – Prof. Shachar Ayal", date: "2026-01-06T12:00:00" },
-      { id: "honors6", title: "Prep With Saar", date: "2026-01-20T10:00:00" }
-    ];
+      timers.forEach(timer => {
+        const time = new Date(timer.getAttribute('data-time'));
+        const diff = time - now;
 
-    function countdown(targetDate, elementId) {
-      const el = document.getElementById(elementId);
-      function update() {
-        const now = new Date();
-        const diff = new Date(targetDate) - now;
         if (diff <= 0) {
-          el.textContent = "🎉 הגיע הזמן!";
+          timer.innerText = "עבר!";
           return;
         }
+
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
         const minutes = Math.floor((diff / (1000 * 60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        el.textContent = `${days} ימים ${hours} שעות ${minutes} דקות ${seconds} שניות`;
-      }
-      update();
-      setInterval(update, 1000);
-    }
 
-    function renderEvents(events, containerId) {
-      const container = document.getElementById(containerId);
-      events.sort((a, b) => new Date(a.date) - new Date(b.date));
-      events.forEach(event => {
-        const div = document.createElement("div");
-        div.className = "event";
-        div.innerHTML = `${event.title}<span class="time" id="${event.id}"></span>`;
-        container.appendChild(div);
-        countdown(event.date, event.id);
+        timer.innerText = `${days} ימים, ${hours} שעות, ${minutes} דקות`;
       });
     }
 
-    renderEvents(mainEvents, "main-events");
-    renderEvents(honorsEvents, "honors-events");
+    updateTimers();
+    setInterval(updateTimers, 60000);
   </script>
 </body>
 </html>
