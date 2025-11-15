@@ -1,144 +1,99 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>לוח זמנים אקדמי</title>
+  <meta charset="UTF-8">
+  <title>Academic Countdown</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 2rem;
-      background-color: #f8f9fa;
-      direction: rtl;
-    }
-
-    .container {
+      font-family: sans-serif;
       display: flex;
       justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
+      padding: 20px;
+      background: #f9f9f9;
     }
-
     table {
       border-collapse: collapse;
-      width: 420px;
-      background-color: #ffffff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 450px;
+      margin: 0 15px;
     }
-
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: right;
+    }
     th {
-      background-color: #34E5FF;
-      color: #000;
-      text-align: center;
-      padding: 1rem;
-      font-size: 1.2rem;
-    }
-
-    td {
-      padding: 1rem;
-      border-bottom: 1px solid #ddd;
-      font-size: 1rem;
-    }
-
-    tr:nth-child(even) td {
-      background-color: #f1f9ff;
-    }
-
-    .countdown {
+      background-color: #b9e5f7;
       font-weight: bold;
-      color: #2c3e50;
     }
-
-    .icon {
-      margin-inline-end: 0.5rem;
+    td.countdown {
+      font-weight: bold;
+      text-align: center;
+      background-color: #eaffea;
+    }
+    .english {
+      text-align: left;
     }
   </style>
 </head>
-
 <body>
-  <div class="container">
-    <!-- טבלת קורסים -->
-    <table>
-      <thead>
-        <tr>
-          <th>אירוע</th>
-          <th>ספירה לאחור</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="icon">🧪</span> שיטות מחקר והערכה - הגשת מטלה</td>
-          <td class="countdown">נותרו 10 ימים</td>
-        </tr>
-        <tr>
-          <td><span class="icon">🧠</span> בסיס ביולוגי של ההתנהגות - בוחן</td>
-          <td class="countdown">נותרו 31 ימים</td>
-        </tr>
-        <tr>
-          <td><span class="icon">🧠</span> בסיס ביולוגי של ההתנהגות - בוחן</td>
-          <td class="countdown">נותרו 51 ימים</td>
-        </tr>
-        <tr>
-          <td><span class="icon">🧠</span> בסיס ביולוגי של ההתנהגות - בוחן</td>
-          <td class="countdown">נותרו 52 ימים</td>
-        </tr>
-        <tr>
-          <td><span class="icon">🧬</span> תאוריות באישיות - הגשת תמלול</td>
-          <td class="countdown">נותרו 63 ימים</td>
-        </tr>
-        <tr>
-          <td><span class="icon">🧬</span> תאוריות באישיות - הגשה סופית</td>
-          <td class="countdown">נותרו 65 ימים</td>
-        </tr>
-        <tr>
-          <td><span class="icon">🗣️</span> תהליכים קוגניטיביים ב׳ - בוחן</td>
-          <td class="countdown">נותרו 81 ימים</td>
-        </tr>
-        <tr>
-          <td><span class="icon">🗣️</span> תהליכים קוגניטיביים ב׳ - בוחן</td>
-          <td class="countdown">נותרו 123 ימים</td>
-        </tr>
-      </tbody>
-    </table>
 
-    <!-- טבלת Honors -->
-    <table>
-      <thead>
-        <tr>
-          <th>Honors Event</th>
-          <th>Time Left</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1st Research Proposal Deadline <span class="icon">📘</span></td>
-          <td class="countdown">25 ימים</td>
-        </tr>
-        <tr>
-          <td>2nd Research Proposal Deadline <span class="icon">📘</span></td>
-          <td class="countdown">46 ימים</td>
-        </tr>
-        <tr>
-          <td>3rd Research Proposal Deadline <span class="icon">📘</span></td>
-          <td class="countdown">67 ימים</td>
-        </tr>
-        <tr>
-          <td>Presentation Prof. Shachar Ayal <span class="icon">🎤</span></td>
-          <td class="countdown">67 ימים</td>
-        </tr>
-        <tr>
-          <td>4th Research Proposal Deadline <span class="icon">📘</span></td>
-          <td class="countdown">78 ימים</td>
-        </tr>
-        <tr>
-          <td>Prep With Saar <span class="icon">💬</span></td>
-          <td class="countdown">81 ימים</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <!-- טבלת קורסים בעברית -->
+  <table id="hebrew-table">
+    <thead>
+      <tr>
+        <th>ספירה לאחור</th>
+        <th>אירוע</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="countdown" data-datetime="2025-11-27T09:00:00"></td><td>שיטות מחקר והערכה - הגשת מטלה</td></tr>
+      <tr><td class="countdown" data-datetime="2025-12-02T13:45:00"></td><td>בסיס ביולוגי - בוחן</td></tr>
+      <tr><td class="countdown" data-datetime="2025-12-07T13:45:00"></td><td>תהליכים קוגנטיביים ב׳ - בוחן</td></tr>
+      <tr><td class="countdown" data-datetime="2025-12-20T13:45:00"></td><td>בסיס ביולוגי - בוחן</td></tr>
+      <tr><td class="countdown" data-datetime="2025-12-22T23:55:00"></td><td>תאוריות באישיות - הגשת תמלול</td></tr>
+      <tr><td class="countdown" data-datetime="2025-12-30T13:45:00"></td><td>בסיס ביולוגי - בוחן</td></tr>
+      <tr><td class="countdown" data-datetime="2025-12-30T23:55:00"></td><td>תאוריות באישיות - הגשה סופית</td></tr>
+      <tr><td class="countdown" data-datetime="2026-01-18T13:45:00"></td><td>תהליכים קוגנטיביים ב׳ - בוחן</td></tr>
+    </tbody>
+  </table>
+
+  <!-- טבלת Honors באנגלית -->
+  <table id="honors-table">
+    <thead>
+      <tr>
+        <th>Honors Event</th>
+        <th>Time Left</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="english">1st Research Proposal Deadline</td><td class="countdown" data-datetime="2025-11-25T23:55:00"></td></tr>
+      <tr><td class="english">2nd Research Proposal Deadline</td><td class="countdown" data-datetime="2025-12-16T23:55:00"></td></tr>
+      <tr><td class="english">3rd Research Proposal Deadline</td><td class="countdown" data-datetime="2026-01-06T23:55:00"></td></tr>
+      <tr><td class="english">Presentation Prof. Shachar Ayal</td><td class="countdown" data-datetime="2026-01-06T13:00:00"></td></tr>
+      <tr><td class="english">4th Research Proposal Deadline</td><td class="countdown" data-datetime="2026-01-17T23:55:00"></td></tr>
+      <tr><td class="english">Prep With Saar</td><td class="countdown" data-datetime="2026-01-20T18:00:00"></td></tr>
+    </tbody>
+  </table>
+
+<script>
+  function updateCountdowns() {
+    const countdownCells = document.querySelectorAll('.countdown');
+    countdownCells.forEach(cell => {
+      const targetDate = new Date(cell.getAttribute('data-datetime'));
+      const now = new Date();
+      const diff = targetDate - now;
+      if (diff <= 0) {
+        cell.textContent = 'עבר';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      cell.textContent = `ימים ${days} שעות ${hours} דקות ${minutes}`;
+    });
+  }
+  updateCountdowns();
+  setInterval(updateCountdowns, 60000); // every minute
+</script>
 </body>
-
 </html>
