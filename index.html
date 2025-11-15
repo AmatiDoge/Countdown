@@ -12,10 +12,18 @@
       text-align: center;
       padding: 50px 10px;
       margin: 0;
+      direction: rtl;
     }
     h1 {
       background-color: rgba(255,255,255,0.7);
       padding: 15px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+    h2 {
+      margin-top: 60px;
+      background-color: rgba(255,255,255,0.5);
+      padding: 10px 20px;
       border-radius: 12px;
       display: inline-block;
     }
@@ -32,15 +40,32 @@
       margin-top: 5px;
       font-weight: bold;
     }
+    #main-events, #honors-events {
+      display: inline-block;
+      vertical-align: top;
+      width: 48%;
+    }
+    @media (max-width: 768px) {
+      #main-events, #honors-events {
+        width: 100%;
+        display: block;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>📅 לוח מועדים - סמסטר חדש (מסודר כרונולוגית)</h1>
+  <h1>📅 לוח מועדים - סמסטר א׳</h1>
 
-  <div id="events-container"></div>
+  <div id="main-events">
+    <h2>מועדים כלליים</h2>
+  </div>
+
+  <div id="honors-events">
+    <h2>תוכנית המצטיינים Honors</h2>
+  </div>
 
   <script>
-    const events = [
+    const mainEvents = [
       { id: "methods", title: "שיטות מחקר והערכה – הגשת מטלה", date: "2025-11-27T09:00:00" },
       { id: "bio1", title: "בסיס ביולוגי של ההתנהגות – בוחן 1", date: "2025-12-02T13:45:00" },
       { id: "cog1", title: "תהליכים קוגנטיביים ב׳ – בוחן 1", date: "2025-12-07T13:45:00" },
@@ -51,7 +76,14 @@
       { id: "cog2", title: "תהליכים קוגנטיביים ב׳ – בוחן 2", date: "2026-01-18T13:45:00" }
     ];
 
-    events.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const honorsEvents = [
+      { id: "honors1", title: "1st Research Proposal Deadline", date: "2025-11-25T23:59:00" },
+      { id: "honors2", title: "2nd Research Proposal Deadline", date: "2025-12-16T23:59:00" },
+      { id: "honors3", title: "3rd Research Proposal Deadline", date: "2026-01-06T23:59:00" },
+      { id: "honors4", title: "4th Research Proposal Deadline", date: "2026-01-17T23:59:00" },
+      { id: "honors5", title: "Presentation – Prof. Shachar Ayal", date: "2026-01-06T12:00:00" },
+      { id: "honors6", title: "Prep With Saar", date: "2026-01-20T10:00:00" }
+    ];
 
     function countdown(targetDate, elementId) {
       const el = document.getElementById(elementId);
@@ -72,15 +104,20 @@
       setInterval(update, 1000);
     }
 
-    const container = document.getElementById("events-container");
-    events.forEach(event => {
-      const div = document.createElement("div");
-      div.className = "event";
-      div.innerHTML = `${event.title}<span class="time" id="${event.id}"></span>`;
-      container.appendChild(div);
-      countdown(event.date, event.id);
-    });
+    function renderEvents(events, containerId) {
+      const container = document.getElementById(containerId);
+      events.sort((a, b) => new Date(a.date) - new Date(b.date));
+      events.forEach(event => {
+        const div = document.createElement("div");
+        div.className = "event";
+        div.innerHTML = `${event.title}<span class="time" id="${event.id}"></span>`;
+        container.appendChild(div);
+        countdown(event.date, event.id);
+      });
+    }
+
+    renderEvents(mainEvents, "main-events");
+    renderEvents(honorsEvents, "honors-events");
   </script>
 </body>
 </html>
-
