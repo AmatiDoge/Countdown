@@ -1,134 +1,144 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <title>ספירה לאחור - סמסטר</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>לוח זמנים אקדמי</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
-      background-color: #f4f4f4;
+      padding: 2rem;
+      background-color: #f8f9fa;
       direction: rtl;
     }
-    h1 {
-      text-align: center;
-    }
+
     .container {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 2rem;
       flex-wrap: wrap;
     }
-    .table-container {
-      width: 480px;
-    }
+
     table {
-      width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      width: 420px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-      font-size: 16px;
-    }
+
     th {
       background-color: #34E5FF;
+      color: #000;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.2rem;
     }
-    .red {
-      background-color: #ffcccc;
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      font-size: 1rem;
     }
-    .yellow {
-      background-color: #fff3cd;
+
+    tr:nth-child(even) td {
+      background-color: #f1f9ff;
     }
-    .green {
-      background-color: #d4edda;
+
+    .countdown {
+      font-weight: bold;
+      color: #2c3e50;
     }
-    .gray {
-      background-color: #e2e3e5;
-    }
+
     .icon {
-      font-size: 18px;
-    }
-    .ltr {
-      direction: ltr;
+      margin-inline-end: 0.5rem;
     }
   </style>
 </head>
+
 <body>
-<h1>לוח זמנים - סמסטר א׳</h1>
-<div class="container">
-  <div class="table-container">
-    <table id="courseTable">
-      <tr><th>🧠 קורסים</th><th>זמן שנותר</th></tr>
+  <div class="container">
+    <!-- טבלת קורסים -->
+    <table>
+      <thead>
+        <tr>
+          <th>אירוע</th>
+          <th>ספירה לאחור</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="icon">🧪</span> שיטות מחקר והערכה - הגשת מטלה</td>
+          <td class="countdown">נותרו 10 ימים</td>
+        </tr>
+        <tr>
+          <td><span class="icon">🧠</span> בסיס ביולוגי של ההתנהגות - בוחן</td>
+          <td class="countdown">נותרו 31 ימים</td>
+        </tr>
+        <tr>
+          <td><span class="icon">🧠</span> בסיס ביולוגי של ההתנהגות - בוחן</td>
+          <td class="countdown">נותרו 51 ימים</td>
+        </tr>
+        <tr>
+          <td><span class="icon">🧠</span> בסיס ביולוגי של ההתנהגות - בוחן</td>
+          <td class="countdown">נותרו 52 ימים</td>
+        </tr>
+        <tr>
+          <td><span class="icon">🧬</span> תאוריות באישיות - הגשת תמלול</td>
+          <td class="countdown">נותרו 63 ימים</td>
+        </tr>
+        <tr>
+          <td><span class="icon">🧬</span> תאוריות באישיות - הגשה סופית</td>
+          <td class="countdown">נותרו 65 ימים</td>
+        </tr>
+        <tr>
+          <td><span class="icon">🗣️</span> תהליכים קוגניטיביים ב׳ - בוחן</td>
+          <td class="countdown">נותרו 81 ימים</td>
+        </tr>
+        <tr>
+          <td><span class="icon">🗣️</span> תהליכים קוגניטיביים ב׳ - בוחן</td>
+          <td class="countdown">נותרו 123 ימים</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- טבלת Honors -->
+    <table>
+      <thead>
+        <tr>
+          <th>Honors Event</th>
+          <th>Time Left</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1st Research Proposal Deadline <span class="icon">📘</span></td>
+          <td class="countdown">25 ימים</td>
+        </tr>
+        <tr>
+          <td>2nd Research Proposal Deadline <span class="icon">📘</span></td>
+          <td class="countdown">46 ימים</td>
+        </tr>
+        <tr>
+          <td>3rd Research Proposal Deadline <span class="icon">📘</span></td>
+          <td class="countdown">67 ימים</td>
+        </tr>
+        <tr>
+          <td>Presentation Prof. Shachar Ayal <span class="icon">🎤</span></td>
+          <td class="countdown">67 ימים</td>
+        </tr>
+        <tr>
+          <td>4th Research Proposal Deadline <span class="icon">📘</span></td>
+          <td class="countdown">78 ימים</td>
+        </tr>
+        <tr>
+          <td>Prep With Saar <span class="icon">💬</span></td>
+          <td class="countdown">81 ימים</td>
+        </tr>
+      </tbody>
     </table>
   </div>
-  <div class="table-container">
-    <table id="honorsTable">
-      <tr><th class="ltr">Honors 🎓</th><th class="ltr">Time Left</th></tr>
-    </table>
-  </div>
-</div>
-<script>
-  const courseEvents = [
-    { name: "📊 שיטות מחקר והערכה - הגשת מטלה", date: "2025-11-27T09:00:00" },
-    { name: "🧬 בסיס ביולוגי - בוחן", date: "2025-12-02T13:45:00" },
-    { name: "🧠 תהליכים קוגניטיביים ב׳ - בוחן", date: "2025-12-07T13:45:00" },
-    { name: "🧬 בסיס ביולוגי - בוחן", date: "2025-12-20T13:45:00" },
-    { name: "🧬 בסיס ביולוגי - בוחן", date: "2025-12-30T13:45:00" },
-    { name: "📄 תאוריות באישיות - הגשת תמלול", date: "2025-12-22T23:59:00" },
-    { name: "📄 תאוריות באישיות - הגשה סופית", date: "2025-12-30T23:59:00" },
-    { name: "🧠 תהליכים קוגניטיביים ב׳ - בוחן", date: "2026-01-18T13:45:00" },
-  ];
-
-  const honorsEvents = [
-    { name: "1st Research Proposal Deadline 📅", date: "2025-11-25T23:59:00" },
-    { name: "2nd Research Proposal Deadline 📅", date: "2025-12-16T23:59:00" },
-    { name: "3rd Research Proposal Deadline 📅", date: "2026-01-06T23:59:00" },
-    { name: "Presentation Prof. Shachar Ayal 🗣️", date: "2026-01-06T13:45:00" },
-    { name: "4th Research Proposal Deadline 📅", date: "2026-01-17T23:59:00" },
-    { name: "Prep With Saar 👨‍🏫", date: "2026-01-20T13:45:00" },
-  ];
-
-  function getColorClass(timeLeft) {
-    const days = timeLeft / (1000 * 60 * 60 * 24);
-    if (days < 0) return 'gray';
-    if (days < 3) return 'red';
-    if (days < 7) return 'yellow';
-    return 'green';
-  }
-
-  function formatTime(ms) {
-    const totalMinutes = Math.floor(ms / 60000);
-    const days = Math.floor(totalMinutes / 1440);
-    const hours = Math.floor((totalMinutes % 1440) / 60);
-    const minutes = totalMinutes % 60;
-    return `${days} ימים ${hours} שעות ${minutes} דקות`;
-  }
-
-  function insertRows(tableId, events, rtl) {
-    const table = document.getElementById(tableId);
-    events.sort((a, b) => new Date(a.date) - new Date(b.date));
-    events.forEach(e => {
-      const now = new Date();
-      const timeLeft = new Date(e.date) - now;
-      const row = table.insertRow(-1);
-      row.className = getColorClass(timeLeft);
-      const nameCell = row.insertCell(0);
-      const countdownCell = row.insertCell(1);
-      nameCell.textContent = e.name;
-      countdownCell.textContent = formatTime(timeLeft);
-      if (!rtl) {
-        nameCell.classList.add('ltr');
-        countdownCell.classList.add('ltr');
-      }
-    });
-  }
-
-  insertRows('courseTable', courseEvents, true);
-  insertRows('honorsTable', honorsEvents, false);
-</script>
 </body>
+
 </html>
