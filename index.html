@@ -45,7 +45,7 @@
 </head>
 <body>
 
-<!-- 🧠 טבלת הקורסים -->
+<!-- טבלת הקורסים -->
 <table>
   <tr><th>אירוע</th><th>ספירה לאחור</th></tr>
   <tr><td>שיטות מחקר והערכה – הגשת מטלה</td><td class="countdown" data-date="2025-11-27T09:00:00"></td></tr>
@@ -58,7 +58,7 @@
   <tr><td>תהליכים קוגניטיביים ב׳ – בוחן שני</td><td class="countdown" data-date="2026-01-18T13:45:00"></td></tr>
 </table>
 
-<!-- 🏅 טבלת Honors -->
+<!-- טבלת Honors -->
 <table>
   <tr><th class="ltr">Honors Event</th><th class="ltr">Time Left</th></tr>
   <tr><td class="ltr">1st Research Proposal Deadline</td><td class="countdown ltr" data-date="2025-11-25T23:59:00"></td></tr>
@@ -80,7 +80,7 @@ function updateCountdowns() {
     const diff = target - now;
 
     if (diff <= 0) {
-      el.textContent = "עבר!";
+      el.textContent = el.classList.contains("ltr") ? "Passed!" : "עבר!";
       el.classList.add("red");
       return;
     }
@@ -88,7 +88,11 @@ function updateCountdowns() {
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
 
-    el.textContent = `${days} ימים, ${hours} שעות`;
+    if (el.classList.contains("ltr")) {
+      el.textContent = `${days} days, ${hours} hours`;
+    } else {
+      el.textContent = `${days} ימים, ${hours} שעות`;
+    }
 
     if (days <= 3) {
       el.classList.add("red");
