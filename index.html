@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="he">
 <head>
-  <meta charset="UTF-8">
-  <title>לוח זמנים אוניברסיטה</title>
+  <meta charset="UTF-8" />
+  <title>ספירת מועדים - סמסטר</title>
   <style>
     body {
       direction: rtl;
       font-family: Arial, sans-serif;
       padding: 40px;
-      background-color: #f8f8f8;
+      background-image: url('34E5FF.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .container {
@@ -22,7 +25,7 @@
       background: white;
       padding: 20px;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       min-width: 320px;
       max-width: 400px;
     }
@@ -50,55 +53,85 @@
 </head>
 <body>
   <div class="container">
-    <!-- טיימרים רגילים -->
+    <!-- רשימת מועדים כלליים -->
     <div class="column">
       <h2>🔷 מועדים כלליים</h2>
-      <div class="event">שיטות מחקר והערכה - הגשת מטלה עד ה־27.11 בשעה 9:00 <span class="time" data-time="2025-11-27T09:00:00"></span></div>
-      <div class="event">בסיס ביולוגי - בוחן ב־02.12 בשעה 13:45 <span class="time" data-time="2025-12-02T13:45:00"></span></div>
-      <div class="event">תהליכים קוגניטיביים ב׳ - בוחן ב־07.12 בשעה 13:45 <span class="time" data-time="2025-12-07T13:45:00"></span></div>
-      <div class="event">בסיס ביולוגי - בוחן ב־20.12 בשעה 13:45 <span class="time" data-time="2025-12-20T13:45:00"></span></div>
-      <div class="event">תיאוריות באישיות - תמלול עד ה־22.12 <span class="time" data-time="2025-12-22T23:55:00"></span></div>
-      <div class="event">בסיס ביולוגי - בוחן ב־30.12 בשעה 13:45 <span class="time" data-time="2025-12-30T13:45:00"></span></div>
-      <div class="event">תיאוריות באישיות - סופית עד ה־30.12 <span class="time" data-time="2025-12-30T23:55:00"></span></div>
-      <div class="event">תהליכים קוגניטיביים ב׳ - בוחן ב־18.01 בשעה 13:45 <span class="time" data-time="2026-01-18T13:45:00"></span></div>
+
+      <div class="event">
+        שיטות מחקר והערכה - הגשת מטלה  
+        <span class="time">27/11/2025 09:00</span>
+      </div>
+
+      <div class="event">
+        בסיס ביולוגי סוגיות מתקדמות - בוחן  
+        <span class="time">02/12/2025 13:45</span>
+      </div>
+
+      <div class="event">
+        תהליכים קוגניטיביים ב׳ - בוחן  
+        <span class="time">07/12/2025 13:45</span>
+      </div>
+
+      <div class="event">
+        בסיס ביולוגי סוגיות מתקדמות - בוחן  
+        <span class="time">20/12/2025 13:45</span>
+      </div>
+
+      <div class="event">
+        תאוריות באישיות - הגשת תמלול  
+        <span class="time">22/12/2025</span>
+      </div>
+
+      <div class="event">
+        בסיס ביולוגי סוגיות מתקדמות - בוחן  
+        <span class="time">30/12/2025 13:45</span>
+      </div>
+
+      <div class="event">
+        תאוריות באישיות - הגשה סופית  
+        <span class="time">30/12/2025</span>
+      </div>
+
+      <div class="event">
+        תהליכים קוגניטיביים ב׳ - בוחן  
+        <span class="time">18/01/2026 13:45</span>
+      </div>
     </div>
 
-    <!-- Honors -->
+    <!-- רשימת Honors -->
     <div class="column">
-      <h2>🔶 Honors</h2>
-      <div class="event">1st Research Proposal Deadline <span class="time" data-time="2025-11-25T23:55:00"></span></div>
-      <div class="event">2nd Research Proposal Deadline <span class="time" data-time="2025-12-16T23:55:00"></span></div>
-      <div class="event">3rd Research Proposal Deadline <span class="time" data-time="2026-01-06T23:55:00"></span></div>
-      <div class="event">Presentation Prof. Shachar Ayal <span class="time" data-time="2026-01-06T10:00:00"></span></div>
-      <div class="event">4th Research Proposal Deadline <span class="time" data-time="2026-01-17T23:55:00"></span></div>
-      <div class="event">Prep with Saar <span class="time" data-time="2026-01-20T10:00:00"></span></div>
+      <h2>🔶 Honors - מועדים</h2>
+
+      <div class="event">
+        1st Research Proposal  
+        <span class="time">25/11/2025</span>
+      </div>
+
+      <div class="event">
+        2nd Research Proposal  
+        <span class="time">16/12/2025</span>
+      </div>
+
+      <div class="event">
+        3rd Research Proposal  
+        <span class="time">06/01/2026</span>
+      </div>
+
+      <div class="event">
+        Presentation with Prof. Shachar Ayal  
+        <span class="time">06/01/2026</span>
+      </div>
+
+      <div class="event">
+        4th Research Proposal  
+        <span class="time">17/01/2026</span>
+      </div>
+
+      <div class="event">
+        Prep with Saar  
+        <span class="time">20/01/2026</span>
+      </div>
     </div>
   </div>
-
-  <script>
-    function updateTimers() {
-      const timers = document.querySelectorAll('.time');
-      const now = new Date();
-
-      timers.forEach(timer => {
-        const time = new Date(timer.getAttribute('data-time'));
-        const diff = time - now;
-
-        if (diff <= 0) {
-          timer.innerText = "עבר!";
-          return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
-
-        timer.innerText = `${days} ימים, ${hours} שעות, ${minutes} דקות`;
-      });
-    }
-
-    updateTimers();
-    setInterval(updateTimers, 60000);
-  </script>
 </body>
 </html>
