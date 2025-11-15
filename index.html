@@ -1,123 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Countdown Table</title>
+  <meta charset="UTF-8">
+  <title>Countdown Tables</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
-      padding: 20px;
+      gap: 20px;
       background-color: #f4f4f4;
+      margin: 40px;
     }
     table {
       border-collapse: collapse;
-      margin: 0 10px;
       width: 420px;
-      background-color: #fff;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     th {
       background-color: #bde4ff;
-      color: #000;
-      text-align: center;
-      padding: 10px;
-      font-size: 16px;
-    }
-    td {
-      border: 1px solid #ddd;
       padding: 12px;
       text-align: center;
+      font-weight: bold;
     }
-    td:nth-child(odd) {
-      background-color: #f8fdf8;
+    td {
+      padding: 10px;
+      border-top: 1px solid #eee;
     }
-    .icon {
-      margin: 0 5px;
+    .countdown {
+      background-color: #e9fff1;
+      font-weight: bold;
+      direction: rtl;
+    }
+    .countdown-en {
+      background-color: #e9fff1;
+      font-weight: bold;
+      direction: ltr;
+    }
+    .rtl {
+      direction: rtl;
+    }
+    .ltr {
+      direction: ltr;
     }
   </style>
 </head>
 <body>
+
+  <!-- טבלה של הקורסים -->
   <table>
-    <thead>
-      <tr>
-        <th>ספירה לאחור</th>
-        <th>אירוע</th>
-      </tr>
-    </thead>
-    <tbody id="hebrew-events">
-      <!-- Hebrew events will be populated here -->
-    </tbody>
+    <tr><th>אירוע</th><th>ספירה לאחור</th></tr>
+    <tr><td class="rtl">שיטות מחקר והערכה - הגשת מטלה</td><td class="countdown">18 ימים, 11 שעות, 16 דקות</td></tr>
+    <tr><td class="rtl">בסיס ביולוגי של ההתנהגות - בוחן</td><td class="countdown">3 ימים, 16 שעות, 21 דקות</td></tr>
+    <tr><td class="rtl">תהליכים קוגניטיביים ב' - בוחן</td><td class="countdown">3 ימים, 21 שעות, 21 דקות</td></tr>
+    <tr><td class="rtl">בסיס ביולוגי של ההתנהגות - בוחן</td><td class="countdown">3 ימים, 34 שעות, 21 דקות</td></tr>
+    <tr><td class="rtl">תאוריות באישיות - הגשת תמלול</td><td class="countdown">13 ימים, 7 שעות, 37 דקות</td></tr>
+    <tr><td class="rtl">בסיס ביולוגי - בוחן</td><td class="countdown">3 ימים, 44 שעות, 21 דקות</td></tr>
+    <tr><td class="rtl">תאוריות באישיות - הגשה סופית</td><td class="countdown">13 ימים, 7 שעות, 45 דקות</td></tr>
+    <tr><td class="rtl">תהליכים קוגניטיביים ב' - בוחן</td><td class="countdown">3 ימים, 63 שעות, 21 דקות</td></tr>
   </table>
 
+  <!-- טבלה של Honors -->
   <table>
-    <thead>
-      <tr>
-        <th>Honors Event</th>
-        <th>Time Left</th>
-      </tr>
-    </thead>
-    <tbody id="honors-events">
-      <!-- Honors events will be populated here -->
-    </tbody>
+    <tr><th>Honors Event</th><th>Time Left</th></tr>
+    <tr><td class="ltr">1st Research Proposal Deadline</td><td class="countdown-en">10 ימים, 7 שעות, 13 דקות</td></tr>
+    <tr><td class="ltr">2nd Research Proposal Deadline</td><td class="countdown-en">31 ימים, 7 שעות, 13 דקות</td></tr>
+    <tr><td class="ltr">3rd Research Proposal Deadline</td><td class="countdown-en">52 ימים, 7 שעות, 13 דקות</td></tr>
+    <tr><td class="ltr">Presentation Prof. Shachar Ayal</td><td class="countdown-en">51 ימים, 20 שעות, 18 דקות</td></tr>
+    <tr><td class="ltr">4th Research Proposal Deadline</td><td class="countdown-en">63 ימים, 7 שעות, 13 דקות</td></tr>
+    <tr><td class="ltr">Prep With Saar</td><td class="countdown-en">66 ימים, 1 שעות, 18 דקות</td></tr>
   </table>
 
-  <script>
-    const hebrewEvents = [
-      { title: 'שיטות מחקר והערכה - הגשת מטלה', date: '2025-11-27T09:00:00' },
-      { title: 'בסיס ביולוגי של ההתנהגות - בוחן', date: '2025-12-02T13:45:00' },
-      { title: 'תהליכים קוגניטיביים ב׳ - בוחן', date: '2025-12-07T13:45:00' },
-      { title: 'בסיס ביולוגי של ההתנהגות - בוחן', date: '2025-12-20T13:45:00' },
-      { title: 'תאוריות באישיות - הגשת תמלול', date: '2025-12-22T23:59:59' },
-      { title: 'בסיס ביולוגי של ההתנהגות - בוחן', date: '2025-12-30T13:45:00' },
-      { title: 'תאוריות באישיות - הגשה סופית', date: '2025-12-30T23:59:59' },
-      { title: 'תהליכים קוגניטיביים ב׳ - בוחן', date: '2026-01-18T13:45:00' },
-    ];
-
-    const honorsEvents = [
-      { title: '1st Research Proposal Deadline', date: '2025-11-25T23:59:59' },
-      { title: '2nd Research Proposal Deadline', date: '2025-12-16T23:59:59' },
-      { title: '3rd Research Proposal Deadline', date: '2026-01-06T23:59:59' },
-      { title: 'Presentation Prof. Shachar Ayal', date: '2026-01-06T13:00:00' },
-      { title: '4th Research Proposal Deadline', date: '2026-01-17T23:59:59' },
-      { title: 'Prep With Saar', date: '2026-01-20T13:00:00' },
-    ];
-
-    function formatCountdown(targetDate) {
-      const now = new Date();
-      const diff = new Date(targetDate) - now;
-      if (diff <= 0) return 'עבר הזמן';
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      return `${days} ימים, ${hours} שעות, ${minutes} דקות`;
-    }
-
-    function populateTable(data, elementId, isHebrew = false) {
-      const sorted = data.sort((a, b) => new Date(a.date) - new Date(b.date));
-      const tbody = document.getElementById(elementId);
-      tbody.innerHTML = '';
-      sorted.forEach(event => {
-        const row = document.createElement('tr');
-        const col1 = document.createElement('td');
-        const col2 = document.createElement('td');
-        col1.textContent = formatCountdown(event.date);
-        col2.textContent = event.title;
-        if (isHebrew) {
-          row.appendChild(col1);
-          row.appendChild(col2);
-        } else {
-          row.appendChild(col2);
-          row.appendChild(col1);
-        }
-        tbody.appendChild(row);
-      });
-    }
-
-    populateTable(hebrewEvents, 'hebrew-events', true);
-    populateTable(honorsEvents, 'honors-events');
-  </script>
 </body>
 </html>
