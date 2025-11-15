@@ -1,137 +1,116 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>ספירת מועדים - סמסטר</title>
+  <title>לוח מועדים</title>
   <style>
     body {
-      direction: rtl;
+      margin: 0;
       font-family: Arial, sans-serif;
-      padding: 40px;
       background-image: url('34E5FF.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-    }
-
-    .container {
+      color: #000;
       display: flex;
-      gap: 40px;
-      justify-content: center;
-      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding: 40px;
+      gap: 50px;
     }
 
     .column {
-      background: white;
-      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 25px;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       min-width: 320px;
-      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     }
 
     h2 {
       margin-top: 0;
       text-align: center;
-      font-size: 1.4rem;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 10px;
     }
 
     .event {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
+      margin: 15px 0;
     }
 
-    .time {
-      display: block;
-      font-size: 1.5rem;
+    .timer {
       font-weight: bold;
-      color: #FF5722;
+      color: #333;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- רשימת מועדים כלליים -->
-    <div class="column">
-      <h2>🔷 מועדים כלליים</h2>
-
-      <div class="event">
-        שיטות מחקר והערכה - הגשת מטלה  
-        <span class="time">27/11/2025 09:00</span>
-      </div>
-
-      <div class="event">
-        בסיס ביולוגי סוגיות מתקדמות - בוחן  
-        <span class="time">02/12/2025 13:45</span>
-      </div>
-
-      <div class="event">
-        תהליכים קוגניטיביים ב׳ - בוחן  
-        <span class="time">07/12/2025 13:45</span>
-      </div>
-
-      <div class="event">
-        בסיס ביולוגי סוגיות מתקדמות - בוחן  
-        <span class="time">20/12/2025 13:45</span>
-      </div>
-
-      <div class="event">
-        תאוריות באישיות - הגשת תמלול  
-        <span class="time">22/12/2025</span>
-      </div>
-
-      <div class="event">
-        בסיס ביולוגי סוגיות מתקדמות - בוחן  
-        <span class="time">30/12/2025 13:45</span>
-      </div>
-
-      <div class="event">
-        תאוריות באישיות - הגשה סופית  
-        <span class="time">30/12/2025</span>
-      </div>
-
-      <div class="event">
-        תהליכים קוגניטיביים ב׳ - בוחן  
-        <span class="time">18/01/2026 13:45</span>
-      </div>
-    </div>
-
-    <!-- רשימת Honors -->
-    <div class="column">
-      <h2>🔶 Honors - מועדים</h2>
-
-      <div class="event">
-        1st Research Proposal  
-        <span class="time">25/11/2025</span>
-      </div>
-
-      <div class="event">
-        2nd Research Proposal  
-        <span class="time">16/12/2025</span>
-      </div>
-
-      <div class="event">
-        3rd Research Proposal  
-        <span class="time">06/01/2026</span>
-      </div>
-
-      <div class="event">
-        Presentation with Prof. Shachar Ayal  
-        <span class="time">06/01/2026</span>
-      </div>
-
-      <div class="event">
-        4th Research Proposal  
-        <span class="time">17/01/2026</span>
-      </div>
-
-      <div class="event">
-        Prep with Saar  
-        <span class="time">20/01/2026</span>
-      </div>
-    </div>
+  <div class="column" id="main">
+    <h2>אירועי קורסים</h2>
   </div>
+  <div class="column" id="honors">
+    <h2>Honors Deadlines</h2>
+  </div>
+
+  <script>
+    const courseEvents = [
+      { title: "שיטות מחקר והערכה - הגשת מטלה", date: "2025-11-27T09:00:00" },
+      { title: "בסיס ביולוגי של ההתנהגות - בוחן", date: "2025-12-02T13:45:00" },
+      { title: "תהליכים קוגנטיביים ב׳ - בוחן", date: "2025-12-07T13:45:00" },
+      { title: "בסיס ביולוגי של ההתנהגות - בוחן", date: "2025-12-20T13:45:00" },
+      { title: "תאוריות באישיות - הגשת תמלול", date: "2025-12-22T23:59:00" },
+      { title: "בסיס ביולוגי של ההתנהגות - בוחן", date: "2025-12-30T13:45:00" },
+      { title: "תאוריות באישיות - הגשה סופית", date: "2025-12-30T23:59:00" },
+      { title: "תהליכים קוגנטיביים ב׳ - בוחן", date: "2026-01-18T13:45:00" }
+    ];
+
+    const honorsEvents = [
+      { title: "1st Research Proposal Deadline", date: "2025-11-25T00:00:00" },
+      { title: "2nd Research Proposal Deadline", date: "2025-12-16T00:00:00" },
+      { title: "3rd Research Proposal Deadline", date: "2026-01-06T00:00:00" },
+      { title: "Presentation Prof. Shachar Ayal", date: "2026-01-06T00:00:00" },
+      { title: "4th Research Proposal Deadline", date: "2026-01-17T00:00:00" },
+      { title: "Prep With Saar", date: "2026-01-20T00:00:00" }
+    ];
+
+    function renderCountdowns(containerId, events) {
+      const container = document.getElementById(containerId);
+      events
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .forEach(event => {
+          const div = document.createElement('div');
+          div.className = 'event';
+          const title = document.createElement('div');
+          title.textContent = event.title;
+          const timer = document.createElement('div');
+          timer.className = 'timer';
+          timer.setAttribute('data-date', event.date);
+          div.appendChild(title);
+          div.appendChild(timer);
+          container.appendChild(div);
+        });
+    }
+
+    function updateTimers() {
+      const timers = document.querySelectorAll('.timer');
+      timers.forEach(timer => {
+        const targetDate = new Date(timer.getAttribute('data-date'));
+        const now = new Date();
+        const diff = targetDate - now;
+        if (diff <= 0) {
+          timer.textContent = "עבר המועד";
+        } else {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          timer.textContent = `${days} ימים, ${hours} שעות, ${minutes} דקות`;
+        }
+      });
+    }
+
+    renderCountdowns('main', courseEvents);
+    renderCountdowns('honors', honorsEvents);
+    updateTimers();
+    setInterval(updateTimers, 60000);
+  </script>
 </body>
 </html>
