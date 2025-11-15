@@ -51,18 +51,51 @@
         display: block;
       }
     }
-  </style>
-</head>
-<body>
-  <h1>📅 לוח מועדים - סמסטר א׳</h1>
+<style>
+  body {
+    direction: rtl;
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    background-color: #f8f8f8;
+  }
 
-  <div id="main-events">
-    <h2>מועדים כלליים</h2>
-  </div>
+  .container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
-  <div id="honors-events">
-    <h2>תוכנית המצטיינים Honors</h2>
-  </div>
+  .column {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    min-width: 320px;
+    max-width: 400px;
+  }
+
+  h2 {
+    margin-top: 0;
+    text-align: center;
+    font-size: 1.4rem;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+  }
+
+  .event {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  .time {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FF5722;
+  }
+</style>
+
 
   <script>
     const mainEvents = [
