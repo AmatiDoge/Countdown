@@ -87,9 +87,8 @@ function updateCountdowns() {
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
 
-    el.textContent = `${days} ימים, ${hours} שעות, ${minutes} דקות`;
+    el.textContent = `${days} ימים, ${hours} שעות`;
 
     if (days <= 3) {
       el.classList.add("red");
@@ -101,7 +100,7 @@ function updateCountdowns() {
   });
 }
 updateCountdowns();
-setInterval(updateCountdowns, 60000); // Update every minute
+setInterval(updateCountdowns, 60000);
 </script>
 
 </body>
