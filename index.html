@@ -1,123 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academic Countdown</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f6f9fb;
-      margin: 0;
-      padding: 20px;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .container {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-    .table-wrapper {
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      min-width: 340px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th {
-      background-color: #d9ecff;
-      padding: 12px;
-      text-align: center;
-      font-weight: bold;
-    }
-    td {
-      padding: 12px;
-      text-align: center;
-    }
-    .event-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: center;
-    }
-    .green { background-color: #e1f9e3; }
-    .yellow { background-color: #fff9db; }
-    .red { background-color: #ffe6e6; }
-    .gray { background-color: #f0f0f0; color: #888; }
-  </style>
-</head>
-<body>
+<style>
+  body {
+    font-family: sans-serif;
+    background-color: #f0f8ff;
+    margin: 20px;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .tables {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  table {
+    border-collapse: collapse;
+    width: 440px;
+    background-color: #f9fbfd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    direction: rtl;
+  }
+  th {
+    background-color: #cbe5ff;
+    padding: 12px;
+    font-size: 18px;
+  }
+  td {
+    padding: 10px 16px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .countdown {
+    font-weight: bold;
+    font-family: monospace;
+    direction: ltr;
+  }
+  .row-icon {
+    margin: 0 10px;
+  }
+  .green { background-color: #e5fbe5; }
+  .yellow { background-color: #fffbe5; }
+  .red { background-color: #ffe5e5; }
+  .gray { background-color: #eeeeee; }
+</style>
 
-<h2>ספירות לאחר לסמסטר</h2>
+<h2>לוח זמנים - סמסטר א' ותוכנית המצטיינים</h2>
+<div class="tables">
 
-<div class="container">
-  <!-- Hebrew Table -->
-  <div class="table-wrapper">
-    <table id="hebrewTable">
-      <thead>
-        <tr><th>אירוע</th><th>ספירה לאחר</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="event-label">🔢 שיטות מחקר והערכה - הגשת מטלה</td><td data-date="2025-11-27T09:00:00"></td></tr>
-        <tr><td class="event-label">🔢 בסיס ביולוגי של ההתנהגות - בוחן</td><td data-date="2025-12-02T13:45:00"></td></tr>
-        <tr><td class="event-label">🎨 תאוריות באישיות - הגשת תמלול</td><td data-date="2025-12-22T23:59:00"></td></tr>
-        <tr><td class="event-label">🎨 תאוריות באישיות - הגשה סופית</td><td data-date="2025-12-30T23:59:00"></td></tr>
-        <tr><td class="event-label">🔢 בסיס הביולוגי של ההתנהגות - בוחן</td><td data-date="2025-12-20T13:45:00"></td></tr>
-        <tr><td class="event-label">🔢 בסיס הביולוגי של ההתנהגות - בוחן</td><td data-date="2025-12-30T13:45:00"></td></tr>
-        <tr><td class="event-label">⚖️ תהליכים קוגנטיביים ב' - בוחן</td><td data-date="2025-12-07T13:45:00"></td></tr>
-        <tr><td class="event-label">⚖️ תהליכים קוגנטיביים ב' - בוחן</td><td data-date="2026-01-18T13:45:00"></td></tr>
-      </tbody>
-    </table>
-  </div>
+<table id="mainTable">
+  <thead>
+    <tr><th>אירוע</th><th>ספירה לאחור</th></tr>
+  </thead>
+  <tbody id="mainEvents"></tbody>
+</table>
 
-  <!-- English Table -->
-  <div class="table-wrapper">
-    <table id="honorsTable">
-      <thead>
-        <tr><th>Honors Event</th><th>Countdown</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="event-label">1st Research Proposal Deadline 🕒</td><td data-date="2025-11-25T23:59:00"></td></tr>
-        <tr><td class="event-label">2nd Research Proposal Deadline 🕒</td><td data-date="2025-12-16T23:59:00"></td></tr>
-        <tr><td class="event-label">3rd Research Proposal Deadline 🕒</td><td data-date="2026-01-06T23:59:00"></td></tr>
-        <tr><td class="event-label">Presentation Prof. Shachar Ayal 🎓</td><td data-date="2026-01-06T13:45:00"></td></tr>
-        <tr><td class="event-label">4th Research Proposal Deadline 🕒</td><td data-date="2026-01-17T23:59:00"></td></tr>
-        <tr><td class="event-label">Prep With Saar ✍️</td><td data-date="2026-01-20T13:45:00"></td></tr>
-      </tbody>
-    </table>
-  </div>
+<table id="honorsTable">
+  <thead>
+    <tr><th>Honors Event</th><th>Countdown</th></tr>
+  </thead>
+  <tbody id="honorsEvents"></tbody>
+</table>
+
 </div>
 
 <script>
-  function updateCountdowns() {
-    const now = new Date();
-    document.querySelectorAll('[data-date]').forEach(cell => {
-      const date = new Date(cell.dataset.date);
-      const diff = date - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+const mainEvents = [
+  { title: 'שיטות מחקר והערכה - הגשת מטלה', date: '2025-11-27T09:00:00', icon: '📘' },
+  { title: 'בסיס ביולוגי של ההתנהגות - בוחן', date: '2025-12-02T13:45:00', icon: '🧠' },
+  { title: 'תהליכים קוגנטיביים ב׳ - בוחן', date: '2025-12-07T13:45:00', icon: '🧩' },
+  { title: 'בסיס ביולוגי של ההתנהגות - בוחן', date: '2025-12-20T13:45:00', icon: '🧠' },
+  { title: 'תאוריות באישיות - הגשת תמלול', date: '2025-12-22T23:59:00', icon: '📝' },
+  { title: 'בסיס ביולוגי של ההתנהגות - בוחן', date: '2025-12-30T13:45:00', icon: '🧠' },
+  { title: 'תאוריות באישיות - הגשה סופית', date: '2025-12-30T23:59:00', icon: '📝' },
+  { title: 'תהליכים קוגנטיביים ב׳ - בוחן', date: '2026-01-18T13:45:00', icon: '🧩' },
+];
 
-      let text = '';
-      if (diff < 0) {
-        text = 'עבר';
-        cell.parentElement.className = 'gray';
-      } else {
-        text = `${days} ימים`;
-        cell.parentElement.className = days > 7 ? 'green' : days > 3 ? 'yellow' : 'red';
-      }
-      cell.textContent = text;
-    });
-  }
-  updateCountdowns();
-  setInterval(updateCountdowns, 60 * 1000); // Update every minute
+const honorsEvents = [
+  { title: '1st Research Proposal Deadline', date: '2025-11-25T23:59:00', icon: '🎯' },
+  { title: '2nd Research Proposal Deadline', date: '2025-12-16T23:59:00', icon: '🎯' },
+  { title: '3rd Research Proposal Deadline', date: '2026-01-06T23:59:00', icon: '🎯' },
+  { title: 'Presentation Prof. Shachar Ayal', date: '2026-01-06T13:00:00', icon: '🎤' },
+  { title: '4th Research Proposal Deadline', date: '2026-01-17T23:59:00', icon: '🎯' },
+  { title: 'Prep With Saar', date: '2026-01-20T10:00:00', icon: '🧑‍🏫' },
+];
+
+function getRemainingTime(dateStr) {
+  const now = new Date();
+  const then = new Date(dateStr);
+  const diff = then - now;
+  if (diff <= 0) return { text: 'עבר', class: 'gray' };
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  return {
+    text: `${days} ימים ${hours} שעות`,
+    class: days > 7 ? 'green' : days > 3 ? 'yellow' : 'red'
+  };
+}
+
+function renderEvents(events, tableId, isRTL = true) {
+  const sorted = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const container = document.getElementById(tableId);
+  sorted.forEach(event => {
+    const { text, class: urgency } = getRemainingTime(event.date);
+    const row = document.createElement('tr');
+    row.className = urgency;
+    const iconCell = `<span class="row-icon">${event.icon}</span>`;
+    if (isRTL) {
+      row.innerHTML = `<td>${iconCell}${event.title}</td><td class="countdown">${text}</td>`;
+    } else {
+      row.innerHTML = `<td class="countdown">${text}</td><td>${event.title}${iconCell}</td>`;
+    }
+    container.appendChild(row);
+  });
+}
+
+renderEvents(mainEvents, 'mainEvents', true);
+renderEvents(honorsEvents, 'honorsEvents', false);
+
+setInterval(() => {
+  document.getElementById('mainEvents').innerHTML = '';
+  document.getElementById('honorsEvents').innerHTML = '';
+  renderEvents(mainEvents, 'mainEvents', true);
+  renderEvents(honorsEvents, 'honorsEvents', false);
+}, 60000);
 </script>
-
-</body>
-</html>
