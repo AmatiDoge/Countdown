@@ -1,117 +1,123 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>לוח זמנים סמסטר ב׳</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Countdown</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: white;
-      direction: rtl;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f6f9fb;
+      margin: 0;
       padding: 20px;
     }
-    table {
-      border-collapse: collapse;
-      width: 480px;
-      background: #f0f8ff;
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
     }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: right;
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .table-wrapper {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      min-width: 340px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
     th {
-      background-color: #b0dfff;
-    }
-    .countdown {
+      background-color: #d9ecff;
+      padding: 12px;
+      text-align: center;
       font-weight: bold;
-      color: #003366;
     }
+    td {
+      padding: 12px;
+      text-align: center;
+    }
+    .event-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+    }
+    .green { background-color: #e1f9e3; }
+    .yellow { background-color: #fff9db; }
+    .red { background-color: #ffe6e6; }
+    .gray { background-color: #f0f0f0; color: #888; }
   </style>
 </head>
 <body>
 
-  <!-- טבלת קורסים -->
-  <table>
-    <thead>
-      <tr><th>אירוע</th><th>ספירה לאחור</th></tr>
-    </thead>
-    <tbody id="mainEvents"></tbody>
-  </table>
+<h2>ספירות לאחר לסמסטר</h2>
 
-  <!-- טבלת Honors -->
-  <table>
-    <thead>
-      <tr><th>Honors Event</th><th>Countdown</th></tr>
-    </thead>
-    <tbody id="honorsEvents"></tbody>
-  </table>
+<div class="container">
+  <!-- Hebrew Table -->
+  <div class="table-wrapper">
+    <table id="hebrewTable">
+      <thead>
+        <tr><th>אירוע</th><th>ספירה לאחר</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="event-label">🔢 שיטות מחקר והערכה - הגשת מטלה</td><td data-date="2025-11-27T09:00:00"></td></tr>
+        <tr><td class="event-label">🔢 בסיס ביולוגי של ההתנהגות - בוחן</td><td data-date="2025-12-02T13:45:00"></td></tr>
+        <tr><td class="event-label">🎨 תאוריות באישיות - הגשת תמלול</td><td data-date="2025-12-22T23:59:00"></td></tr>
+        <tr><td class="event-label">🎨 תאוריות באישיות - הגשה סופית</td><td data-date="2025-12-30T23:59:00"></td></tr>
+        <tr><td class="event-label">🔢 בסיס הביולוגי של ההתנהגות - בוחן</td><td data-date="2025-12-20T13:45:00"></td></tr>
+        <tr><td class="event-label">🔢 בסיס הביולוגי של ההתנהגות - בוחן</td><td data-date="2025-12-30T13:45:00"></td></tr>
+        <tr><td class="event-label">⚖️ תהליכים קוגנטיביים ב' - בוחן</td><td data-date="2025-12-07T13:45:00"></td></tr>
+        <tr><td class="event-label">⚖️ תהליכים קוגנטיביים ב' - בוחן</td><td data-date="2026-01-18T13:45:00"></td></tr>
+      </tbody>
+    </table>
+  </div>
 
-  <script>
-    const mainEvents = [
-      { name: "שיטות מחקר והערכה - הגשת מטלה", date: "2025-11-27T09:00:00" },
-      { name: "בסיס ביולוגי של ההתנהגות - בוחן", date: "2025-12-02T13:45:00" },
-      { name: "תהליכים קוגנטיביים ב׳ - בוחן", date: "2025-12-07T13:45:00" },
-      { name: "בסיס ביולוגי של ההתנהגות - בוחן", date: "2025-12-20T13:45:00" },
-      { name: "תאוריות באישיות - הגשת תמלול", date: "2025-12-22T23:55:00" },
-      { name: "בסיס ביולוגי של ההתנהגות - בוחן", date: "2025-12-30T13:45:00" },
-      { name: "תאוריות באישיות - הגשה סופית", date: "2025-12-30T23:55:00" },
-      { name: "תהליכים קוגנטיביים ב׳ - בוחן", date: "2026-01-18T13:45:00" },
-    ];
+  <!-- English Table -->
+  <div class="table-wrapper">
+    <table id="honorsTable">
+      <thead>
+        <tr><th>Honors Event</th><th>Countdown</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="event-label">1st Research Proposal Deadline 🕒</td><td data-date="2025-11-25T23:59:00"></td></tr>
+        <tr><td class="event-label">2nd Research Proposal Deadline 🕒</td><td data-date="2025-12-16T23:59:00"></td></tr>
+        <tr><td class="event-label">3rd Research Proposal Deadline 🕒</td><td data-date="2026-01-06T23:59:00"></td></tr>
+        <tr><td class="event-label">Presentation Prof. Shachar Ayal 🎓</td><td data-date="2026-01-06T13:45:00"></td></tr>
+        <tr><td class="event-label">4th Research Proposal Deadline 🕒</td><td data-date="2026-01-17T23:59:00"></td></tr>
+        <tr><td class="event-label">Prep With Saar ✍️</td><td data-date="2026-01-20T13:45:00"></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-    const honorsEvents = [
-      { name: "1st Research Propusal Deadline", date: "2025-11-25T23:55:00" },
-      { name: "2nd Research Propusal Deadling", date: "2025-12-16T23:55:00" },
-      { name: "3rd Research Propusal Deadline", date: "2026-01-06T23:55:00" },
-      { name: "Presentation Prof. Shachar Ayal", date: "2026-01-06T13:45:00" },
-      { name: "4th Research Propusal Deadline", date: "2026-01-17T23:55:00" },
-      { name: "Prep With Saar", date: "2026-01-20T13:00:00" },
-    ];
+<script>
+  function updateCountdowns() {
+    const now = new Date();
+    document.querySelectorAll('[data-date]').forEach(cell => {
+      const date = new Date(cell.dataset.date);
+      const diff = date - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-    function updateCountdowns(list, containerId) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = "";
-
-      list.forEach(event => {
-        const tr = document.createElement("tr");
-        const tdName = document.createElement("td");
-        tdName.textContent = event.name;
-        const tdCountdown = document.createElement("td");
-        tdCountdown.className = "countdown";
-        tdCountdown.id = `timer-${containerId}-${event.date}`;
-        tr.appendChild(tdName);
-        tr.appendChild(tdCountdown);
-        container.appendChild(tr);
-      });
-    }
-
-    function startCountdown(list, containerId) {
-      list.forEach(event => {
-        const countdownId = `timer-${containerId}-${event.date}`;
-        setInterval(() => {
-          const now = new Date();
-          const target = new Date(event.date);
-          const diff = target - now;
-          if (diff <= 0) {
-            document.getElementById(countdownId).textContent = "הגיע הזמן!";
-            return;
-          }
-          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-          const minutes = Math.floor((diff / (1000 * 60)) % 60);
-          document.getElementById(countdownId).textContent = `${days} ימים : ${hours} שעות : ${minutes} דקות`;
-        }, 60000);
-      });
-    }
-
-    updateCountdowns(mainEvents, "mainEvents");
-    startCountdown(mainEvents, "mainEvents");
-    updateCountdowns(honorsEvents, "honorsEvents");
-    startCountdown(honorsEvents, "honorsEvents");
-  </script>
+      let text = '';
+      if (diff < 0) {
+        text = 'עבר';
+        cell.parentElement.className = 'gray';
+      } else {
+        text = `${days} ימים`;
+        cell.parentElement.className = days > 7 ? 'green' : days > 3 ? 'yellow' : 'red';
+      }
+      cell.textContent = text;
+    });
+  }
+  updateCountdowns();
+  setInterval(updateCountdowns, 60 * 1000); // Update every minute
+</script>
 
 </body>
 </html>
