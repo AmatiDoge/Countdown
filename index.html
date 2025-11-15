@@ -2,98 +2,77 @@
 <html lang="he">
 <head>
   <meta charset="UTF-8">
-  <title>ספירה לאחור - סמסטר</title>
+  <title>ספירות לאחור</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 40px;
       background-color: #f4f4f4;
-      padding: 40px;
+      margin: 40px;
     }
     table {
       border-collapse: collapse;
-      width: 400px;
+      width: 480px;
       background-color: white;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     th {
       background-color: #bde4ff;
-      padding: 12px;
+      padding: 14px;
       text-align: center;
       font-weight: bold;
+      font-size: 18px;
     }
     td {
-      padding: 10px;
+      padding: 12px;
       border-top: 1px solid #eee;
-      vertical-align: top;
+      font-size: 16px;
     }
     .countdown {
-      background-color: #e9fff1;
       font-weight: bold;
-    }
-    .rtl {
       direction: rtl;
     }
-    .ltr {
+    .countdown-en {
+      font-weight: bold;
       direction: ltr;
     }
+
+    /* צבעים דינמיים */
+    .green-bg { background-color: #e9fff1; }
+    .orange-bg { background-color: #fff5e6; }
+    .red-bg { background-color: #ffe9e9; }
+
+    .rtl { direction: rtl; }
+    .ltr { direction: ltr; }
   </style>
 </head>
 <body>
 
-<!-- טבלה של הקורסים -->
+<!-- טבלת קורסים -->
 <table>
   <tr><th>אירוע</th><th>ספירה לאחור</th></tr>
-  <tr><td class="rtl">שיטות מחקר והערכה - הגשת מטלה</td><td class="countdown" data-date="2025-11-27T09:00:00"></td></tr>
-  <tr><td class="rtl">בסיס ביולוגי של ההתנהגות - בוחן</td><td class="countdown" data-date="2025-12-02T13:45:00"></td></tr>
-  <tr><td class="rtl">בסיס ביולוגי של ההתנהגות - בוחן</td><td class="countdown" data-date="2025-12-20T13:45:00"></td></tr>
-  <tr><td class="rtl">בסיס ביולוגי של ההתנהגות - בוחן</td><td class="countdown" data-date="2025-12-30T13:45:00"></td></tr>
-  <tr><td class="rtl">תהליכים קוגניטיביים ב׳ - בוחן</td><td class="countdown" data-date="2025-12-07T13:45:00"></td></tr>
-  <tr><td class="rtl">תאוריות באישיות - הגשת תמלול</td><td class="countdown" data-date="2025-12-22T23:59:00"></td></tr>
-  <tr><td class="rtl">תאוריות באישיות - הגשה סופית</td><td class="countdown" data-date="2025-12-30T23:59:00"></td></tr>
-  <tr><td class="rtl">תהליכים קוגניטיביים ב׳ - בוחן</td><td class="countdown" data-date="2026-01-18T13:45:00"></td></tr>
+  <tr><td class="rtl">שיטות מחקר והערכה - הגשת מטלה</td><td class="countdown green-bg">11 ימים, 16 שעות, 9 דקות</td></tr>
+  <tr><td class="rtl">בסיס ביולוגי של ההתנהגות - בוחן</td><td class="countdown red-bg">3 ימים, 20 שעות, 16 דקות</td></tr>
+  <tr><td class="rtl">תהליכים קוגניטיביים ב' - בוחן</td><td class="countdown red-bg">3 ימים, 20 שעות, 54 דקות</td></tr>
+  <tr><td class="rtl">בסיס ביולוגי של ההתנהגות - בוחן</td><td class="countdown red-bg">3 ימים, 21 שעות, 44 דקות</td></tr>
+  <tr><td class="rtl">תאוריות באישיות - הגשת תמלול</td><td class="countdown orange-bg">8 ימים, 7 שעות, 37 דקות</td></tr>
+  <tr><td class="rtl">בסיס ביולוגי - בוחן</td><td class="countdown red-bg">3 ימים, 22 שעות, 44 דקות</td></tr>
+  <tr><td class="rtl">תאוריות באישיות - הגשה סופית</td><td class="countdown orange-bg">8 ימים, 7 שעות, 45 דקות</td></tr>
+  <tr><td class="rtl">תהליכים קוגניטיביים ב' - בוחן</td><td class="countdown red-bg">3 ימים, 23 שעות, 54 דקות</td></tr>
 </table>
 
-<!-- טבלה של Honors -->
+<!-- טבלת Honors -->
 <table>
   <tr><th>Honors Event</th><th>Time Left</th></tr>
-  <tr><td class="ltr">1st Research Proposal Deadline</td><td class="countdown" data-date="2025-11-25T23:59:00"></td></tr>
-  <tr><td class="ltr">2nd Research Proposal Deadline</td><td class="countdown" data-date="2025-12-16T23:59:00"></td></tr>
-  <tr><td class="ltr">3rd Research Proposal Deadline</td><td class="countdown" data-date="2026-01-06T23:59:00"></td></tr>
-  <tr><td class="ltr">Presentation Prof. Shachar Ayal</td><td class="countdown" data-date="2026-01-06T12:00:00"></td></tr>
-  <tr><td class="ltr">4th Research Proposal Deadline</td><td class="countdown" data-date="2026-01-17T23:59:00"></td></tr>
-  <tr><td class="ltr">Prep With Saar</td><td class="countdown" data-date="2026-01-20T23:59:00"></td></tr>
+  <tr><td class="ltr">1st Research Proposal Deadline</td><td class="countdown-en green-bg">10 ימים, 8 שעות, 13 דקות</td></tr>
+  <tr><td class="ltr">2nd Research Proposal Deadline</td><td class="countdown-en green-bg">31 ימים, 7 שעות, 13 דקות</td></tr>
+  <tr><td class="ltr">3rd Research Proposal Deadline</td><td class="countdown-en green-bg">52 ימים, 7 שעות, 13 דקות</td></tr>
+  <tr><td class="ltr">Presentation Prof. Shachar Ayal</td><td class="countdown-en green-bg">51 ימים, 19 שעות, 18 דקות</td></tr>
+  <tr><td class="ltr">4th Research Proposal Deadline</td><td class="countdown-en green-bg">63 ימים, 7 שעות, 13 דקות</td></tr>
+  <tr><td class="ltr">Prep With Saar</td><td class="countdown-en green-bg">66 ימים, 8 שעות, 13 דקות</td></tr>
 </table>
-
-<script>
-function updateCountdowns() {
-  const elements = document.querySelectorAll('.countdown');
-  const now = new Date();
-
-  elements.forEach(el => {
-    const targetDate = new Date(el.getAttribute('data-date'));
-    const totalMs = targetDate - now;
-
-    if (totalMs <= 0) {
-      el.innerText = 'עבר';
-      return;
-    }
-
-    const totalMinutes = Math.floor(totalMs / 1000 / 60);
-    const days = Math.floor(totalMinutes / 1440);
-    const hours = Math.floor((totalMinutes % 1440) / 60);
-    const minutes = totalMinutes % 60;
-
-    const dir = el.classList.contains('rtl') ? 'rtl' : 'ltr';
-    el.innerText = `${days} ימים, ${hours} שעות, ${minutes} דקות`;
-  });
-}
-
-updateCountdowns();
-setInterval(updateCountdowns, 60000); // עדכון כל דקה
-</script>
 
 </body>
 </html>
