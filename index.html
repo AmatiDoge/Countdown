@@ -8,41 +8,37 @@
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
-      gap: 30px;
+      gap: 20px;
       background-color: #f4f4f4;
       margin: 40px;
       direction: rtl;
     }
-
     table {
       border-collapse: collapse;
       width: 420px;
       background-color: white;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       font-size: 16px;
+      table-layout: fixed;
     }
-
     th {
+      background-color: #bde4ff;
       padding: 12px;
       text-align: center;
       font-weight: bold;
-      background-color: #bde4ff;
     }
-
     td {
-      padding: 10px;
+      padding: 8px 10px;
+      line-height: 1.4;
       border-top: 1px solid #eee;
     }
-
     .countdown {
       font-weight: bold;
       text-align: center;
     }
-
     .green { background-color: #e9fff1; }
     .orange { background-color: #fff6e5; }
     .red { background-color: #ffe5e5; }
-
     .ltr {
       direction: ltr;
       text-align: left;
@@ -51,8 +47,8 @@
 </head>
 <body>
 
-<!-- טבלת קורסים -->
-<table id="coursesTable">
+<!-- טבלת הקורסים -->
+<table>
   <tr><th>אירוע</th><th>ספירה לאחור</th></tr>
   <tr><td>שיטות מחקר והערכה – הגשת מטלה</td><td class="countdown" data-date="2025-11-27T09:00:00"></td></tr>
   <tr><td>בסיס ביולוגי - בוחן ראשון</td><td class="countdown" data-date="2025-12-02T13:45:00"></td></tr>
@@ -65,14 +61,14 @@
 </table>
 
 <!-- טבלת Honors -->
-<table id="honorsTable">
-  <tr><th class="ltr">Time Left</th><th class="ltr">Honors Event</th></tr>
-  <tr><td class="countdown ltr" data-date="2025-11-25T23:59:00"></td><td class="ltr">1st Research Proposal Deadline</td></tr>
-  <tr><td class="countdown ltr" data-date="2025-12-09T09:00:00"></td><td class="ltr">Prep With Saar</td></tr>
-  <tr><td class="countdown ltr" data-date="2025-12-16T23:59:00"></td><td class="ltr">2nd Research Proposal Deadline</td></tr>
-  <tr><td class="countdown ltr" data-date="2026-01-06T09:00:00"></td><td class="ltr">Presentation Prof. Shachar Ayal</td></tr>
-  <tr><td class="countdown ltr" data-date="2026-01-06T23:59:00"></td><td class="ltr">3rd Research Proposal Deadline</td></tr>
-  <tr><td class="countdown ltr" data-date="2026-01-17T23:59:00"></td><td class="ltr">4th Research Proposal Deadline</td></tr>
+<table>
+  <tr><th class="ltr">Honors Event</th><th class="ltr">Time Left</th></tr>
+  <tr><td class="ltr">1st Research Proposal Deadline</td><td class="countdown ltr" data-date="2025-11-25T23:59:00"></td></tr>
+  <tr><td class="ltr">Prep With Saar</td><td class="countdown ltr" data-date="2025-12-09T09:00:00"></td></tr>
+  <tr><td class="ltr">2nd Research Proposal Deadline</td><td class="countdown ltr" data-date="2025-12-16T23:59:00"></td></tr>
+  <tr><td class="ltr">Presentation Prof. Shachar Ayal</td><td class="countdown ltr" data-date="2026-01-06T09:00:00"></td></tr>
+  <tr><td class="ltr">3rd Research Proposal Deadline</td><td class="countdown ltr" data-date="2026-01-06T23:59:00"></td></tr>
+  <tr><td class="ltr">4th Research Proposal Deadline</td><td class="countdown ltr" data-date="2026-01-17T23:59:00"></td></tr>
 </table>
 
 <script>
@@ -81,7 +77,8 @@ function updateCountdowns() {
   const countdowns = document.querySelectorAll('.countdown');
 
   countdowns.forEach(el => {
-    const target = new Date(el.getAttribute('data-date'));
+    const dateStr = el.getAttribute('data-date');
+    const target = new Date(dateStr);
     const diff = target - now;
 
     if (diff <= 0) {
@@ -92,9 +89,13 @@ function updateCountdowns() {
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const text = `${days} ${el.classList.contains("ltr") ? "days" : "ימים"}, ${hours} ${el.classList.contains("ltr") ? "hours" : "שעות"}`;
 
-    el.textContent = text;
+    if (el.classList.contains("ltr")) {
+      el.textContent = `${days} days, ${hours} hours`;
+    } else {
+      el.textContent = `${days} ימים, ${hours} שעות`;
+    }
+
     if (days <= 3) {
       el.classList.add("red");
     } else if (days <= 10) {
@@ -103,22 +104,7 @@ function updateCountdowns() {
       el.classList.add("green");
     }
   });
-
-  sortTableByCountdown('honorsTable');
 }
-
-function sortTableByCountdown(tableId) {
-  const table = document.getElementById(tableId);
-  const rows = Array.from(table.rows).slice(1);
-
-  rows.sort((a, b) => {
-    const getDate = row => new Date(row.querySelector('.countdown').getAttribute('data-date'));
-    return getDate(a) - getDate(b);
-  });
-
-  rows.forEach(row => table.appendChild(row));
-}
-
 updateCountdowns();
 setInterval(updateCountdowns, 60000);
 </script>
