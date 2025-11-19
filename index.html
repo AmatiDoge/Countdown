@@ -45,28 +45,28 @@
 </head>
 <body>
 
-<!-- טבלת הקורסים -->
-<table>
+<!-- טבלת קורסים -->
+<table id="courses-table">
   <tr><th>אירוע</th><th>ספירה לאחור</th></tr>
-  <tr><td>שיטות מחקר והערכה – הגשת מטלה</td><td class="countdown" data-date="2025-11-27T09:00:00"></td></tr>
-  <tr><td>בסיס ביולוגי - בוחן ראשון</td><td class="countdown" data-date="2025-12-02T13:45:00"></td></tr>
-  <tr><td>תהליכים קוגניטיביים ב׳ – בוחן ראשון</td><td class="countdown" data-date="2025-12-07T13:45:00"></td></tr>
-  <tr><td>בסיס ביולוגי - בוחן שני</td><td class="countdown" data-date="2025-12-20T13:45:00"></td></tr>
-  <tr><td>תאוריות באישיות – תמלול</td><td class="countdown" data-date="2025-12-22T23:59:00"></td></tr>
-  <tr><td>בסיס ביולוגי - בוחן שלישי</td><td class="countdown" data-date="2025-12-30T13:45:00"></td></tr>
-  <tr><td>תאוריות באישיות – סופית</td><td class="countdown" data-date="2025-12-30T23:59:00"></td></tr>
-  <tr><td>תהליכים קוגניטיביים ב׳ – בוחן שני</td><td class="countdown" data-date="2026-01-18T13:45:00"></td></tr>
+  <tr data-date="2025-11-27T09:00:00"><td>שיטות מחקר והערכה – הגשת מטלה</td><td class="countdown" data-date="2025-11-27T09:00:00"></td></tr>
+  <tr data-date="2025-12-02T13:45:00"><td>בסיס ביולוגי - בוחן ראשון</td><td class="countdown" data-date="2025-12-02T13:45:00"></td></tr>
+  <tr data-date="2025-12-07T13:45:00"><td>תהליכים קוגניטיביים ב׳ – בוחן ראשון</td><td class="countdown" data-date="2025-12-07T13:45:00"></td></tr>
+  <tr data-date="2025-12-20T13:45:00"><td>בסיס ביולוגי - בוחן שני</td><td class="countdown" data-date="2025-12-20T13:45:00"></td></tr>
+  <tr data-date="2025-12-22T23:59:00"><td>תאוריות באישיות – תמלול</td><td class="countdown" data-date="2025-12-22T23:59:00"></td></tr>
+  <tr data-date="2025-12-30T13:45:00"><td>בסיס ביולוגי - בוחן שלישי</td><td class="countdown" data-date="2025-12-30T13:45:00"></td></tr>
+  <tr data-date="2025-12-30T23:59:00"><td>תאוריות באישיות – סופית</td><td class="countdown" data-date="2025-12-30T23:59:00"></td></tr>
+  <tr data-date="2026-01-18T13:45:00"><td>תהליכים קוגניטיביים ב׳ – בוחן שני</td><td class="countdown" data-date="2026-01-18T13:45:00"></td></tr>
 </table>
 
 <!-- טבלת Honors -->
-<table>
+<table id="honors-table">
   <tr><th class="ltr">Honors Event</th><th class="ltr">Time Left</th></tr>
-  <tr><td class="ltr">1st Research Proposal Deadline</td><td class="countdown ltr" data-date="2025-11-25T23:59:00"></td></tr>
-  <tr><td class="ltr">2nd Research Proposal Deadline</td><td class="countdown ltr" data-date="2025-12-16T23:59:00"></td></tr>
-  <tr><td class="ltr">3rd Research Proposal Deadline</td><td class="countdown ltr" data-date="2026-01-06T23:59:00"></td></tr>
-  <tr><td class="ltr">Presentation Prof. Shachar Ayal</td><td class="countdown ltr" data-date="2026-01-06T09:00:00"></td></tr>
-  <tr><td class="ltr">4th Research Proposal Deadline</td><td class="countdown ltr" data-date="2026-01-17T23:59:00"></td></tr>
-  <tr><td class="ltr">Prep With Saar</td><td class="countdown ltr" data-date="2026-01-20T09:00:00"></td></tr>
+  <tr data-date="2025-11-25T23:59:00"><td class="ltr">1st Research Proposal Deadline</td><td class="countdown ltr" data-date="2025-11-25T23:59:00"></td></tr>
+  <tr data-date="2025-12-16T23:59:00"><td class="ltr">2nd Research Proposal Deadline</td><td class="countdown ltr" data-date="2025-12-16T23:59:00"></td></tr>
+  <tr data-date="2026-01-06T23:59:00"><td class="ltr">3rd Research Proposal Deadline</td><td class="countdown ltr" data-date="2026-01-06T23:59:00"></td></tr>
+  <tr data-date="2026-01-06T09:00:00"><td class="ltr">Presentation Prof. Shachar Ayal</td><td class="countdown ltr" data-date="2026-01-06T09:00:00"></td></tr>
+  <tr data-date="2026-01-17T23:59:00"><td class="ltr">4th Research Proposal Deadline</td><td class="countdown ltr" data-date="2026-01-17T23:59:00"></td></tr>
+  <tr data-date="2025-12-09T09:00:00"><td class="ltr">Prep With Saar</td><td class="countdown ltr" data-date="2025-12-09T09:00:00"></td></tr>
 </table>
 
 <script>
@@ -79,30 +79,45 @@ function updateCountdowns() {
     const target = new Date(dateStr);
     const diff = target - now;
 
+    const row = el.closest('tr');
+
     if (diff <= 0) {
       el.textContent = el.classList.contains("ltr") ? "Passed!" : "עבר!";
-      el.classList.add("red");
+      row.classList.add("red");
       return;
     }
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
 
     if (el.classList.contains("ltr")) {
-      el.textContent = `${days} days, ${hours} hours`;
+      el.textContent = `${days} days, ${hours} hours, ${minutes} minutes`;
     } else {
-      el.textContent = `${days} ימים, ${hours} שעות`;
+      el.textContent = `${days} ימים, ${hours} שעות, ${minutes} דקות`;
     }
 
+    // צבע רקע
     if (days <= 3) {
-      el.classList.add("red");
+      row.classList.add("red");
     } else if (days <= 10) {
-      el.classList.add("orange");
+      row.classList.add("orange");
     } else {
-      el.classList.add("green");
+      row.classList.add("green");
     }
   });
 }
+
+function sortTableByDate(tableId) {
+  const table = document.getElementById(tableId);
+  const rows = Array.from(table.querySelectorAll("tr"))
+                    .slice(1) // skip header row
+                    .sort((a, b) => new Date(a.getAttribute("data-date")) - new Date(b.getAttribute("data-date")));
+  rows.forEach(row => table.appendChild(row));
+}
+
+sortTableByDate("courses-table");
+sortTableByDate("honors-table");
 updateCountdowns();
 setInterval(updateCountdowns, 60000);
 </script>
