@@ -78,7 +78,6 @@ function updateCountdowns() {
     const dateStr = el.getAttribute('data-date');
     const target = new Date(dateStr);
     const diff = target - now;
-
     const row = el.closest('tr');
 
     if (diff <= 0) {
@@ -89,15 +88,13 @@ function updateCountdowns() {
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
 
     if (el.classList.contains("ltr")) {
-      el.textContent = `${days} days, ${hours} hours, ${minutes} minutes`;
+      el.textContent = `${days} days, ${hours} hours`;
     } else {
-      el.textContent = `${days} ימים, ${hours} שעות, ${minutes} דקות`;
+      el.textContent = `${days} ימים, ${hours} שעות`;
     }
 
-    // צבע רקע
     if (days <= 3) {
       row.classList.add("red");
     } else if (days <= 10) {
@@ -110,9 +107,8 @@ function updateCountdowns() {
 
 function sortTableByDate(tableId) {
   const table = document.getElementById(tableId);
-  const rows = Array.from(table.querySelectorAll("tr"))
-                    .slice(1) // skip header row
-                    .sort((a, b) => new Date(a.getAttribute("data-date")) - new Date(b.getAttribute("data-date")));
+  const rows = Array.from(table.querySelectorAll("tr")).slice(1);
+  rows.sort((a, b) => new Date(a.getAttribute("data-date")) - new Date(b.getAttribute("data-date")));
   rows.forEach(row => table.appendChild(row));
 }
 
