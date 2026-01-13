@@ -1,3 +1,8 @@
+הוספתי את "הגשת הצעת המחקר" לטבלת המטלות. מכיוון שהתאריך הוא ה-25 בינואר, המשימה הזו תופיע בראש הטבלה (אחרי המשימות שעברו) כי היא הדבר הקרוב ביותר בלו"ז המטלות שלך.
+
+הנה הקוד המלא והמעודכן:
+
+```html
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -9,7 +14,7 @@
       --bg-color: #f0f2f5;
       --card-bg: #ffffff;
       --primary: #3498db;
-      --exam-color: #9b59b6; /* סגול בולט לבחינות */
+      --exam-color: #9b59b6; 
       --honors-color: #2980b9;
       --red: #ff7675;
       --orange: #fab1a0;
@@ -166,6 +171,7 @@
         <tr data-date="2026-01-06T23:59:00"><td>תאוריות באישיות – סופית</td><td class="countdown"></td></tr>
         <tr data-date="2026-01-11T13:45:00"><td>תהליכים קוגניטיביים ב׳ – בוחן שני</td><td class="countdown"></td></tr>
         <tr data-date="2026-01-20T13:45:00"><td>בסיס ביולוגי - בוחן שלישי</td><td class="countdown"></td></tr>
+        <tr data-date="2026-01-25T10:00:00"><td>שיטות מחקר – הגשת הצעת מחקר</td><td class="countdown"></td></tr>
       </tbody>
     </table>
   </div>
@@ -239,7 +245,6 @@
         const dateB = new Date(b.getAttribute('data-date'));
         const now = new Date();
         
-        // משימות שעברו תמיד יהיו בסוף
         if (dateA < now && dateB > now) return 1;
         if (dateA > now && dateB < now) return -1;
         
@@ -261,3 +266,5 @@
 
 </body>
 </html>
+
+```
