@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -184,7 +183,7 @@
         <tr class="ltr" data-date="2025-12-16T23:59:00"><td>2nd Research Proposal</td><td class="countdown"></td></tr>
         <tr class="ltr" data-date="2026-01-06T09:00:00"><td>Presentation Shachar Ayal</td><td class="countdown"></td></tr>
         <tr class="ltr" data-date="2026-01-06T23:59:00"><td>3rd Research Proposal</td><td class="countdown"></td></tr>
-        <tr class="ltr" data-date="2026-01-17T23:59:00"><td>4th Research Proposal</td><td class="countdown"></td></tr>
+        <tr class="ltr" data-date="2026-01-24T23:59:00"><td>4th Research Proposal</td><td class="countdown"></td></tr>
       </tbody>
     </table>
   </div>
@@ -193,74 +192,3 @@
 
 <script>
   let hidePassed = false;
-
-  function updateCountdowns() {
-    const now = new Date();
-    const rows = document.querySelectorAll('tbody tr');
-
-    rows.forEach(row => {
-      const dateStr = row.getAttribute('data-date');
-      const target = new Date(dateStr);
-      const diff = target - now;
-      const countdownEl = row.querySelector('.countdown');
-      const isLtr = row.classList.contains('ltr');
-
-      countdownEl.className = 'countdown';
-      if (isLtr) countdownEl.classList.add('ltr');
-
-      if (diff <= 0) {
-        countdownEl.textContent = isLtr ? "Passed" : "עבר";
-        countdownEl.classList.add('status-passed');
-        row.style.display = hidePassed ? 'none' : 'table-row';
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-
-      countdownEl.textContent = isLtr ? `${days}d, ${hours}h` : `${days} ימים, ${hours} ש׳`;
-
-      if (days <= 3) countdownEl.classList.add('status-red');
-      else if (days <= 10) countdownEl.classList.add('status-orange');
-      else countdownEl.classList.add('status-green');
-      
-      row.style.display = 'table-row';
-    });
-
-    sortTables();
-  }
-
-  function sortTables() {
-    const tables = document.querySelectorAll('table');
-    tables.forEach(table => {
-      const tbody = table.tBodies[0];
-      const rows = Array.from(tbody.rows);
-
-      rows.sort((a, b) => {
-        const dateA = new Date(a.getAttribute('data-date'));
-        const dateB = new Date(b.getAttribute('data-date'));
-        const now = new Date();
-        
-        if (dateA < now && dateB > now) return 1;
-        if (dateA > now && dateB < now) return -1;
-        
-        return dateA - dateB;
-      });
-
-      rows.forEach(row => tbody.appendChild(row));
-    });
-  }
-
-  function togglePassed() {
-    hidePassed = !hidePassed;
-    updateCountdowns();
-  }
-
-  updateCountdowns();
-  setInterval(updateCountdowns, 60000);
-</script>
-
-</body>
-</html>
-
-```
