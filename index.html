@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard בחינות ודד-ליינים</title>
+  <title>Dashboard אקדמי 2026</title>
   <style>
     :root {
       --bg-color: #f0f2f5;
@@ -16,134 +16,42 @@
       --green: #55efc4;
       --text: #2d3436;
     }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text);
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg-color); color: var(--text); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
     h1 { margin-bottom: 10px; color: #2c3e50; }
-    .subtitle { margin-bottom: 30px; color: #636e72; font-size: 1.1rem; }
-
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      width: 100%;
-      max-width: 1400px;
-    }
-
-    .table-container {
-      background: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-      overflow: hidden;
-      flex: 1;
-      min-width: 320px;
-      max-width: 450px;
-      margin-bottom: 20px;
-    }
-
-    .table-header {
-      color: white;
-      padding: 15px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      text-align: center;
-    }
-
+    .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%; max-width: 1400px; }
+    .table-container { background: var(--card-bg); border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); overflow: hidden; flex: 1; min-width: 320px; max-width: 450px; }
+    .table-header { color: white; padding: 15px; font-size: 1.2rem; font-weight: bold; text-align: center; }
     .header-courses { background: var(--primary); }
     .header-exams { background: var(--exam-color); }
     .header-honors { background: var(--honors-color); }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      table-layout: fixed;
-    }
-
-    th {
-      background-color: #f8f9fa;
-      padding: 12px;
-      text-align: right;
-      font-size: 0.85rem;
-      color: #636e72;
-      border-bottom: 2px solid #edf2f7;
-    }
-
-    td {
-      padding: 12px 15px;
-      border-bottom: 1px solid #edf2f7;
-      word-wrap: break-word;
-      font-size: 0.95rem;
-    }
-
-    tr:hover { background-color: #fdfdfd; }
-
-    .countdown {
-      font-weight: 700;
-      text-align: center;
-      border-radius: 6px;
-      padding: 4px 8px;
-      display: block;
-    }
-
+    table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+    th { background-color: #f8f9fa; padding: 12px; text-align: right; font-size: 0.85rem; color: #636e72; border-bottom: 2px solid #edf2f7; }
+    td { padding: 12px 15px; border-bottom: 1px solid #edf2f7; word-wrap: break-word; font-size: 0.95rem; }
+    .countdown { font-weight: 700; text-align: center; border-radius: 6px; padding: 4px 8px; display: block; }
     .status-red { color: #d63031; background: #fff5f5; }
     .status-orange { color: #e67e22; background: #fffaf0; }
     .status-green { color: #27ae60; background: #f0fff4; }
     .status-passed { color: #636e72; background: #f1f2f6; opacity: 0.6; }
-
     .ltr { direction: ltr; text-align: left; }
-    
     .controls { margin-bottom: 20px; }
-
-    button {
-      padding: 10px 20px;
-      background: #2c3e50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.2s;
-    }
-
-    button:hover { background: #34495e; transform: translateY(-1px); }
-
-    @media (max-width: 768px) {
-      .container { flex-direction: column; align-items: center; }
-      .table-container { width: 100%; max-width: none; }
-    }
+    button { padding: 10px 20px; background: #2c3e50; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    @media (max-width: 768px) { .container { flex-direction: column; } .table-container { width: 100%; } }
   </style>
 </head>
 <body>
 
 <h1>הלו״ז האקדמי שלי</h1>
-<div class="subtitle">מעקב דד-ליינים ובחינות - סמסטר א' 2026</div>
-
-<div class="controls">
-  <button onclick="togglePassed()">הצג/הסתר אירועים שעברו</button>
-</div>
+<div class="controls"><button onclick="togglePassed()">הצג/הסתר אירועים שעברו</button></div>
 
 <div class="container">
-  
   <div class="table-container">
     <div class="table-header header-exams">בחינות (מועד א')</div>
     <table>
-      <thead>
-        <tr><th>קורס</th><th>זמן נותר</th></tr>
-      </thead>
+      <thead><tr><th>קורס</th><th>זמן נותר</th></tr></thead>
       <tbody>
-        <tr data-date="2026-01-27T15:45:00"><td>תהליכים קוגניטיביים ב' – קשב ושפה</td><td class="countdown"></td></tr>
+        <tr data-date="2026-01-27T15:45:00"><td>תהליכים קוגניטיביים ב'</td><td class="countdown"></td></tr>
         <tr data-date="2026-02-02T15:45:00"><td>סטטיסטיקה רב-משתנית</td><td class="countdown"></td></tr>
-        <tr data-date="2026-02-08T09:45:00"><td>הבסיס הביולוגי של ההתנהגות</td><td class="countdown"></td></tr>
+        <tr data-date="2026-02-08T09:45:00"><td>הבסיס הביולוגי</td><td class="countdown"></td></tr>
         <tr data-date="2026-02-22T09:45:00"><td>תאוריות באישיות</td><td class="countdown"></td></tr>
         <tr data-date="2026-02-27T09:00:00"><td>שיטות מחקר והערכה</td><td class="countdown"></td></tr>
       </tbody>
@@ -153,19 +61,10 @@
   <div class="table-container">
     <div class="table-header header-courses">מטלות ובחנים</div>
     <table>
-      <thead>
-        <tr><th>אירוע</th><th>זמן נותר</th></tr>
-      </thead>
+      <thead><tr><th>אירוע</th><th>זמן נותר</th></tr></thead>
       <tbody>
-        <tr data-date="2025-11-27T09:00:00"><td>שיטות מחקר – הגשת מטלה</td><td class="countdown"></td></tr>
-        <tr data-date="2025-12-02T13:45:00"><td>בסיס ביולוגי - בוחן ראשון</td><td class="countdown"></td></tr>
-        <tr data-date="2025-12-07T13:45:00"><td>תהליכים קוגניטיביים ב׳ – בוחן ראשון</td><td class="countdown"></td></tr>
-        <tr data-date="2025-12-29T23:59:00"><td>תאוריות באישיות – תמלול</td><td class="countdown"></td></tr>
-        <tr data-date="2025-12-30T13:45:00"><td>בסיס ביולוגי - בוחן שני</td><td class="countdown"></td></tr>
-        <tr data-date="2025-12-31T10:00:00"><td>שיטות מחקר – סטטוס קבוצה</td><td class="countdown"></td></tr>
-        <tr data-date="2026-01-06T23:59:00"><td>תאוריות באישיות – סופית</td><td class="countdown"></td></tr>
-        <tr data-date="2026-01-11T13:45:00"><td>תהליכים קוגניטיביים ב׳ – בוחן שני</td><td class="countdown"></td></tr>
-        <tr data-date="2026-01-20T13:45:00"><td>בסיס ביולוגי - בוחן שלישי</td><td class="countdown"></td></tr>
+        <tr data-date="2025-12-30T13:45:00"><td>בסיס ביולוגי - בוחן 2</td><td class="countdown"></td></tr>
+        <tr data-date="2026-01-20T13:45:00"><td>בסיס ביולוגי - בוחן 3</td><td class="countdown"></td></tr>
         <tr data-date="2026-01-25T23:59:00"><td>שיטות מחקר – הצעת מחקר</td><td class="countdown"></td></tr>
       </tbody>
     </table>
@@ -174,21 +73,41 @@
   <div class="table-container">
     <div class="table-header header-honors ltr">Honors Track</div>
     <table>
-      <thead>
-        <tr><th class="ltr">Event</th><th class="ltr">Time Left</th></tr>
-      </thead>
+      <thead><tr><th class="ltr">Event</th><th class="ltr">Time Left</th></tr></thead>
       <tbody>
-        <tr class="ltr" data-date="2025-11-25T23:59:00"><td>1st Research Proposal</td><td class="countdown"></td></tr>
-        <tr class="ltr" data-date="2025-12-09T09:00:00"><td>Prep With Saar</td><td class="countdown"></td></tr>
-        <tr class="ltr" data-date="2025-12-16T23:59:00"><td>2nd Research Proposal</td><td class="countdown"></td></tr>
         <tr class="ltr" data-date="2026-01-06T09:00:00"><td>Presentation Shachar Ayal</td><td class="countdown"></td></tr>
-        <tr class="ltr" data-date="2026-01-06T23:59:00"><td>3rd Research Proposal</td><td class="countdown"></td></tr>
         <tr class="ltr" data-date="2026-01-24T23:59:00"><td>4th Research Proposal</td><td class="countdown"></td></tr>
       </tbody>
     </table>
   </div>
-
 </div>
 
 <script>
   let hidePassed = false;
+  function updateCountdowns() {
+    const now = new Date();
+    document.querySelectorAll('tbody tr').forEach(row => {
+      const target = new Date(row.getAttribute('data-date'));
+      const diff = target - now;
+      const el = row.querySelector('.countdown');
+      const isLtr = row.classList.contains('ltr');
+
+      if (diff <= 0) {
+        el.textContent = isLtr ? "Passed" : "עבר";
+        el.className = 'countdown status-passed';
+        row.style.display = hidePassed ? 'none' : 'table-row';
+      } else {
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        el.textContent = isLtr ? `${d}d, ${h}h` : `${d} ימים, ${h} ש׳`;
+        el.className = 'countdown ' + (d <= 3 ? 'status-red' : d <= 10 ? 'status-orange' : 'status-green');
+        row.style.display = 'table-row';
+      }
+    });
+  }
+  function togglePassed() { hidePassed = !hidePassed; updateCountdowns(); }
+  setInterval(updateCountdowns, 60000);
+  updateCountdowns();
+</script>
+</body>
+</html>
