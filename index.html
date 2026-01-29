@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>לוח דד-ליינים אקדמי מעודכן</title>
+  <title>לוח מבחנים ודד-ליינים 2026</title>
   <style>
     :root {
-      --bg-color: #f0f2f5;
-      --card-bg: #ffffff;
+      --bg: #f4f7f6;
+      --card: #ffffff;
       --primary: #3498db;
-      --exam-color: #9b59b6;
-      --red: #ff7675;
-      --orange: #fab1a0;
-      --green: #55efc4;
-      --text: #2d3436;
+      --accent: #9b59b6;
+      --passed: #bdc3c7;
+      --red: #e74c3c;
+      --orange: #f39c12;
+      --green: #2ecc71;
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
       margin: 0;
       padding: 20px;
       display: flex;
@@ -27,133 +26,104 @@
       align-items: center;
     }
 
-    h1 { margin-bottom: 10px; color: #2c3e50; }
-    .subtitle { margin-bottom: 30px; color: #636e72; font-size: 1.1rem; }
+    h1 { color: #2c3e50; margin-bottom: 20px; }
 
     .container {
       display: flex;
       flex-wrap: wrap;
+      gap: 20px;
       justify-content: center;
-      gap: 25px;
       width: 100%;
-      max-width: 1100px;
+      max-width: 1000px;
     }
 
-    .table-container {
-      background: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-      overflow: hidden;
+    .box {
+      background: var(--card);
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       flex: 1;
-      min-width: 350px;
-      margin-bottom: 20px;
+      min-width: 320px;
+      overflow: hidden;
     }
 
-    .table-header {
-      color: white;
+    .box-header {
       padding: 15px;
-      font-size: 1.2rem;
+      color: white;
       font-weight: bold;
       text-align: center;
+      font-size: 1.2rem;
     }
 
-    .header-courses { background: var(--primary); }
-    .header-exams { background: var(--exam-color); }
+    .blue { background-color: var(--primary); }
+    .purple { background-color: var(--accent); }
 
     table {
-      border-collapse: collapse;
       width: 100%;
-      table-layout: fixed;
+      border-collapse: collapse;
     }
 
-    th {
-      background-color: #f8f9fa;
+    td, th {
       padding: 12px;
       text-align: right;
-      font-size: 0.85rem;
-      color: #636e72;
-      border-bottom: 2px solid #edf2f7;
-    }
-
-    td {
-      padding: 12px 15px;
-      border-bottom: 1px solid #edf2f7;
-      word-wrap: break-word;
-      font-size: 0.95rem;
+      border-bottom: 1px solid #eee;
     }
 
     .countdown {
-      font-weight: 700;
-      text-align: center;
-      border-radius: 6px;
+      font-weight: bold;
       padding: 4px 8px;
-      display: block;
+      border-radius: 4px;
+      display: inline-block;
+      min-width: 100px;
+      text-align: center;
     }
 
-    .status-red { color: #d63031; background: #fff5f5; }
-    .status-orange { color: #e67e22; background: #fffaf0; }
-    .status-green { color: #27ae60; background: #f0fff4; }
-    .status-passed { color: #636e72; background: #f1f2f6; opacity: 0.6; }
-
-    .controls { margin-bottom: 20px; }
+    /* סטטוסים */
+    .bg-red { background-color: #ffeaea; color: var(--red); }
+    .bg-orange { background-color: #fff4e5; color: var(--orange); }
+    .bg-green { background-color: #eafff0; color: var(--green); }
+    .bg-passed { background-color: #f0f0f0; color: var(--passed); text-decoration: line-through; }
 
     button {
+      margin-bottom: 20px;
       padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
       background: #2c3e50;
       color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
       font-weight: bold;
-      transition: 0.2s;
-    }
-
-    button:hover { background: #34495e; }
-
-    @media (max-width: 768px) {
-      .container { flex-direction: column; align-items: center; }
-      .table-container { width: 100%; }
     }
   </style>
 </head>
 <body>
 
 <h1>הלו״ז האקדמי שלי</h1>
-<div class="subtitle">מעקב דד-ליינים ובחינות - מעודכן לינואר/פברואר 2026</div>
 
-<div class="controls">
-  <button onclick="togglePassed()">הצג/הסתר אירועים שעברו</button>
-</div>
+<button onclick="togglePassed()">הצג/הסתר אירועים שעברו</button>
 
 <div class="container">
   
-  <div class="table-container">
-    <div class="table-header header-exams">בחינות (מועד א' ו-ב')</div>
+  <div class="box">
+    <div class="box-header purple">בחינות (מועדי א' ו-ב')</div>
     <table>
-      <thead>
-        <tr><th>קורס</th><th>זמן נותר</th></tr>
-      </thead>
-      <tbody>
-        <tr data-date="2026-01-27T15:45:00"><td>קוגניטיבית ב' – קשב ושפה (מועד א')</td><td class="countdown"></td></tr>
-        <tr data-date="2026-02-08T09:45:00"><td>הבסיס הביולוגי של ההתנהגות</td><td class="countdown"></td></tr>
-        <tr data-date="2026-02-22T09:45:00"><td>תאוריות באישיות</td><td class="countdown"></td></tr>
-        <tr data-date="2026-02-27T09:00:00"><td>שיטות מחקר והערכה</td><td class="countdown"></td></tr>
-        <tr data-date="2026-03-04T09:45:00"><td>קוגניטיבית ב' – קשב ושפה (מועד ב')</td><td class="countdown"></td></tr>
-        <tr data-date="2026-03-09T09:45:00"><td>סטטיסטיקה רב-משתנית (מועד ב')</td><td class="countdown"></td></tr>
+      <tbody id="exams-body">
+        <tr data-date="2026-01-27T15:45:00"><td>קוגניטיבית ב' (מועד א')</td><td class="timer"></td></tr>
+        <tr data-date="2026-02-08T09:45:00"><td>הבסיס הביולוגי</td><td class="timer"></td></tr>
+        <tr data-date="2026-02-22T09:45:00"><td>תאוריות באישיות</td><td class="timer"></td></tr>
+        <tr data-date="2026-02-27T09:00:00"><td>שיטות מחקר והערכה</td><td class="timer"></td></tr>
+        <tr data-date="2026-03-04T09:45:00"><td>קוגניטיבית ב' (מועד ב')</td><td class="timer"></td></tr>
+        <tr data-date="2026-03-09T09:45:00"><td>סטטיסטיקה רב-משתנית (מועד ב')</td><td class="timer"></td></tr>
       </tbody>
     </table>
   </div>
 
-  <div class="table-container">
-    <div class="table-header header-courses">מטלות ובחנים</div>
+  <div class="box">
+    <div class="box-header blue">מטלות ובחנים</div>
     <table>
-      <thead>
-        <tr><th>אירוע</th><th>זמן נותר</th></tr>
-      </thead>
-      <tbody>
-        <tr data-date="2026-01-20T13:45:00"><td>בסיס ביולוגי - בוחן שלישי</td><td class="countdown"></td></tr>
-        <tr data-date="2026-02-01T23:59:00"><td>שיטות מחקר – הצעת מחקר</td><td class="countdown"></td></tr>
-        <tr data-date="2025-12-31T10:00:00"><td>שיטות מחקר – סטטוס קבוצה</td><td class="countdown"></td></tr>
+      <tbody id="tasks-body">
+        <tr data-date="2026-01-20T13:45:00"><td>בסיס ביולוגי - בוחן 3</td><td class="timer"></td></tr>
+        <tr data-date="2026-02-01T23:59:00"><td>שיטות מחקר – הצעת מחקר</td><td class="timer"></td></tr>
+        <tr data-date="2025-12-31T10:00:00"><td>שיטות מחקר – סטטוס קבוצה</td><td class="timer"></td></tr>
       </tbody>
     </table>
   </div>
@@ -161,57 +131,41 @@
 </div>
 
 <script>
-  let hidePassed = false;
+  let showPassed = true;
 
-  function updateCountdowns() {
+  function update() {
     const now = new Date();
-    const rows = document.querySelectorAll('tbody tr');
+    const rows = document.querySelectorAll('tr[data-date]');
 
     rows.forEach(row => {
-      const dateStr = row.getAttribute('data-date');
-      const target = new Date(dateStr);
+      const target = new Date(row.getAttribute('data-date'));
       const diff = target - now;
-      const countdownEl = row.querySelector('.countdown');
+      const display = row.querySelector('.timer');
 
       if (diff <= 0) {
-        countdownEl.textContent = "עבר";
-        countdownEl.className = 'countdown status-passed';
-        row.style.display = hidePassed ? 'none' : 'table-row';
-        return;
+        display.textContent = "עבר";
+        display.className = "timer countdown bg-passed";
+        row.style.display = showPassed ? "table-row" : "none";
+      } else {
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        display.textContent = `${days} ימים, ${hours} ש׳`;
+        
+        row.style.display = "table-row";
+        if (days <= 3) display.className = "timer countdown bg-red";
+        else if (days <= 10) display.className = "timer countdown bg-orange";
+        else display.className = "timer countdown bg-green";
       }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-
-      countdownEl.textContent = `${days} ימים, ${hours} ש׳`;
-
-      if (days <= 3) countdownEl.className = 'countdown status-red';
-      else if (days <= 10) countdownEl.className = 'countdown status-orange';
-      else countdownEl.className = 'countdown status-green';
-      
-      row.style.display = 'table-row';
-    });
-
-    sortTables();
-  }
-
-  function sortTables() {
-    const tables = document.querySelectorAll('table');
-    tables.forEach(table => {
-      const tbody = table.tBodies[0];
-      const rows = Array.from(tbody.rows);
-      rows.sort((a, b) => new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date')));
-      rows.forEach(row => tbody.appendChild(row));
     });
   }
 
   function togglePassed() {
-    hidePassed = !hidePassed;
-    updateCountdowns();
+    showPassed = !showPassed;
+    update();
   }
 
-  updateCountdowns();
-  setInterval(updateCountdowns, 60000);
+  setInterval(update, 1000);
+  update();
 </script>
 
 </body>
