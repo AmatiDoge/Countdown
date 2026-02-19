@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>לוח בחינות 2026</title>
+  <title>Dashboard אקדמי חכם 2026</title>
   <style>
     :root {
       --bg: #f4f7f6;
       --card: #ffffff;
-      --accent: #9b59b6;
+      --exam-accent: #9b59b6;
+      --task-accent: #3498db;
       --passed: #bdc3c7;
       --red: #e74c3c;
       --orange: #f39c12;
@@ -28,8 +29,12 @@
     h1 { color: #2c3e50; margin-bottom: 20px; text-align: center; }
 
     .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
       width: 100%;
-      max-width: 600px; /* צמצום הרוחב לטבלה אחת מרכזית */
+      max-width: 1100px;
     }
 
     .box {
@@ -37,6 +42,9 @@
       border-radius: 12px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       overflow: hidden;
+      flex: 1;
+      min-width: 320px;
+      max-width: 500px;
     }
 
     .box-header {
@@ -45,72 +53,84 @@
       font-weight: bold;
       text-align: center;
       font-size: 1.4rem;
-      background-color: var(--accent);
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    .header-exams { background-color: var(--exam-accent); }
+    .header-tasks { background-color: var(--task-accent); }
 
-    td {
-      padding: 15px;
-      text-align: right;
-      border-bottom: 1px solid #eee;
-      font-size: 1.1rem;
-    }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 15px; text-align: right; border-bottom: 1px solid #eee; font-size: 1.1rem; }
 
+    /* טיימר מבחנים */
     .timer {
       font-weight: bold;
       padding: 6px 12px;
       border-radius: 6px;
       display: inline-block;
-      min-width: 120px;
+      min-width: 110px;
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
-
-    /* עיצוב סטטוסים */
     .bg-red { background-color: #ffeaea; color: var(--red); border: 1px solid var(--red); }
     .bg-orange { background-color: #fff4e5; color: var(--orange); border: 1px solid var(--orange); }
     .bg-green { background-color: #eafff0; color: var(--green); border: 1px solid var(--green); }
     .bg-passed { background-color: #f8f9fa; color: var(--passed); text-decoration: line-through; opacity: 0.7; }
 
-    .controls {
-      margin-bottom: 20px;
+    /* ממשק משימות */
+    .task-input-area {
+      padding: 15px;
+      background: #f9f9f9;
+      display: flex;
+      gap: 10px;
+      border-bottom: 2px solid #eee;
     }
-
-    button {
-      padding: 12px 24px;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-      background: #2c3e50;
+    #taskInput {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .add-btn {
+      padding: 10px 15px;
+      background: var(--task-accent);
       color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
       font-weight: bold;
-      transition: background 0.3s;
     }
-
-    button:hover { background: #34495e; }
-
-    @media (max-width: 480px) {
-      body { padding: 10px; }
-      td { padding: 10px; font-size: 0.95rem; }
-      .timer { min-width: 90px; font-size: 0.85rem; }
+    .task-row { transition: background 0.2s; display: flex; align-items: center; width: 100%; }
+    .task-text { flex: 1; cursor: pointer; padding: 10px 0; }
+    .delete-btn {
+      color: var(--red);
+      cursor: pointer;
+      font-weight: bold;
+      padding: 5px 10px;
+      font-size: 1.2rem;
+      border: none;
+      background: none;
     }
+    .done .task-text { text-decoration: line-through; color: #bdc3c7; }
+
+    .controls { margin-bottom: 20px; }
+    .main-btn { padding: 12px 24px; cursor: pointer; border: none; border-radius: 8px; background: #2c3e50; color: white; font-weight: bold; }
+
+    @media (max-width: 768px) { .container { flex-direction: column; } .box { max-width: 100%; } }
   </style>
 </head>
 <body>
 
-<h1>לוח בחינות מעודכן</h1>
+<h1>הלו״ז האקדמי שלי</h1>
 
 <div class="controls">
-  <button onclick="togglePassed()">הצג/הסתר מבחנים שעברו</button>
+  <button class="main-btn" onclick="togglePassed()">הצג/הסתר מבחנים שעברו</button>
 </div>
 
 <div class="container">
+  
   <div class="box">
-    <div class="box-header">מועדי א' ו-ב' - סמסטר א'</div>
+    <div class="box-header header-exams">בחינות (מועדי א' ו-ב')</div>
     <table>
       <tbody id="exams-list">
         <tr data-date="2026-01-27T15:45:00"><td>קוגניטיבית ב' (מועד א')</td><td class="timer"></td></tr>
@@ -122,16 +142,29 @@
       </tbody>
     </table>
   </div>
+
+  <div class="box">
+    <div class="box-header header-tasks">משימות כלליות</div>
+    <div class="task-input-area">
+      <input type="text" id="taskInput" placeholder="הקלד משימה חדשה...">
+      <button class="add-btn" onclick="addTask()">הוסף</button>
+    </div>
+    <table id="tasks-table">
+      <tbody id="task-list">
+        </tbody>
+    </table>
+  </div>
+
 </div>
 
 <script>
   let showPassed = true;
+  let tasks = JSON.parse(localStorage.getItem('academicTasks')) || [];
 
-  function update() {
+  // פונקציות בחינות
+  function updateExams() {
     const now = new Date();
-    const rows = document.querySelectorAll('tr[data-date]');
-
-    rows.forEach(row => {
+    document.querySelectorAll('#exams-list tr').forEach(row => {
       const target = new Date(row.getAttribute('data-date'));
       const diff = target - now;
       const display = row.querySelector('.timer');
@@ -143,10 +176,8 @@
       } else {
         const days = Math.floor(diff / 86400000);
         const hours = Math.floor((diff % 86400000) / 3600000);
-        
         display.textContent = `${days} ימים, ${hours} ש׳`;
         row.style.display = "table-row";
-
         if (days <= 3) display.className = "timer bg-red";
         else if (days <= 10) display.className = "timer bg-orange";
         else display.className = "timer bg-green";
@@ -154,14 +185,55 @@
     });
   }
 
-  function togglePassed() {
-    showPassed = !showPassed;
-    update();
+  // פונקציות משימות
+  function renderTasks() {
+    const list = document.getElementById('task-list');
+    list.innerHTML = '';
+    tasks.forEach((task, index) => {
+      const tr = document.createElement('tr');
+      tr.className = `task-row ${task.done ? 'done' : ''}`;
+      tr.innerHTML = `
+        <td style="display: flex; align-items: center; justify-content: space-between;">
+          <span class="task-text" onclick="toggleTaskStatus(${index})">${task.text}</span>
+          <button class="delete-btn" onclick="deleteTask(${index})">×</button>
+        </td>
+      `;
+      list.appendChild(tr);
+    });
+    localStorage.setItem('academicTasks', JSON.stringify(tasks));
   }
 
-  // עדכון כל דקה
-  setInterval(update, 60000);
-  update();
+  function addTask() {
+    const input = document.getElementById('taskInput');
+    if (input.value.trim() === '') return;
+    tasks.push({ text: input.value, done: false });
+    input.value = '';
+    renderTasks();
+  }
+
+  function toggleTaskStatus(index) {
+    tasks[index].done = !tasks[index].done;
+    renderTasks();
+  }
+
+  function deleteTask(index) {
+    tasks.splice(index, 1);
+    renderTasks();
+  }
+
+  function togglePassed() {
+    showPassed = !showPassed;
+    updateExams();
+  }
+
+  // תמיכה ב-Enter להוספת משימה
+  document.getElementById('taskInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') addTask();
+  });
+
+  setInterval(updateExams, 60000);
+  updateExams();
+  renderTasks();
 </script>
 
 </body>
