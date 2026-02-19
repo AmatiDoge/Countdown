@@ -1,78 +1,129 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academic Compact Dashboard</title>
-  <style>
-    :root {
-      --bg: #f0f2f5;
-      --card: #ffffff;
-      --exam: #8e44ad;
-      --task: #2980b9;
-      --red: #d63031;
-      --orange: #e67e22;
-      --green: #27ae60;
-      --text: #2d3436;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Dashboard 2.0</title>
+    <style>
+        :root {
+            --bg: #f4f7f6; --card: #ffffff; --exam: #8e44ad; --task: #2980b9;
+            --red: #d63031; --orange: #e67e22; --green: #27ae60; --text: #2d3436;
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 800px; margin-bottom: 15px; }
+        h1 { font-size: 1.2rem; margin: 0; }
+        #date { font-size: 0.8rem; background: #fff; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .container { display: flex; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 800px; }
+        .box { background: var(--card); border-radius: 10px; shadow: 0 4px 10px rgba(0,0,0,0.1); flex: 1; min-width: 300px; overflow: hidden; display: flex; flex-direction: column; }
+        .header { padding: 10px; color: white; text-align: center; font-weight: bold; font-size: 0.95rem; }
+        .h-exams { background: var(--exam); } .h-tasks { background: var(--task); }
+        .inputs { padding: 10px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; gap: 5px; }
+        input { padding: 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem; flex: 1; }
+        .btn-add { background: #2d3436; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 10px; border-bottom: 1px solid #f1f1f1; font-size: 0.85rem; }
+        .timer { font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 80px; }
+        .bg-red { background: #fff1f0; color: var(--red); border: 1px solid #ffa39e; }
+        .bg-orange { background: #fff7e6; color: var(--orange); border: 1px solid #ffd591; }
+        .bg-green { background: #f6ffed; color: var(--green); border: 1px solid #b7eb8f; }
+        .bg-passed { background: #f5f5f5; color: #bfbfbf; text-decoration: line-through; }
+        .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1.1rem; }
+        .done { color: #bfbfbf; text-decoration: line-through; }
+        .foot { margin-top: 15px; display: flex; gap: 10px; }
+        .btn-s { font-size: 0.75rem; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; background: #ddd; }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <h1>לוח בקרה</h1>
+    <div id="date"></div>
+</div>
+
+<div class="container">
+    <div class="box">
+        <div class="header h-exams">בחינות ודד-ליינים</div>
+        <div class="inputs">
+            <input type="text" id="exT" placeholder="שם האירוע">
+            <input type="datetime-local" id="exD">
+            <button class="btn-add" onclick="addEx()">+</button>
+        </div>
+        <table><tbody id="exList"></tbody></table>
+    </div>
+
+    <div class="box">
+        <div class="header h-tasks">משימות כלליות</div>
+        <div class="inputs">
+            <input type="text" id="tkT" placeholder="משימה חדשה...">
+            <button class="btn-add" onclick="addTk()">+</button>
+        </div>
+        <table><tbody id="tkList"></tbody></table>
+    </div>
+</div>
+
+<div class="foot">
+    <button class="btn-s" onclick="toggleP()">הצג/הסתר עבר</button>
+    <button class="btn-s" onclick="resetAll()">איפוס נתונים</button>
+</div>
+
+<script>
+    let showP = true;
+    const defEx = [
+        { t: "תאוריות באישיות (מועד א')", d: "2026-02-22T09:45" },
+        { t: "שיטות מחקר (מועד א')", d: "2026-02-27T09:00" },
+        { t: "קוגניטיבית ב' (מועד ב')", d: "2026-03-04T09:45" },
+        { t: "סטטיסטיקה רב-משתנית (מועד ב')", d: "2026-03-09T09:45" }
+    ];
+
+    let exams = JSON.parse(localStorage.getItem('exams')) || defEx;
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    function save() {
+        localStorage.setItem('exams', JSON.stringify(exams));
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background-color: var(--bg);
-      margin: 0;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: var(--text);
+    function addEx() {
+        const t = document.getElementById('exT').value, d = document.getElementById('exD').value;
+        if (t && d) { exams.push({ t, d }); document.getElementById('exT').value = ''; render(); }
     }
 
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      max-width: 900px;
-      margin-bottom: 10px;
+    function addTk() {
+        const t = document.getElementById('tkT').value;
+        if (t) { tasks.push({ t, f: false }); document.getElementById('tkT').value = ''; render(); }
     }
 
-    h1 { font-size: 1.4rem; margin: 0; }
-    #todayDisplay { font-size: 0.85rem; font-weight: bold; background: #fff; padding: 4px 10px; border-radius: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    function delE(i) { exams.splice(i, 1); render(); }
+    function delT(i) { tasks.splice(i, 1); render(); }
+    function togT(i) { tasks[i].f = !tasks[i].f; render(); }
+    function toggleP() { showP = !showP; render(); }
+    function resetAll() { if(confirm("לאפס?")) { exams=[...defEx]; tasks=[]; render(); } }
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      width: 100%;
-      max-width: 900px;
+    function render() {
+        const now = new Date();
+        document.getElementById('date').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+        
+        const eL = document.getElementById('exList'); eL.innerHTML = '';
+        exams.sort((a,b) => new Date(a.d) - new Date(b.d)).forEach((x, i) => {
+            const diff = new Date(x.d) - now, days = Math.ceil(diff / 86400000);
+            if (diff <= 0 && !showP) return;
+            let c = "bg-green", txt = days + " ימים";
+            if (diff <= 0) { c = "bg-passed"; txt = "עבר"; }
+            else if (days <= 3) { c = "bg-red"; txt = (days <= 1 ? "קרוב!" : days + " ימים"); }
+            else if (days <= 10) c = "bg-orange";
+
+            eL.innerHTML += `<tr><td><strong>${x.t}</strong><br><small>${new Date(x.d).toLocaleDateString('he-IL')}</small></td>
+                <td style="text-align:left"><span class="timer ${c}">${txt}</span><button class="del-btn" onclick="delE(${i})">×</button></td></tr>`;
+        });
+
+        const tL = document.getElementById('tkList'); tL.innerHTML = '';
+        tasks.forEach((x, i) => {
+            tL.innerHTML += `<tr class="${x.f?'done':''}"><td onclick="togT(${i})">${x.t}</td>
+                <td style="text-align:left"><button class="del-btn" onclick="delT(${i})">×</button></td></tr>`;
+        });
+        save();
     }
-
-    .box {
-      background: var(--card);
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      flex: 1;
-      min-width: 300px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .box-header {
-      padding: 10px;
-      color: white;
-      font-weight: bold;
-      text-align: center;
-      font-size: 1rem;
-    }
-    .header-exams { background-color: var(--exam); }
-    .header-tasks { background-color: var(--task); }
-
-    .input-area {
-      padding: 8px;
-      background: #f9f9f9;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      gap: 5px;
-    }
-
-    input, button { padding: 6
+    setInterval(render, 30000); render();
+</script>
+</body>
+</html>
