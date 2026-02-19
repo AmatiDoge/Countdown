@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>לוח בקרה אקדמי חכם</title>
+  <title>Dashboard אקדמי חכם 2026</title>
   <style>
     :root {
       --bg: #f4f7f6;
@@ -17,7 +17,7 @@
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background-color: var(--bg);
       margin: 0;
       padding: 20px;
@@ -26,7 +26,7 @@
       align-items: center;
     }
 
-    h1 { color: #2c3e50; margin-bottom: 20px; }
+    h1 { color: #2c3e50; margin-bottom: 20px; text-align: center; }
 
     .container {
       display: flex;
@@ -34,7 +34,7 @@
       gap: 30px;
       justify-content: center;
       width: 100%;
-      max-width: 1200px;
+      max-width: 1100px;
     }
 
     .box {
@@ -43,9 +43,8 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       overflow: hidden;
       flex: 1;
-      min-width: 350px;
-      display: flex;
-      flex-direction: column;
+      min-width: 320px;
+      max-width: 500px;
     }
 
     .box-header {
@@ -53,112 +52,189 @@
       color: white;
       font-weight: bold;
       text-align: center;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
     }
 
     .header-exams { background-color: var(--exam-accent); }
     .header-tasks { background-color: var(--task-accent); }
 
-    .input-area {
-      padding: 15px;
-      background: #f9f9f9;
-      border-bottom: 2px solid #eee;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .input-row { display: flex; gap: 8px; }
-
-    input, button {
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 0.9rem;
-    }
-
-    input[type="text"] { flex: 2; }
-    input[type="datetime-local"] { flex: 1; }
-
-    .add-btn {
-      background: #2c3e50;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.2s;
-    }
-
-    .add-btn:hover { opacity: 0.9; }
-
     table { width: 100%; border-collapse: collapse; }
-    td { padding: 12px 15px; border-bottom: 1px solid #eee; }
+    td { padding: 15px; text-align: right; border-bottom: 1px solid #eee; font-size: 1.1rem; }
 
+    /* טיימר מבחנים */
     .timer {
       font-weight: bold;
-      padding: 5px 10px;
+      padding: 6px 12px;
       border-radius: 6px;
       display: inline-block;
-      min-width: 100px;
+      min-width: 110px;
       text-align: center;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
-
     .bg-red { background-color: #ffeaea; color: var(--red); border: 1px solid var(--red); }
     .bg-orange { background-color: #fff4e5; color: var(--orange); border: 1px solid var(--orange); }
     .bg-green { background-color: #eafff0; color: var(--green); border: 1px solid var(--green); }
     .bg-passed { background-color: #f8f9fa; color: var(--passed); text-decoration: line-through; opacity: 0.7; }
 
+    /* ממשק משימות */
+    .task-input-area {
+      padding: 15px;
+      background: #f9f9f9;
+      display: flex;
+      gap: 10px;
+      border-bottom: 2px solid #eee;
+    }
+    #taskInput {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .add-btn {
+      padding: 10px 15px;
+      background: var(--task-accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .task-row { transition: background 0.2s; display: flex; align-items: center; width: 100%; }
+    .task-text { flex: 1; cursor: pointer; padding: 10px 0; }
     .delete-btn {
       color: var(--red);
       cursor: pointer;
       font-weight: bold;
-      background: none;
+      padding: 5px 10px;
+      font-size: 1.2rem;
       border: none;
-      font-size: 1.1rem;
+      background: none;
     }
-
-    .task-row { cursor: pointer; }
-    .task-row.done td { text-decoration: line-through; color: #bdc3c7; }
+    .done .task-text { text-decoration: line-through; color: #bdc3c7; }
 
     .controls { margin-bottom: 20px; }
+    .main-btn { padding: 12px 24px; cursor: pointer; border: none; border-radius: 8px; background: #2c3e50; color: white; font-weight: bold; }
 
-    @media (max-width: 768px) { .container { flex-direction: column; } .box { min-width: 100%; } }
+    @media (max-width: 768px) { .container { flex-direction: column; } .box { max-width: 100%; } }
   </style>
 </head>
 <body>
 
-<h1>הלו״ז האקדמי החכם שלי</h1>
+<h1>הלו״ז האקדמי שלי</h1>
 
 <div class="controls">
-  <button class="add-btn" style="padding: 10px 20px;" onclick="togglePassed()">הצג/הסתר אירועים שעברו</button>
+  <button class="main-btn" onclick="togglePassed()">הצג/הסתר מבחנים שעברו</button>
 </div>
 
 <div class="container">
   
   <div class="box">
-    <div class="box-header header-exams">בחינות ודד-ליינים</div>
-    <div class="input-area">
-      <div class="input-row">
-        <input type="text" id="examTitle" placeholder="שם המבחן/אירוע">
-        <input type="datetime-local" id="examDate">
-      </div>
-      <button class="add-btn" onclick="addExam()">הוסף אירוע ללו"ז</button>
-    </div>
+    <div class="box-header header-exams">בחינות (מועדי א' ו-ב')</div>
     <table>
-      <tbody id="exam-list">
-        </tbody>
+      <tbody id="exams-list">
+        <tr data-date="2026-01-27T15:45:00"><td>קוגניטיבית ב' (מועד א')</td><td class="timer"></td></tr>
+        <tr data-date="2026-02-08T09:45:00"><td>הבסיס הביולוגי (מועד א')</td><td class="timer"></td></tr>
+        <tr data-date="2026-02-22T09:45:00"><td>תאוריות באישיות (מועד א')</td><td class="timer"></td></tr>
+        <tr data-date="2026-02-27T09:00:00"><td>שיטות מחקר והערכה (מועד א')</td><td class="timer"></td></tr>
+        <tr data-date="2026-03-04T09:45:00"><td>קוגניטיבית ב' (מועד ב')</td><td class="timer"></td></tr>
+        <tr data-date="2026-03-09T09:45:00"><td>סטטיסטיקה רב-משתנית (מועד ב')</td><td class="timer"></td></tr>
+      </tbody>
     </table>
   </div>
 
   <div class="box">
     <div class="box-header header-tasks">משימות כלליות</div>
-    <div class="input-area">
-      <div class="input-row">
-        <input type="text" id="taskText" placeholder="מה צריך לעשות?">
-        <button class="add-btn" onclick="addTask()">הוסף</button>
-      </div>
+    <div class="task-input-area">
+      <input type="text" id="taskInput" placeholder="הקלד משימה חדשה...">
+      <button class="add-btn" onclick="addTask()">הוסף</button>
     </div>
-    <table>
+    <table id="tasks-table">
       <tbody id="task-list">
         </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  let showPassed = true;
+  let tasks = JSON.parse(localStorage.getItem('academicTasks')) || [];
+
+  // פונקציות בחינות
+  function updateExams() {
+    const now = new Date();
+    document.querySelectorAll('#exams-list tr').forEach(row => {
+      const target = new Date(row.getAttribute('data-date'));
+      const diff = target - now;
+      const display = row.querySelector('.timer');
+
+      if (diff <= 0) {
+        display.textContent = "עבר";
+        display.className = "timer bg-passed";
+        row.style.display = showPassed ? "table-row" : "none";
+      } else {
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        display.textContent = `${days} ימים, ${hours} ש׳`;
+        row.style.display = "table-row";
+        if (days <= 3) display.className = "timer bg-red";
+        else if (days <= 10) display.className = "timer bg-orange";
+        else display.className = "timer bg-green";
+      }
+    });
+  }
+
+  // פונקציות משימות
+  function renderTasks() {
+    const list = document.getElementById('task-list');
+    list.innerHTML = '';
+    tasks.forEach((task, index) => {
+      const tr = document.createElement('tr');
+      tr.className = `task-row ${task.done ? 'done' : ''}`;
+      tr.innerHTML = `
+        <td style="display: flex; align-items: center; justify-content: space-between;">
+          <span class="task-text" onclick="toggleTaskStatus(${index})">${task.text}</span>
+          <button class="delete-btn" onclick="deleteTask(${index})">×</button>
+        </td>
+      `;
+      list.appendChild(tr);
+    });
+    localStorage.setItem('academicTasks', JSON.stringify(tasks));
+  }
+
+  function addTask() {
+    const input = document.getElementById('taskInput');
+    if (input.value.trim() === '') return;
+    tasks.push({ text: input.value, done: false });
+    input.value = '';
+    renderTasks();
+  }
+
+  function toggleTaskStatus(index) {
+    tasks[index].done = !tasks[index].done;
+    renderTasks();
+  }
+
+  function deleteTask(index) {
+    tasks.splice(index, 1);
+    renderTasks();
+  }
+
+  function togglePassed() {
+    showPassed = !showPassed;
+    updateExams();
+  }
+
+  // תמיכה ב-Enter להוספת משימה
+  document.getElementById('taskInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') addTask();
+  });
+
+  setInterval(updateExams, 60000);
+  updateExams();
+  renderTasks();
+</script>
+
+</body>
+</html>
