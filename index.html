@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard אקדמי חכם 2026</title>
+  <title>לוח בקרה אקדמי 2026</title>
   <style>
     :root {
       --bg: #f4f7f6;
@@ -17,7 +17,7 @@
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Segoe UI', system-ui, sans-serif;
       background-color: var(--bg);
       margin: 0;
       padding: 20px;
@@ -26,15 +26,25 @@
       align-items: center;
     }
 
-    h1 { color: #2c3e50; margin-bottom: 20px; text-align: center; }
+    .today-info {
+      background: #2c3e50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 { color: #2c3e50; margin-bottom: 10px; }
 
     .container {
       display: flex;
       flex-wrap: wrap;
-      gap: 30px;
+      gap: 25px;
       justify-content: center;
       width: 100%;
-      max-width: 1100px;
+      max-width: 1200px;
     }
 
     .box {
@@ -43,8 +53,7 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       overflow: hidden;
       flex: 1;
-      min-width: 320px;
-      max-width: 500px;
+      min-width: 350px;
     }
 
     .box-header {
@@ -52,188 +61,217 @@
       color: white;
       font-weight: bold;
       text-align: center;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
     }
 
     .header-exams { background-color: var(--exam-accent); }
     .header-tasks { background-color: var(--task-accent); }
 
-    table { width: 100%; border-collapse: collapse; }
-    td { padding: 15px; text-align: right; border-bottom: 1px solid #eee; font-size: 1.1rem; }
+    .input-area {
+      padding: 15px;
+      background: #f9f9f9;
+      border-bottom: 2px solid #eee;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
-    /* טיימר מבחנים */
+    .input-row { display: flex; gap: 8px; }
+    input, button { padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem; }
+    input[type="text"] { flex: 2; }
+    
+    .add-btn { background: #2c3e50; color: white; border: none; cursor: pointer; font-weight: bold; }
+
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 12px 15px; border-bottom: 1px solid #eee; }
+
     .timer {
       font-weight: bold;
-      padding: 6px 12px;
+      padding: 5px 10px;
       border-radius: 6px;
       display: inline-block;
       min-width: 110px;
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
+
     .bg-red { background-color: #ffeaea; color: var(--red); border: 1px solid var(--red); }
     .bg-orange { background-color: #fff4e5; color: var(--orange); border: 1px solid var(--orange); }
     .bg-green { background-color: #eafff0; color: var(--green); border: 1px solid var(--green); }
     .bg-passed { background-color: #f8f9fa; color: var(--passed); text-decoration: line-through; opacity: 0.7; }
 
-    /* ממשק משימות */
-    .task-input-area {
-      padding: 15px;
-      background: #f9f9f9;
-      display: flex;
-      gap: 10px;
-      border-bottom: 2px solid #eee;
-    }
-    #taskInput {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-    .add-btn {
-      padding: 10px 15px;
-      background: var(--task-accent);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .task-row { transition: background 0.2s; display: flex; align-items: center; width: 100%; }
-    .task-text { flex: 1; cursor: pointer; padding: 10px 0; }
-    .delete-btn {
-      color: var(--red);
-      cursor: pointer;
-      font-weight: bold;
-      padding: 5px 10px;
-      font-size: 1.2rem;
-      border: none;
-      background: none;
-    }
-    .done .task-text { text-decoration: line-through; color: #bdc3c7; }
+    .delete-btn { color: var(--red); cursor: pointer; font-weight: bold; background: none; border: none; font-size: 1.2rem; }
 
-    .controls { margin-bottom: 20px; }
-    .main-btn { padding: 12px 24px; cursor: pointer; border: none; border-radius: 8px; background: #2c3e50; color: white; font-weight: bold; }
+    .controls { margin-bottom: 20px; display: flex; gap: 10px; }
+    .secondary-btn { background: #95a5a6; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; }
 
-    @media (max-width: 768px) { .container { flex-direction: column; } .box { max-width: 100%; } }
+    @media (max-width: 768px) { .container { flex-direction: column; } .box { min-width: 100%; } }
   </style>
 </head>
 <body>
 
+<div class="today-info" id="todayDisplay"></div>
 <h1>הלו״ז האקדמי שלי</h1>
 
 <div class="controls">
-  <button class="main-btn" onclick="togglePassed()">הצג/הסתר מבחנים שעברו</button>
+  <button class="add-btn" style="padding: 10px 20px;" onclick="togglePassed()">הצג/הסתר מבחנים שעברו</button>
+  <button class="secondary-btn" onclick="resetData()">איפוס לרשימה המקורית</button>
 </div>
 
 <div class="container">
-  
   <div class="box">
-    <div class="box-header header-exams">בחינות (מועדי א' ו-ב')</div>
+    <div class="box-header header-exams">בחינות ומועדי ב'</div>
+    <div class="input-area">
+      <div class="input-row">
+        <input type="text" id="examTitle" placeholder="שם המבחן">
+        <input type="datetime-local" id="examDate">
+      </div>
+      <button class="add-btn" onclick="addExam()">הוסף אירוע ללו"ז</button>
+    </div>
     <table>
-      <tbody id="exams-list">
-        <tr data-date="2026-01-27T15:45:00"><td>קוגניטיבית ב' (מועד א')</td><td class="timer"></td></tr>
-        <tr data-date="2026-02-08T09:45:00"><td>הבסיס הביולוגי (מועד א')</td><td class="timer"></td></tr>
-        <tr data-date="2026-02-22T09:45:00"><td>תאוריות באישיות (מועד א')</td><td class="timer"></td></tr>
-        <tr data-date="2026-02-27T09:00:00"><td>שיטות מחקר והערכה (מועד א')</td><td class="timer"></td></tr>
-        <tr data-date="2026-03-04T09:45:00"><td>קוגניטיבית ב' (מועד ב')</td><td class="timer"></td></tr>
-        <tr data-date="2026-03-09T09:45:00"><td>סטטיסטיקה רב-משתנית (מועד ב')</td><td class="timer"></td></tr>
-      </tbody>
+      <tbody id="exam-list"></tbody>
     </table>
   </div>
 
   <div class="box">
     <div class="box-header header-tasks">משימות כלליות</div>
-    <div class="task-input-area">
-      <input type="text" id="taskInput" placeholder="הקלד משימה חדשה...">
-      <button class="add-btn" onclick="addTask()">הוסף</button>
+    <div class="input-area">
+      <div class="input-row">
+        <input type="text" id="taskText" placeholder="משימה חדשה...">
+        <button class="add-btn" onclick="addTask()">הוסף</button>
+      </div>
     </div>
-    <table id="tasks-table">
-      <tbody id="task-list">
-        </tbody>
+    <table>
+      <tbody id="task-list"></tbody>
     </table>
   </div>
-
 </div>
 
 <script>
   let showPassed = true;
-  let tasks = JSON.parse(localStorage.getItem('academicTasks')) || [];
+  
+  // רשימת הבחינות המקורית שלך
+  const initialExams = [
+    { title: "קוגניטיבית ב' (מועד א')", date: "2026-01-27T15:45" },
+    { title: "הבסיס הביולוגי (מועד א')", date: "2026-02-08T09:45" },
+    { title: "תאוריות באישיות (מועד א')", date: "2026-02-22T09:45" },
+    { title: "שיטות מחקר והערכה (מועד א')", date: "2026-02-27T09:00" },
+    { title: "שיטות מחקר - הצעת מחקר", date: "2026-02-01T23:59" },
+    { title: "קוגניטיבית ב' (מועד ב')", date: "2026-03-04T09:45" },
+    { title: "סטטיסטיקה רב-משתנית (מועד ב')", date: "2026-03-09T09:45" }
+  ];
 
-  // פונקציות בחינות
-  function updateExams() {
-    const now = new Date();
-    document.querySelectorAll('#exams-list tr').forEach(row => {
-      const target = new Date(row.getAttribute('data-date'));
-      const diff = target - now;
-      const display = row.querySelector('.timer');
+  let exams = JSON.parse(localStorage.getItem('myExams')) || initialExams;
+  let tasks = JSON.parse(localStorage.getItem('myTasks')) || [];
 
-      if (diff <= 0) {
-        display.textContent = "עבר";
-        display.className = "timer bg-passed";
-        row.style.display = showPassed ? "table-row" : "none";
-      } else {
-        const days = Math.floor(diff / 86400000);
-        const hours = Math.floor((diff % 86400000) / 3600000);
-        display.textContent = `${days} ימים, ${hours} ש׳`;
-        row.style.display = "table-row";
-        if (days <= 3) display.className = "timer bg-red";
-        else if (days <= 10) display.className = "timer bg-orange";
-        else display.className = "timer bg-green";
-      }
-    });
+  function save() {
+    localStorage.setItem('myExams', JSON.stringify(exams));
+    localStorage.setItem('myTasks', JSON.stringify(tasks));
   }
 
-  // פונקציות משימות
-  function renderTasks() {
-    const list = document.getElementById('task-list');
-    list.innerHTML = '';
-    tasks.forEach((task, index) => {
-      const tr = document.createElement('tr');
-      tr.className = `task-row ${task.done ? 'done' : ''}`;
-      tr.innerHTML = `
-        <td style="display: flex; align-items: center; justify-content: space-between;">
-          <span class="task-text" onclick="toggleTaskStatus(${index})">${task.text}</span>
-          <button class="delete-btn" onclick="deleteTask(${index})">×</button>
-        </td>
-      `;
-      list.appendChild(tr);
-    });
-    localStorage.setItem('academicTasks', JSON.stringify(tasks));
+  function resetData() {
+    if(confirm("האם לאפס את הרשימה לבחינות המקוריות?")) {
+      exams = [...initialExams];
+      save();
+      render();
+    }
+  }
+
+  function addExam() {
+    const title = document.getElementById('examTitle').value;
+    const date = document.getElementById('examDate').value;
+    if (!title || !date) return alert("נא להזין שם ותאריך");
+    exams.push({ title, date });
+    document.getElementById('examTitle').value = '';
+    render();
+  }
+
+  function deleteExam(index) {
+    exams.splice(index, 1);
+    render();
   }
 
   function addTask() {
-    const input = document.getElementById('taskInput');
-    if (input.value.trim() === '') return;
-    tasks.push({ text: input.value, done: false });
-    input.value = '';
-    renderTasks();
+    const text = document.getElementById('taskText').value;
+    if (!text) return;
+    tasks.push({ text, done: false });
+    document.getElementById('taskText').value = '';
+    render();
   }
 
-  function toggleTaskStatus(index) {
+  function toggleTask(index) {
     tasks[index].done = !tasks[index].done;
-    renderTasks();
+    render();
   }
 
   function deleteTask(index) {
     tasks.splice(index, 1);
-    renderTasks();
+    render();
   }
 
   function togglePassed() {
     showPassed = !showPassed;
-    updateExams();
+    render();
   }
 
-  // תמיכה ב-Enter להוספת משימה
-  document.getElementById('taskInput').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') addTask();
-  });
+  function render() {
+    const now = new Date();
+    document.getElementById('todayDisplay').textContent = "היום: " + now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'});
+    
+    const examList = document.getElementById('exam-list');
+    examList.innerHTML = '';
+    
+    // מיון
+    exams.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  setInterval(updateExams, 60000);
-  updateExams();
-  renderTasks();
+    exams.forEach((exam, index) => {
+      const target = new Date(exam.date);
+      const diff = target - now;
+      const days = Math.floor(diff / 86400000);
+      
+      if (diff <= 0 && !showPassed) return;
+
+      let statusClass = "bg-green";
+      let timeText = `${days} ימים`;
+
+      if (diff <= 0) {
+        statusClass = "bg-passed";
+        timeText = "עבר";
+      } else if (days <= 3) {
+        statusClass = "bg-red";
+        timeText = days === 0 ? "היום/מחר" : `${days} ימים`;
+      } else if (days <= 10) {
+        statusClass = "bg-orange";
+      }
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${exam.title}<br><small style="color:#7f8c8d">${target.toLocaleDateString('he-IL')}</small></td>
+        <td style="text-align: left;">
+          <span class="timer ${statusClass}">${timeText}</span>
+          <button class="delete-btn" onclick="deleteExam(${index})">×</button>
+        </td>
+      `;
+      examList.appendChild(tr);
+    });
+
+    const taskList = document.getElementById('task-list');
+    taskList.innerHTML = '';
+    tasks.forEach((task, index) => {
+      const tr = document.createElement('tr');
+      tr.style.cursor = "pointer";
+      if(task.done) tr.style.opacity = "0.5";
+      tr.innerHTML = `
+        <td onclick="toggleTask(${index})" style="${task.done ? 'text-decoration:line-through' : ''}">${task.text}</td>
+        <td style="text-align: left;"><button class="delete-btn" onclick="deleteTask(${index})">×</button></td>
+      `;
+      taskList.appendChild(tr);
+    });
+    save();
+  }
+
+  setInterval(render, 30000);
+  render();
 </script>
 
 </body>
