@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Dashboard 2.0 - Countdown</title>
+    <title>Academic Dashboard - Full Text</title>
     <style>
         :root {
             --bg: #f4f7f6; --card: #ffffff; --exam: #8e44ad; --task: #2980b9;
@@ -22,7 +22,7 @@
         .btn-add { background: #2d3436; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         table { width: 100%; border-collapse: collapse; }
         td { padding: 10px; border-bottom: 1px solid #f1f1f1; font-size: 0.85rem; }
-        .timer { font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 100px; }
+        .timer { font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 125px; } /* הגדלתי רוחב למילים מלאות */
         .bg-red { background: #fff1f0; color: var(--red); border: 1px solid #ffa39e; }
         .bg-orange { background: #fff7e6; color: var(--orange); border: 1px solid #ffd591; }
         .bg-green { background: #f6ffed; color: var(--green); border: 1px solid #b7eb8f; }
@@ -119,9 +119,9 @@
                 const m = Math.floor((diff % 3600000) / 60000);
 
                 if (d > 0) {
-                    txt = `${d} י', ${h} ש'`;
+                    txt = `${d} ימים, ${h} שעות`;
                 } else if (h > 0) {
-                    txt = `${h} ש', ${m} ד'`;
+                    txt = `${h} שעות, ${m} דקות`;
                 } else {
                     txt = `${m} דקות!`;
                 }
@@ -142,7 +142,6 @@
         save();
     }
     
-    // מעדכן כל דקה כדי שהשעות והדקות יהיו מדויקות
     setInterval(render, 60000); 
     render();
 </script>
