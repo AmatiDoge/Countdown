@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Dashboard 2.0</title>
+    <title>Academic Dashboard 2.0 - Countdown</title>
     <style>
         :root {
             --bg: #f4f7f6; --card: #ffffff; --exam: #8e44ad; --task: #2980b9;
@@ -14,7 +14,7 @@
         h1 { font-size: 1.2rem; margin: 0; }
         #date { font-size: 0.8rem; background: #fff; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .container { display: flex; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 800px; }
-        .box { background: var(--card); border-radius: 10px; shadow: 0 4px 10px rgba(0,0,0,0.1); flex: 1; min-width: 300px; overflow: hidden; display: flex; flex-direction: column; }
+        .box { background: var(--card); border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); flex: 1; min-width: 300px; overflow: hidden; display: flex; flex-direction: column; }
         .header { padding: 10px; color: white; text-align: center; font-weight: bold; font-size: 0.95rem; }
         .h-exams { background: var(--exam); } .h-tasks { background: var(--task); }
         .inputs { padding: 10px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; gap: 5px; }
@@ -22,7 +22,7 @@
         .btn-add { background: #2d3436; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         table { width: 100%; border-collapse: collapse; }
         td { padding: 10px; border-bottom: 1px solid #f1f1f1; font-size: 0.85rem; }
-        .timer { font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 80px; }
+        .timer { font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 100px; }
         .bg-red { background: #fff1f0; color: var(--red); border: 1px solid #ffa39e; }
         .bg-orange { background: #fff7e6; color: var(--orange); border: 1px solid #ffd591; }
         .bg-green { background: #f6ffed; color: var(--green); border: 1px solid #b7eb8f; }
@@ -36,7 +36,7 @@
 <body>
 
 <div class="top-bar">
-    <h1>לוח בקרה</h1>
+    <h1>לוח בקרה אקדמי</h1>
     <div id="date"></div>
 </div>
 
@@ -97,7 +97,7 @@
     function delT(i) { tasks.splice(i, 1); render(); }
     function togT(i) { tasks[i].f = !tasks[i].f; render(); }
     function toggleP() { showP = !showP; render(); }
-    function resetAll() { if(confirm("לאפס?")) { exams=[...defEx]; tasks=[]; render(); } }
+    function resetAll() { if(confirm("לאפס נתונים?")) { exams=[...defEx]; tasks=[]; render(); } }
 
     function render() {
         const now = new Date();
@@ -105,12 +105,30 @@
         
         const eL = document.getElementById('exList'); eL.innerHTML = '';
         exams.sort((a,b) => new Date(a.d) - new Date(b.d)).forEach((x, i) => {
-            const diff = new Date(x.d) - now, days = Math.ceil(diff / 86400000);
+            const diff = new Date(x.d) - now;
             if (diff <= 0 && !showP) return;
-            let c = "bg-green", txt = days + " ימים";
-            if (diff <= 0) { c = "bg-passed"; txt = "עבר"; }
-            else if (days <= 3) { c = "bg-red"; txt = (days <= 1 ? "קרוב!" : days + " ימים"); }
-            else if (days <= 10) c = "bg-orange";
+
+            let c = "bg-green", txt = "";
+            
+            if (diff <= 0) {
+                c = "bg-passed";
+                txt = "עבר";
+            } else {
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+
+                if (d > 0) {
+                    txt = `${d} י', ${h} ש'`;
+                } else if (h > 0) {
+                    txt = `${h} ש', ${m} ד'`;
+                } else {
+                    txt = `${m} דקות!`;
+                }
+
+                if (d <= 3) c = "bg-red";
+                else if (d <= 10) c = "bg-orange";
+            }
 
             eL.innerHTML += `<tr><td><strong>${x.t}</strong><br><small>${new Date(x.d).toLocaleDateString('he-IL')}</small></td>
                 <td style="text-align:left"><span class="timer ${c}">${txt}</span><button class="del-btn" onclick="delE(${i})">×</button></td></tr>`;
@@ -123,7 +141,10 @@
         });
         save();
     }
-    setInterval(render, 30000); render();
+    
+    // מעדכן כל דקה כדי שהשעות והדקות יהיו מדויקות
+    setInterval(render, 60000); 
+    render();
 </script>
 </body>
 </html>
