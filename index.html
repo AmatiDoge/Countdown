@@ -3,41 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Dashboard - Full Text</title>
+    <title>Academic Hub 2026</title>
     <style>
         :root {
-            --bg: #f4f7f6; --card: #ffffff; --exam: #8e44ad; --task: #2980b9;
-            --red: #d63031; --orange: #e67e22; --green: #27ae60; --text: #2d3436;
+            --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60;
+            --red: #d63031; --orange: #e67e22; --green: #2ecc71; --text: #2d3436;
         }
-        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 800px; margin-bottom: 15px; }
-        h1 { font-size: 1.2rem; margin: 0; }
-        #date { font-size: 0.8rem; background: #fff; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .container { display: flex; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 800px; }
-        .box { background: var(--card); border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); flex: 1; min-width: 300px; overflow: hidden; display: flex; flex-direction: column; }
-        .header { padding: 10px; color: white; text-align: center; font-weight: bold; font-size: 0.95rem; }
-        .h-exams { background: var(--exam); } .h-tasks { background: var(--task); }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+        
+        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1200px; margin-bottom: 15px; }
+        h1 { font-size: 1.3rem; margin: 0; }
+        #date-display { font-size: 0.8rem; background: #fff; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+        .container { display: flex; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 1200px; align-items: flex-start; }
+        
+        .box { background: var(--card); border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); flex: 1; min-width: 320px; overflow: hidden; display: flex; flex-direction: column; }
+        .header { padding: 12px; color: white; text-align: center; font-weight: bold; font-size: 1rem; }
+        .h-exams { background: var(--exam); } 
+        .h-tasks { background: var(--task); }
+        .h-syllabus { background: var(--syllabus); display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; }
+        
+        .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 28px; height: 28px; font-weight: bold; }
+        .nav-btn:hover { background: rgba(255,255,255,0.4); }
+
         .inputs { padding: 10px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; gap: 5px; }
         input { padding: 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem; flex: 1; }
         .btn-add { background: #2d3436; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
         table { width: 100%; border-collapse: collapse; }
-        td { padding: 10px; border-bottom: 1px solid #f1f1f1; font-size: 0.85rem; }
-        .timer { font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 125px; } /* הגדלתי רוחב למילים מלאות */
+        td { padding: 10px; border-bottom: 1px solid #f1f1f1; font-size: 0.85rem; vertical-align: middle; }
+        
+        .timer { font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 120px; }
         .bg-red { background: #fff1f0; color: var(--red); border: 1px solid #ffa39e; }
         .bg-orange { background: #fff7e6; color: var(--orange); border: 1px solid #ffd591; }
         .bg-green { background: #f6ffed; color: var(--green); border: 1px solid #b7eb8f; }
         .bg-passed { background: #f5f5f5; color: #bfbfbf; text-decoration: line-through; }
+
         .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1.1rem; }
         .done { color: #bfbfbf; text-decoration: line-through; }
-        .foot { margin-top: 15px; display: flex; gap: 10px; }
-        .btn-s { font-size: 0.75rem; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; background: #ddd; }
+        
+        .syllabus-item { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 8px; border-radius: 5px; transition: 0.2s; }
+        .syllabus-item:hover { background: #f9f9f9; }
+        .syllabus-item input { flex: 0 0 auto; margin-top: 4px; }
+        .week-info { text-align: center; padding: 5px; background: #f1f1f1; font-size: 0.75rem; font-weight: bold; }
+
+        .foot { margin-top: 20px; display: flex; gap: 10px; }
+        .btn-s { font-size: 0.75rem; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; background: #ddd; }
+
+        @media (max-width: 768px) { .container { flex-direction: column; } .box { min-width: 100%; } }
     </style>
 </head>
 <body>
 
 <div class="top-bar">
-    <h1>לוח בקרה אקדמי</h1>
-    <div id="date"></div>
+    <h1>לוח בקרה אקדמי סמסטר ב'</h1>
+    <div id="date-display"></div>
 </div>
 
 <div class="container">
@@ -52,12 +72,23 @@
     </div>
 
     <div class="box">
-        <div class="header h-tasks">משימות כלליות</div>
+        <div class="header h-tasks">משימות שוטפות</div>
         <div class="inputs">
             <input type="text" id="tkT" placeholder="משימה חדשה...">
             <button class="btn-add" onclick="addTk()">+</button>
         </div>
         <table><tbody id="tkList"></tbody></table>
+    </div>
+
+    <div class="box">
+        <div class="header h-syllabus">
+            <button class="nav-btn" onclick="changeWeek(-1)">></button>
+            <span id="week-title">שבוע 1</span>
+            <button class="nav-btn" onclick="changeWeek(1)"><</button>
+        </div>
+        <div class="week-info" id="week-dates">15.03 - 22.03</div>
+        <div id="syllabus-content" style="padding: 10px;">
+            </div>
     </div>
 </div>
 
@@ -68,6 +99,28 @@
 
 <script>
     let showP = true;
+    let currentWeekIdx = 0;
+
+    // נתוני סילבוס
+    const syllabusData = [
+        { range: "15.03 - 22.03", items: ["תחילת סמסטר - אין חומר קריאה מוגדר"] },
+        { range: "23.03 - 29.03", items: ["Squire, L. R., & Wixted, J.T. (2015). Remembering. Daedalus, 141(1), 53-66."] },
+        { range: "30.03 - 05.04", items: ["גולדשטיין, Cognitive Psychology, פרק 8."] },
+        { range: "06.04 - 12.04", items: ["חופשת פסח – אין חומר קריאה"] },
+        { range: "13.04 - 19.04", items: ["חופשת פסח – אין חומר קריאה"] },
+        { range: "20.04 - 26.04", items: ["Anderson & Levy (2009). Suppressing unwanted memories.", "Kihlstrom, J. F. “Trauma and Memory Revisited” (תקציר).", "Bauer, P. J. (2004). Oh where, oh where have those early memories gone?", "Gammon, K. (2016). Childhood amnesia."] },
+        { range: "27.04 - 03.05", items: ["חזרה על חומר קודם / אין קריאה מוגדרת"] },
+        { range: "04.05 - 10.05", items: ["גולדשטיין, עמודים 172-181, 187-189, 191-193.", "Talmi, D. (2013). Enhanced emotional memory."] },
+        { range: "11.05 - 17.05", items: ["גולדשטיין, עמודים 191-193.", "Freberg, L. A. (2010). Discovering Biological Psychology, pp. 358-361."] },
+        { range: "18.05 - 24.05", items: ["Wixted, J. T. (2005). A theory about why we forget."] },
+        { range: "25.05 - 31.05", items: ["גולדשטיין, Cognitive Psychology, עמודים 195-198."] },
+        { range: "01.06 - 07.06", items: ["גולדשטיין, Cognitive Psychology, עמודים 181-187."] },
+        { range: "08.06 - 14.06", items: ["Freberg, pp. 348-352.", "Luck & Vogel (1997). Visual working memory.", "גולדשטיין, עמודים 121-143."] },
+        { range: "15.06 - 21.06", items: ["גולדשטיין, עמודים 161-164.", "Ricker, AuBuchon, and Cowan (2010). Working memory."] },
+        { range: "22.06 - 28.06", items: ["גולדשטיין, Cognitive Psychology, עמודים 375-385."] },
+        { range: "29.06 - 05.07", items: ["גולדשטיין, Cognitive Psychology, פרק 12.", "Langer, 1989."] }
+    ];
+
     const defEx = [
         { t: "תאוריות באישיות (מועד א')", d: "2026-02-22T09:45" },
         { t: "שיטות מחקר (מועד א')", d: "2026-02-27T09:00" },
@@ -77,71 +130,93 @@
 
     let exams = JSON.parse(localStorage.getItem('exams')) || defEx;
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let syllabusDone = JSON.parse(localStorage.getItem('syllabusDone')) || {};
 
     function save() {
         localStorage.setItem('exams', JSON.stringify(exams));
         localStorage.setItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem('syllabusDone', JSON.stringify(syllabusDone));
     }
 
+    // ניהול בחינות ומשימות
     function addEx() {
         const t = document.getElementById('exT').value, d = document.getElementById('exD').value;
         if (t && d) { exams.push({ t, d }); document.getElementById('exT').value = ''; render(); }
     }
-
     function addTk() {
         const t = document.getElementById('tkT').value;
         if (t) { tasks.push({ t, f: false }); document.getElementById('tkT').value = ''; render(); }
     }
-
     function delE(i) { exams.splice(i, 1); render(); }
     function delT(i) { tasks.splice(i, 1); render(); }
     function togT(i) { tasks[i].f = !tasks[i].f; render(); }
     function toggleP() { showP = !showP; render(); }
-    function resetAll() { if(confirm("לאפס נתונים?")) { exams=[...defEx]; tasks=[]; render(); } }
+    function resetAll() { if(confirm("לאפס את כל הנתונים?")) { exams=[...defEx]; tasks=[]; syllabusDone={}; render(); } }
+
+    // ניהול סילבוס
+    function changeWeek(dir) {
+        currentWeekIdx = Math.max(0, Math.min(syllabusData.length - 1, currentWeekIdx + dir));
+        render();
+    }
+
+    function toggleSyllabusItem(weekIdx, itemIdx) {
+        const key = `w${weekIdx}i${itemIdx}`;
+        syllabusDone[key] = !syllabusDone[key];
+        render();
+    }
 
     function render() {
         const now = new Date();
-        document.getElementById('date').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+        document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
         
+        // רינדור בחינות
         const eL = document.getElementById('exList'); eL.innerHTML = '';
         exams.sort((a,b) => new Date(a.d) - new Date(b.d)).forEach((x, i) => {
             const diff = new Date(x.d) - now;
             if (diff <= 0 && !showP) return;
-
             let c = "bg-green", txt = "";
-            
-            if (diff <= 0) {
-                c = "bg-passed";
-                txt = "עבר";
-            } else {
-                const d = Math.floor(diff / 86400000);
-                const h = Math.floor((diff % 86400000) / 3600000);
-                const m = Math.floor((diff % 3600000) / 60000);
-
-                if (d > 0) {
-                    txt = `${d} ימים, ${h} שעות`;
-                } else if (h > 0) {
-                    txt = `${h} שעות, ${m} דקות`;
-                } else {
-                    txt = `${m} דקות!`;
-                }
-
-                if (d <= 3) c = "bg-red";
-                else if (d <= 10) c = "bg-orange";
+            if (diff <= 0) { c = "bg-passed"; txt = "עבר"; }
+            else {
+                const d = Math.floor(diff / 86400000), h = Math.floor((diff % 86400000) / 3600000);
+                txt = d > 0 ? `${d} ימים, ${h} שעות` : `${h} שעות, ${Math.floor((diff % 3600000) / 60000)} דקות`;
+                if (d <= 3) c = "bg-red"; else if (d <= 10) c = "bg-orange";
             }
-
             eL.innerHTML += `<tr><td><strong>${x.t}</strong><br><small>${new Date(x.d).toLocaleDateString('he-IL')}</small></td>
                 <td style="text-align:left"><span class="timer ${c}">${txt}</span><button class="del-btn" onclick="delE(${i})">×</button></td></tr>`;
         });
 
+        // רינדור משימות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         tasks.forEach((x, i) => {
-            tL.innerHTML += `<tr class="${x.f?'done':''}"><td onclick="togT(${i})">${x.t}</td>
+            tL.innerHTML += `<tr class="${x.f?'done':''}"><td onclick="togT(${i})" style="cursor:pointer">${x.t}</td>
                 <td style="text-align:left"><button class="del-btn" onclick="delT(${i})">×</button></td></tr>`;
         });
+
+        // רינדור סילבוס
+        const week = syllabusData[currentWeekIdx];
+        document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx + 1}`;
+        document.getElementById('week-dates').innerText = week.range;
+        const sC = document.getElementById('syllabus-content');
+        sC.innerHTML = '';
+        week.items.forEach((item, i) => {
+            const isDone = syllabusDone[`w${currentWeekIdx}i${i}`];
+            sC.innerHTML += `
+                <div class="syllabus-item ${isDone ? 'done' : ''}" onclick="toggleSyllabusItem(${currentWeekIdx}, ${i})">
+                    <input type="checkbox" ${isDone ? 'checked' : ''}>
+                    <span>${item}</span>
+                </div>`;
+        });
+
         save();
     }
-    
+
+    // זיהוי שבוע נוכחי אוטומטי בטעינה ראשונה
+    const startSem = new Date("2026-03-15");
+    const diffDays = Math.floor((new Date() - startSem) / 86400000);
+    if (diffDays >= 0) {
+        currentWeekIdx = Math.min(syllabusData.length - 1, Math.floor(diffDays / 7));
+    }
+
     setInterval(render, 60000); 
     render();
 </script>
