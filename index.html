@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Dashboard 2026</title>
+    <title>Academic & Career Dashboard 2026</title>
     <style>
         :root {
-            --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60;
+            --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60; --jobs: #2c3e50;
             --red: #d63031; --orange: #e67e22; --green: #2ecc71; --text: #2d3436;
         }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
@@ -17,11 +17,12 @@
 
         .container { display: flex; flex-wrap: wrap; gap: 12px; width: 100%; max-width: 1200px; align-items: flex-start; }
         
-        .box { background: var(--card); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex: 1; min-width: 300px; overflow: hidden; display: flex; flex-direction: column; }
+        .box { background: var(--card); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex: 1; min-width: 280px; overflow: hidden; display: flex; flex-direction: column; }
         .header { padding: 10px; color: white; text-align: center; font-weight: bold; font-size: 0.95rem; }
         .h-exams { background: var(--exam); } 
         .h-tasks { background: var(--task); }
         .h-syllabus { background: var(--syllabus); display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; }
+        .h-jobs { background: var(--jobs); }
         
         .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 24px; height: 24px; font-weight: bold; font-size: 1rem; }
         .nav-btn:hover { background: rgba(255,255,255,0.4); }
@@ -42,9 +43,9 @@
         .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1rem; padding: 0 5px; }
         .done { color: #bfbfbf; text-decoration: line-through; }
         
-        .syllabus-item { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 6px; border-radius: 4px; transition: 0.2s; font-size: 0.85rem; line-height: 1.3; }
-        .syllabus-item:hover { background: #f9f9f9; }
-        .syllabus-item input { flex: 0 0 auto; margin-top: 3px; }
+        .item-row { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 8px; border-radius: 4px; transition: 0.2s; font-size: 0.85rem; }
+        .item-row:hover { background: #f9f9f9; }
+        .item-row input { flex: 0 0 auto; margin-top: 3px; }
         .week-info { text-align: center; padding: 4px; background: #f1f1f1; font-size: 0.75rem; font-weight: bold; }
 
         .foot { margin-top: 15px; display: flex; gap: 8px; }
@@ -56,7 +57,7 @@
 <body>
 
 <div class="top-bar">
-    <h1>לוח בקרה אקדמי</h1>
+    <h1>לוח בקרה אקדמי ומקצועי</h1>
     <div id="date-display"></div>
 </div>
 
@@ -89,11 +90,17 @@
         <div class="week-info" id="week-dates">15.03 - 21.03</div>
         <div id="syllabus-content" style="padding: 8px;"></div>
     </div>
+
+    <div class="box">
+        <div class="header h-jobs">בדיקת משרות (יומי)</div>
+        <div id="jobs-content" style="padding: 8px;">
+            </div>
+    </div>
 </div>
 
 <div class="foot">
     <button class="btn-s" onclick="toggleP()">הצג/הסתר עבר</button>
-    <button class="btn-s" onclick="resetAll()">איפוס נתונים</button>
+    <button class="btn-s" onclick="resetAll()">איפוס נתונים כללי</button>
 </div>
 
 <script>
@@ -119,6 +126,8 @@
         { range: "28.06 - 04.07", items: ["גולדשטיין, Cognitive Psychology, פרק 12.", "Langer, 1989."] }
     ];
 
+    const jobSites = ["Jobify", "JobMaster", "AllJobs", "Career Center - Reichman"];
+
     const defEx = [
         { t: "תאוריות באישיות (מועד א')", d: "2026-02-22T09:45" },
         { t: "שיטות מחקר (מועד א')", d: "2026-02-27T09:00" },
@@ -129,11 +138,24 @@
     let exams = JSON.parse(localStorage.getItem('exams')) || defEx;
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     let syllabusDone = JSON.parse(localStorage.getItem('syllabusDone')) || {};
+    let jobsDone = JSON.parse(localStorage.getItem('jobsDone')) || {};
+    let lastResetDate = localStorage.getItem('lastResetDate');
+
+    // פונקציית איפוס יומי למשרות
+    function checkDailyReset() {
+        const today = new Date().toLocaleDateString();
+        if (lastResetDate !== today) {
+            jobsDone = {}; // איפוס התיבות
+            localStorage.setItem('lastResetDate', today);
+            save();
+        }
+    }
 
     function save() {
         localStorage.setItem('exams', JSON.stringify(exams));
         localStorage.setItem('tasks', JSON.stringify(tasks));
         localStorage.setItem('syllabusDone', JSON.stringify(syllabusDone));
+        localStorage.setItem('jobsDone', JSON.stringify(jobsDone));
     }
 
     function addEx() {
@@ -148,8 +170,7 @@
     function delT(i) { tasks.splice(i, 1); render(); }
     function togT(i) { tasks[i].f = !tasks[i].f; render(); }
     function toggleP() { showP = !showP; render(); }
-    function resetAll() { if(confirm("לאפס נתונים?")) { exams=[...defEx]; tasks=[]; syllabusDone={}; render(); } }
-
+    
     function changeWeek(dir) {
         currentWeekIdx = Math.max(0, Math.min(syllabusData.length - 1, currentWeekIdx + dir));
         render();
@@ -161,10 +182,24 @@
         render();
     }
 
+    function toggleJob(site) {
+        jobsDone[site] = !jobsDone[site];
+        render();
+    }
+
+    function resetAll() {
+        if(confirm("לאפס את כל הנתונים?")) {
+            exams=[...defEx]; tasks=[]; syllabusDone={}; jobsDone={}; render();
+        }
+    }
+
     function render() {
         const now = new Date();
         document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
         
+        checkDailyReset();
+
+        // בחינות
         const eL = document.getElementById('exList'); eL.innerHTML = '';
         exams.sort((a,b) => new Date(a.d) - new Date(b.d)).forEach((x, i) => {
             const diff = new Date(x.d) - now;
@@ -180,30 +215,40 @@
                 <td style="text-align:left"><span class="timer ${c}">${txt}</span><button class="del-btn" onclick="delE(${i})">×</button></td></tr>`;
         });
 
+        // משימות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         tasks.forEach((x, i) => {
             tL.innerHTML += `<tr class="${x.f?'done':''}"><td onclick="togT(${i})" style="cursor:pointer">${x.t}</td>
                 <td style="text-align:left"><button class="del-btn" onclick="delT(${i})">×</button></td></tr>`;
         });
 
+        // סילבוס
         const week = syllabusData[currentWeekIdx];
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx + 1}`;
         document.getElementById('week-dates').innerText = week.range;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         week.items.forEach((item, i) => {
             const isDone = syllabusDone[`w${currentWeekIdx}i${i}`];
-            sC.innerHTML += `<div class="syllabus-item ${isDone ? 'done' : ''}" onclick="toggleSyllabusItem(${currentWeekIdx}, ${i})">
+            sC.innerHTML += `<div class="item-row ${isDone ? 'done' : ''}" onclick="toggleSyllabusItem(${currentWeekIdx}, ${i})">
                 <input type="checkbox" ${isDone ? 'checked' : ''}><span>${item}</span></div>`;
         });
+
+        // משרות
+        const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
+        jobSites.forEach(site => {
+            const isDone = jobsDone[site];
+            jC.innerHTML += `<div class="item-row ${isDone ? 'done' : ''}" onclick="toggleJob('${site}')">
+                <input type="checkbox" ${isDone ? 'checked' : ''}><span>${site}</span></div>`;
+        });
+
         save();
     }
 
-    // חישוב שבוע אוטומטי
     const startSem = new Date("2026-03-15");
     const diff = Math.floor((new Date() - startSem) / 86400000);
     if (diff >= 0) currentWeekIdx = Math.min(syllabusData.length - 1, Math.floor(diff / 7));
 
-    setInterval(render, 60000); render();
+    setInterval(render, 30000); render();
 </script>
 </body>
 </html>
