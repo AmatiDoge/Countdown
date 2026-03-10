@@ -47,6 +47,7 @@
         .item-row:hover { background: #f9f9f9; }
         .item-row input { flex: 0 0 auto; margin-top: 3px; }
         .week-info { text-align: center; padding: 4px; background: #f1f1f1; font-size: 0.75rem; font-weight: bold; }
+        .job-cats { font-size: 0.72rem; color: #7f8c8d; margin-right: 4px; display: block; }
 
         .foot { margin-top: 15px; display: flex; gap: 8px; }
         .btn-s { font-size: 0.7rem; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; background: #ddd; }
@@ -76,7 +77,7 @@
         <div class="header h-tasks">משימות שוטפות</div>
         <div class="inputs">
             <input type="text" id="tkT" placeholder="משימה חדשה...">
-            <button class="btn-add" onclick="addTk()">+</button>
+            <button class="btn-add" onclick="addTask()">+</button>
         </div>
         <table><tbody id="tkList"></tbody></table>
     </div>
@@ -93,8 +94,7 @@
 
     <div class="box">
         <div class="header h-jobs">בדיקת משרות (יומי)</div>
-        <div id="jobs-content" style="padding: 8px;">
-            </div>
+        <div id="jobs-content" style="padding: 8px;"></div>
     </div>
 </div>
 
@@ -126,7 +126,12 @@
         { range: "28.06 - 04.07", items: ["גולדשטיין, Cognitive Psychology, פרק 12.", "Langer, 1989."] }
     ];
 
-    const jobSites = ["Jobify", "JobMaster", "AllJobs", "Career Center - Reichman"];
+    const jobSites = [
+        { id: "Jobify", label: "Jobify", cats: "(Data Analyst, אנליסט נתונים ג'וניור, עוזר מחקר, עוזר שיווק, רכז פרויקטים)" },
+        { id: "JobMaster", label: "JobMaster", cats: "" },
+        { id: "AllJobs", label: "AllJobs", cats: "" },
+        { id: "CareerCenter", label: "Career Center - Reichman", cats: "" }
+    ];
 
     const defEx = [
         { t: "תאוריות באישיות (מועד א')", d: "2026-02-22T09:45" },
@@ -141,11 +146,10 @@
     let jobsDone = JSON.parse(localStorage.getItem('jobsDone')) || {};
     let lastResetDate = localStorage.getItem('lastResetDate');
 
-    // פונקציית איפוס יומי למשרות
     function checkDailyReset() {
         const today = new Date().toLocaleDateString();
         if (lastResetDate !== today) {
-            jobsDone = {}; // איפוס התיבות
+            jobsDone = {};
             localStorage.setItem('lastResetDate', today);
             save();
         }
@@ -170,28 +174,10 @@
     function delT(i) { tasks.splice(i, 1); render(); }
     function togT(i) { tasks[i].f = !tasks[i].f; render(); }
     function toggleP() { showP = !showP; render(); }
-    
-    function changeWeek(dir) {
-        currentWeekIdx = Math.max(0, Math.min(syllabusData.length - 1, currentWeekIdx + dir));
-        render();
-    }
-
-    function toggleSyllabusItem(w, i) {
-        const key = `w${w}i${i}`;
-        syllabusDone[key] = !syllabusDone[key];
-        render();
-    }
-
-    function toggleJob(site) {
-        jobsDone[site] = !jobsDone[site];
-        render();
-    }
-
-    function resetAll() {
-        if(confirm("לאפס את כל הנתונים?")) {
-            exams=[...defEx]; tasks=[]; syllabusDone={}; jobsDone={}; render();
-        }
-    }
+    function changeWeek(dir) { currentWeekIdx = Math.max(0, Math.min(syllabusData.length - 1, currentWeekIdx + dir)); render(); }
+    function toggleSyllabusItem(w, i) { const key = `w${w}i${i}`; syllabusDone[key] = !syllabusDone[key]; render(); }
+    function toggleJob(id) { jobsDone[id] = !jobsDone[id]; render(); }
+    function resetAll() { if(confirm("לאפס את כל הנתונים?")) { exams=[...defEx]; tasks=[]; syllabusDone={}; jobsDone={}; render(); } }
 
     function render() {
         const now = new Date();
@@ -236,9 +222,15 @@
         // משרות
         const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
         jobSites.forEach(site => {
-            const isDone = jobsDone[site];
-            jC.innerHTML += `<div class="item-row ${isDone ? 'done' : ''}" onclick="toggleJob('${site}')">
-                <input type="checkbox" ${isDone ? 'checked' : ''}><span>${site}</span></div>`;
+            const isDone = jobsDone[site.id];
+            jC.innerHTML += `
+                <div class="item-row ${isDone ? 'done' : ''}" onclick="toggleJob('${site.id}')">
+                    <input type="checkbox" ${isDone ? 'checked' : ''}>
+                    <div>
+                        <span>${site.label}</span>
+                        ${site.cats ? `<span class="job-cats">${site.cats}</span>` : ''}
+                    </div>
+                </div>`;
         });
 
         save();
