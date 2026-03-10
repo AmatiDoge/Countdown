@@ -11,11 +11,11 @@
         }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
         
-        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1200px; margin-bottom: 10px; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1250px; margin-bottom: 10px; }
         h1 { font-size: 1.2rem; margin: 0; }
         #date-display { font-size: 0.8rem; background: #fff; padding: 4px 12px; border-radius: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        .container { display: flex; flex-wrap: wrap; gap: 12px; width: 100%; max-width: 1200px; align-items: flex-start; }
+        .container { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; max-width: 1250px; align-items: flex-start; }
         
         .box { background: var(--card); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex: 1; min-width: 290px; overflow: hidden; display: flex; flex-direction: column; }
         .header { padding: 10px; color: white; text-align: center; font-weight: bold; font-size: 0.95rem; }
@@ -24,36 +24,31 @@
         .h-syllabus { background: var(--syllabus); display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; }
         .h-jobs { background: var(--jobs); }
         
-        .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 24px; height: 24px; font-weight: bold; font-size: 1rem; }
-        .nav-btn:hover { background: rgba(255,255,255,0.4); }
-
+        .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 22px; height: 22px; font-weight: bold; font-size: 1rem; }
         .inputs { padding: 8px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; gap: 4px; }
         input { padding: 5px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem; flex: 1; }
         .btn-add { background: #2d3436; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
 
         table { width: 100%; border-collapse: collapse; }
-        td { padding: 8px 10px; border-bottom: 1px solid #f1f1f1; font-size: 0.85rem; vertical-align: middle; }
+        td { padding: 8px 10px; border-bottom: 1px solid #f1f1f1; font-size: 0.85rem; }
         
-        .timer { font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 115px; }
+        .timer { font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 110px; }
         .bg-red { background: #fff1f0; color: var(--red); border: 1px solid #ffa39e; }
         .bg-orange { background: #fff7e6; color: var(--orange); border: 1px solid #ffd591; }
         .bg-green { background: #f6ffed; color: var(--green); border: 1px solid #b7eb8f; }
         .bg-passed { background: #f5f5f5; color: #bfbfbf; text-decoration: line-through; }
 
-        .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1rem; padding: 0 5px; }
-        .done { color: #bfbfbf; text-decoration: line-through; }
-        
-        .item-row { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 8px; border-radius: 4px; transition: 0.2s; font-size: 0.85rem; }
+        .item-row { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 6px 10px; border-bottom: 1px solid #f1f1f1; transition: 0.2s; font-size: 0.85rem; }
+        .item-row:last-child { border-bottom: none; }
         .item-row:hover { background: #f9f9f9; }
         .item-row input { flex: 0 0 auto; margin-top: 3px; }
         
-        /* עיצוב התגיות החדש */
-        .job-group { margin-top: 8px; }
-        .job-parent { font-weight: bold; font-size: 0.8rem; color: #34495e; display: block; margin-bottom: 4px; border-right: 2px solid var(--jobs); padding-right: 5px; }
-        .tag-container { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
-        .job-tag { background: #ecf0f1; color: #7f8c8d; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; border: 1px solid #dcdde1; }
-        .job-cats-plain { font-size: 0.72rem; color: #7f8c8d; display: block; margin-top: 2px; }
+        /* עיצוב רשימה קומפקטית למשרות */
+        .job-detail { display: block; line-height: 1.3; }
+        .job-parent { font-weight: bold; color: #34495e; font-size: 0.82rem; }
+        .job-subs { color: #7f8c8d; font-size: 0.78rem; }
 
+        .done { color: #bfbfbf; text-decoration: line-through; }
         .foot { margin-top: 15px; display: flex; gap: 8px; }
         .btn-s { font-size: 0.7rem; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; background: #ddd; }
 
@@ -71,7 +66,7 @@
     <div class="box">
         <div class="header h-exams">בחינות ודד-ליינים</div>
         <div class="inputs">
-            <input type="text" id="exT" placeholder="שם האירוע">
+            <input type="text" id="exT" placeholder="אירוע חדש">
             <input type="datetime-local" id="exD">
             <button class="btn-add" onclick="addEx()">+</button>
         </div>
@@ -93,18 +88,18 @@
             <span id="week-title">שבוע 1</span>
             <button class="nav-btn" onclick="changeWeek(1)"><</button>
         </div>
-        <div id="syllabus-content" style="padding: 8px;"></div>
+        <div id="syllabus-content"></div>
     </div>
 
     <div class="box">
         <div class="header h-jobs">בדיקת משרות (יומי)</div>
-        <div id="jobs-content" style="padding: 8px;"></div>
+        <div id="jobs-content"></div>
     </div>
 </div>
 
 <div class="foot">
     <button class="btn-s" onclick="toggleP()">הצג/הסתר עבר</button>
-    <button class="btn-s" onclick="resetAll()">איפוס נתונים כללי</button>
+    <button class="btn-s" onclick="resetAll()">איפוס נתונים</button>
 </div>
 
 <script>
@@ -117,30 +112,30 @@
         { range: "29.03 - 04.04", items: ["גולדשטיין, פרק 8."] },
         { range: "05.04 - 11.04", items: ["חופשת פסח"] },
         { range: "12.04 - 18.04", items: ["חופשת פסח"] },
-        { range: "19.04 - 25.04", items: ["Anderson & Levy (2009).", "Kihlstrom, J. F. (תקציר)", "Bauer, P. J. (2004).", "Gammon, K. (2016)."] },
+        { range: "19.04 - 25.04", items: ["Anderson & Levy (2009)", "Kihlstrom (תקציר)", "Bauer (2004)", "Gammon (2016)"] },
         { range: "26.04 - 02.05", items: ["חזרה והשלמות"] },
-        { range: "03.05 - 09.05", items: ["גולדשטיין, 172-193.", "Talmi, D. (2013)."] },
-        { range: "10.05 - 16.05", items: ["גולדשטיין, 191-193.", "Freberg (2010), 358-361."] },
-        { range: "17.05 - 23.05", items: ["Wixted, J. T. (2005)."] },
-        { range: "24.05 - 30.05", items: ["גולדשטיין, 195-198."] },
-        { range: "31.05 - 06.06", items: ["גולדשטיין, 181-187."] },
-        { range: "07.06 - 13.06", items: ["Freberg, 348-352.", "Luck & Vogel (1997).", "גולדשטיין, 121-143."] },
-        { range: "14.06 - 20.06", items: ["גולדשטיין, 161-164.", "Ricker et al. (2010)."] },
-        { range: "21.06 - 27.06", items: ["גולדשטיין, 375-385."] },
-        { range: "28.06 - 04.07", items: ["גולדשטיין, פרק 12.", "Langer, 1989."] }
+        { range: "03.05 - 09.05", items: ["גולדשטיין, 172-193", "Talmi (2013)"] },
+        { range: "10.05 - 16.05", items: ["גולדשטיין, 191-193", "Freberg, 358-361"] },
+        { range: "17.05 - 23.05", items: ["Wixted (2005)"] },
+        { range: "24.05 - 30.05", items: ["גולדשטיין, 195-198"] },
+        { range: "31.05 - 06.06", items: ["גולדשטיין, 181-187"] },
+        { range: "07.06 - 13.06", items: ["Freberg, 348-352", "Luck & Vogel", "גולדשטיין, 121-143"] },
+        { range: "14.06 - 20.06", items: ["גולדשטיין, 161-164", "Ricker (2010)"] },
+        { range: "21.06 - 27.06", items: ["גולדשטיין, 375-385"] },
+        { range: "28.06 - 04.07", items: ["גולדשטיין, פרק 12", "Langer, 1989"] }
     ];
 
     const jobSites = [
-        { id: "Jobify", label: "Jobify", cats: "Data Analyst, אנליסט נתונים ג'וניור, עוזר מחקר, עוזר שיווק, רכז פרויקטים", type: "plain" },
-        { id: "JobMaster", label: "JobMaster", cats: "שיווק, כלכלה ושוק ההון, מחשבים ותוכנה, חשבונאות וכספים, מדעי החברה", type: "plain" },
-        { id: "AllJobs", label: "AllJobs", type: "special", groups: [
-            { parent: "פרסום שיווק ויחסי ציבור", subs: ["Product Marketing", "מחקרי שוק", "אנליסט שיווקי"] },
-            { parent: "אינטרנט ודיגיטל", subs: ["Online Marketing", "Marketing Automation"] },
-            { parent: "מוצר", subs: ["Product Manager", "Product Strategy"] },
-            { parent: "מערכות מידע", subs: ["Business Intelligence", "ניתוח מערכות מידע"] },
-            { parent: "מדעי החברה", subs: ["מחקר במדעי החברה"] }
+        { id: "Jobify", label: "Jobify", detail: "Data Analyst | אנליסט נתונים | עוזר מחקר | שיווק | פרויקטים" },
+        { id: "JobMaster", label: "JobMaster", detail: "שיווק | כלכלה | מחשבים | כספים | מדעי החברה" },
+        { id: "AllJobs", label: "AllJobs", special: [
+            { p: "שיווק/יחסי ציבור", s: "Product Marketing, מחקרי שוק, אנליסט" },
+            { p: "דיגיטל", s: "Online Marketing, Marketing Automation" },
+            { p: "מוצר", s: "Product Manager, Strategy" },
+            { p: "מערכות מידע", s: "BI, ניתוח מערכות" },
+            { p: "מדעי החברה", s: "מחקר" }
         ]},
-        { id: "CareerCenter", label: "Career Center - Reichman", cats: "", type: "plain" }
+        { id: "Reichman", label: "Career Center - Reichman", detail: "" }
     ];
 
     const defEx = [
@@ -172,7 +167,7 @@
         const t = document.getElementById('exT').value, d = document.getElementById('exD').value;
         if (t && d) { exams.push({ t, d }); document.getElementById('exT').value = ''; render(); }
     }
-    function addTk() {
+    function addTask() {
         const t = document.getElementById('tkT').value;
         if (t) { tasks.push({ t, f: false }); document.getElementById('tkT').value = ''; render(); }
     }
@@ -181,9 +176,9 @@
     function togT(i) { tasks[i].f = !tasks[i].f; render(); }
     function toggleP() { showP = !showP; render(); }
     function changeWeek(dir) { currentWeekIdx = Math.max(0, Math.min(syllabusData.length - 1, currentWeekIdx + dir)); render(); }
-    function toggleSyllabusItem(w, i) { const key = `w${w}i${i}`; syllabusDone[key] = !syllabusDone[key]; render(); }
+    function toggleSyllabusItem(w, i) { syllabusDone[`w${w}i${i}`] = !syllabusDone[`w${w}i${i}`]; render(); }
     function toggleJob(id) { jobsDone[id] = !jobsDone[id]; render(); }
-    function resetAll() { if(confirm("לאפס את כל הנתונים?")) { exams=[...defEx]; tasks=[]; syllabusDone={}; jobsDone={}; render(); } }
+    function resetAll() { if(confirm("לאפס?")) { exams=[...defEx]; tasks=[]; syllabusDone={}; jobsDone={}; render(); } }
 
     function render() {
         const now = new Date();
@@ -202,41 +197,35 @@
                 txt = d > 0 ? `${d} ימים, ${h} שעות` : `${h} שעות`;
                 if (d <= 3) c = "bg-red"; else if (d <= 10) c = "bg-orange";
             }
-            eL.innerHTML += `<tr><td><strong>${x.t}</strong></td><td style="text-align:left"><span class="timer ${c}">${txt}</span><button class="del-btn" onclick="delE(${i})">×</button></td></tr>`;
+            eL.innerHTML += `<tr><td><strong>${x.t}</strong></td><td style="text-align:left"><span class="timer ${c}">${txt}</span><button onclick="delE(${i})" class="del-btn">×</button></td></tr>`;
         });
 
         // משימות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         tasks.forEach((x, i) => {
-            tL.innerHTML += `<tr class="${x.f?'done':''}"><td onclick="togT(${i})" style="cursor:pointer">${x.t}</td><td style="text-align:left"><button class="del-btn" onclick="delT(${i})">×</button></td></tr>`;
+            tL.innerHTML += `<tr class="${x.f?'done':''}"><td><span onclick="togT(${i})" style="cursor:pointer">${x.t}</span></td><td style="text-align:left"><button onclick="delT(${i})" class="del-btn">×</button></td></tr>`;
         });
 
         // סילבוס
         const week = syllabusData[currentWeekIdx];
-        document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx + 1} (${week.range})`;
+        document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${week.range})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         week.items.forEach((item, i) => {
             const isDone = syllabusDone[`w${currentWeekIdx}i${i}`];
-            sC.innerHTML += `<div class="item-row ${isDone ? 'done' : ''}" onclick="toggleSyllabusItem(${currentWeekIdx}, ${i})"><input type="checkbox" ${isDone ? 'checked' : ''}><span>${item}</span></div>`;
+            sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="toggleSyllabusItem(${currentWeekIdx},${i})"><input type="checkbox" ${isDone?'checked':''}><span>${item}</span></div>`;
         });
 
         // משרות
         const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
         jobSites.forEach(site => {
             const isDone = jobsDone[site.id];
-            let innerHtml = `<strong>${site.label}</strong>`;
-            
-            if (site.type === 'special') {
-                innerHtml += site.groups.map(g => `
-                    <div class="job-group">
-                        <span class="job-parent">${g.parent}</span>
-                        <div class="tag-container">${g.subs.map(s => `<span class="job-tag">${s}</span>`).join('')}</div>
-                    </div>`).join('');
-            } else if (site.cats) {
-                innerHtml += `<span class="job-cats-plain">(${site.cats})</span>`;
+            let html = `<strong>${site.label}</strong>`;
+            if (site.special) {
+                html += site.special.map(g => `<div style="margin-top:2px"><span class="job-parent">${g.p}:</span> <span class="job-subs">${g.s}</span></div>`).join('');
+            } else if (site.detail) {
+                html += `<div class="job-subs">${site.detail}</div>`;
             }
-
-            jC.innerHTML += `<div class="item-row ${isDone ? 'done' : ''}" onclick="toggleJob('${site.id}')"><input type="checkbox" ${isDone ? 'checked' : ''}><div>${innerHtml}</div></div>`;
+            jC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="toggleJob('${site.id}')"><input type="checkbox" ${isDone?'checked':''}><div>${html}</div></div>`;
         });
         save();
     }
