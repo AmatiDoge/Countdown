@@ -46,8 +46,10 @@
         .item-row { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 8px; border-radius: 4px; transition: 0.2s; font-size: 0.85rem; }
         .item-row:hover { background: #f9f9f9; }
         .item-row input { flex: 0 0 auto; margin-top: 3px; }
-        .week-info { text-align: center; padding: 4px; background: #f1f1f1; font-size: 0.75rem; font-weight: bold; }
-        .job-cats { font-size: 0.72rem; color: #7f8c8d; margin-right: 4px; display: block; line-height: 1.2; }
+        
+        .job-cats-list { margin: 4px 0 0 0; padding: 0 15px 0 0; list-style-type: disc; color: #7f8c8d; font-size: 0.72rem; }
+        .job-cats-list li { margin-bottom: 2px; line-height: 1.2; }
+        .job-cats-single { font-size: 0.72rem; color: #7f8c8d; margin-top: 2px; display: block; }
 
         .foot { margin-top: 15px; display: flex; gap: 8px; }
         .btn-s { font-size: 0.7rem; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; background: #ddd; }
@@ -88,7 +90,7 @@
             <span id="week-title">שבוע 1</span>
             <button class="nav-btn" onclick="changeWeek(1)"><</button>
         </div>
-        <div class="week-info" id="week-dates">15.03 - 21.03</div>
+        <div class="week-info" id="week-dates" style="text-align:center; background:#f1f1f1; font-size:0.75rem; padding:4px;">15.03 - 21.03</div>
         <div id="syllabus-content" style="padding: 8px;"></div>
     </div>
 
@@ -127,10 +129,17 @@
     ];
 
     const jobSites = [
-        { id: "Jobify", label: "Jobify", cats: "(Data Analyst, אנליסט נתונים ג'וניור, עוזר מחקר, עוזר שיווק, רכז פרויקטים)" },
-        { id: "JobMaster", label: "JobMaster", cats: "(שיווק, כלכלה ושוק ההון, מחשבים ותוכנה, חשבונאות וכספים, מדעי החברה)" },
-        { id: "AllJobs", label: "AllJobs", cats: "(דאטה, פרסום שיווק ויחסי ציבור (Product Marketing, מחקרי שוק, אנליסט שיווקי), אינטרנט ודיגיטל (Online Marketing, Marketing Automation), מוצר (Product Manager, Product Strategy), מערכות מידע (Business Intelligence, ניתוח מערכות מידע), כספים וכלכלה, מדעי החברה (מחקר במדעי החברה))" },
-        { id: "CareerCenter", label: "Career Center - Reichman", cats: "" }
+        { id: "Jobify", label: "Jobify", cats: "(Data Analyst, אנליסט נתונים ג'וניור, עוזר מחקר, עוזר שיווק, רכז פרויקטים)", type: "text" },
+        { id: "JobMaster", label: "JobMaster", cats: "(שיווק, כלכלה ושוק ההון, מחשבים ותוכנה, חשבונאות וכספים, מדעי החברה)", type: "text" },
+        { id: "AllJobs", label: "AllJobs", cats: [
+            "פרסום שיווק ויחסי ציבור (Product Marketing, מחקרי שוק, אנליסט שיווקי)",
+            "אינטרנט ודיגיטל (Online Marketing, Marketing Automation)",
+            "מוצר (Product Manager, Product Strategy)",
+            "מערכות מידע (Business Intelligence, ניתוח מערכות מידע)",
+            "כספים וכלכלה",
+            "מדעי החברה (מחקר במדעי החברה)"
+        ], type: "list" },
+        { id: "CareerCenter", label: "Career Center - Reichman", cats: "", type: "text" }
     ];
 
     const defEx = [
@@ -223,12 +232,19 @@
         const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
         jobSites.forEach(site => {
             const isDone = jobsDone[site.id];
+            let catsHtml = '';
+            if (site.type === 'list' && Array.isArray(site.cats)) {
+                catsHtml = `<ul class="job-cats-list">` + site.cats.map(c => `<li>${c}</li>`).join('') + `</ul>`;
+            } else if (site.cats) {
+                catsHtml = `<span class="job-cats-single">${site.cats}</span>`;
+            }
+
             jC.innerHTML += `
                 <div class="item-row ${isDone ? 'done' : ''}" onclick="toggleJob('${site.id}')">
                     <input type="checkbox" ${isDone ? 'checked' : ''}>
                     <div>
-                        <span>${site.label}</span>
-                        ${site.cats ? `<span class="job-cats">${site.cats}</span>` : ''}
+                        <strong>${site.label}</strong>
+                        ${catsHtml}
                     </div>
                 </div>`;
         });
@@ -244,5 +260,3 @@
 </script>
 </body>
 </html>
-
-```
