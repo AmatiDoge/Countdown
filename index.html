@@ -17,7 +17,7 @@
 
         .container { display: flex; flex-wrap: wrap; gap: 12px; width: 100%; max-width: 1200px; align-items: flex-start; }
         
-        .box { background: var(--card); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex: 1; min-width: 280px; overflow: hidden; display: flex; flex-direction: column; }
+        .box { background: var(--card); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex: 1; min-width: 290px; overflow: hidden; display: flex; flex-direction: column; }
         .header { padding: 10px; color: white; text-align: center; font-weight: bold; font-size: 0.95rem; }
         .h-exams { background: var(--exam); } 
         .h-tasks { background: var(--task); }
@@ -47,9 +47,12 @@
         .item-row:hover { background: #f9f9f9; }
         .item-row input { flex: 0 0 auto; margin-top: 3px; }
         
-        .job-cats-list { margin: 4px 0 0 0; padding: 0 15px 0 0; list-style-type: disc; color: #7f8c8d; font-size: 0.72rem; }
-        .job-cats-list li { margin-bottom: 2px; line-height: 1.2; }
-        .job-cats-single { font-size: 0.72rem; color: #7f8c8d; margin-top: 2px; display: block; }
+        /* עיצוב התגיות החדש */
+        .job-group { margin-top: 8px; }
+        .job-parent { font-weight: bold; font-size: 0.8rem; color: #34495e; display: block; margin-bottom: 4px; border-right: 2px solid var(--jobs); padding-right: 5px; }
+        .tag-container { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+        .job-tag { background: #ecf0f1; color: #7f8c8d; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; border: 1px solid #dcdde1; }
+        .job-cats-plain { font-size: 0.72rem; color: #7f8c8d; display: block; margin-top: 2px; }
 
         .foot { margin-top: 15px; display: flex; gap: 8px; }
         .btn-s { font-size: 0.7rem; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; background: #ddd; }
@@ -90,7 +93,6 @@
             <span id="week-title">שבוע 1</span>
             <button class="nav-btn" onclick="changeWeek(1)"><</button>
         </div>
-        <div class="week-info" id="week-dates" style="text-align:center; background:#f1f1f1; font-size:0.75rem; padding:4px;">15.03 - 21.03</div>
         <div id="syllabus-content" style="padding: 8px;"></div>
     </div>
 
@@ -111,35 +113,34 @@
 
     const syllabusData = [
         { range: "15.03 - 21.03", items: ["תחילת סמסטר - היכרות"] },
-        { range: "22.03 - 28.03", items: ["Squire, L. R., & Wixted, J.T. (2015). Remembering. Daedalus, 141(1), 53-66."] },
-        { range: "29.03 - 04.04", items: ["גולדשטיין, Cognitive Psychology, פרק 8."] },
-        { range: "05.04 - 11.04", items: ["חופשת פסח – אין חומר קריאה"] },
-        { range: "12.04 - 18.04", items: ["חופשת פסח – אין חומר קריאה"] },
-        { range: "19.04 - 25.04", items: ["Anderson & Levy (2009). Suppressing unwanted memories.", "Kihlstrom, J. F. “Trauma and Memory Revisited” (תקציר).", "Bauer, P. J. (2004). Childhood amnesia.", "Gammon, K. (2016). Childhood amnesia causes."] },
-        { range: "26.04 - 02.05", items: ["חזרה על חומר / השלמות"] },
-        { range: "03.05 - 09.05", items: ["גולדשטיין, עמודים 172-181, 187-189, 191-193.", "Talmi, D. (2013). Enhanced emotional memory."] },
-        { range: "10.05 - 16.05", items: ["גולדשטיין, עמודים 191-193.", "Freberg, L. A. (2010). Biological Psychology, pp. 358-361."] },
-        { range: "17.05 - 23.05", items: ["Wixted, J. T. (2005). Why we forget."] },
-        { range: "24.05 - 30.05", items: ["גולדשטיין, Cognitive Psychology, עמודים 195-198."] },
-        { range: "31.05 - 06.06", items: ["גולדשטיין, Cognitive Psychology, עמודים 181-187."] },
-        { range: "07.06 - 13.06", items: ["Freberg, pp. 348-352.", "Luck & Vogel (1997). Visual working memory.", "גולדשטיין, עמודים 121-143."] },
-        { range: "14.06 - 20.06", items: ["גולדשטיין, עמודים 161-164.", "Ricker et al. (2010). Working memory."] },
-        { range: "21.06 - 27.06", items: ["גולדשטיין, Cognitive Psychology, עמודים 375-385."] },
-        { range: "28.06 - 04.07", items: ["גולדשטיין, Cognitive Psychology, פרק 12.", "Langer, 1989."] }
+        { range: "22.03 - 28.03", items: ["Squire & Wixted (2015). Remembering."] },
+        { range: "29.03 - 04.04", items: ["גולדשטיין, פרק 8."] },
+        { range: "05.04 - 11.04", items: ["חופשת פסח"] },
+        { range: "12.04 - 18.04", items: ["חופשת פסח"] },
+        { range: "19.04 - 25.04", items: ["Anderson & Levy (2009).", "Kihlstrom, J. F. (תקציר)", "Bauer, P. J. (2004).", "Gammon, K. (2016)."] },
+        { range: "26.04 - 02.05", items: ["חזרה והשלמות"] },
+        { range: "03.05 - 09.05", items: ["גולדשטיין, 172-193.", "Talmi, D. (2013)."] },
+        { range: "10.05 - 16.05", items: ["גולדשטיין, 191-193.", "Freberg (2010), 358-361."] },
+        { range: "17.05 - 23.05", items: ["Wixted, J. T. (2005)."] },
+        { range: "24.05 - 30.05", items: ["גולדשטיין, 195-198."] },
+        { range: "31.05 - 06.06", items: ["גולדשטיין, 181-187."] },
+        { range: "07.06 - 13.06", items: ["Freberg, 348-352.", "Luck & Vogel (1997).", "גולדשטיין, 121-143."] },
+        { range: "14.06 - 20.06", items: ["גולדשטיין, 161-164.", "Ricker et al. (2010)."] },
+        { range: "21.06 - 27.06", items: ["גולדשטיין, 375-385."] },
+        { range: "28.06 - 04.07", items: ["גולדשטיין, פרק 12.", "Langer, 1989."] }
     ];
 
     const jobSites = [
-        { id: "Jobify", label: "Jobify", cats: "(Data Analyst, אנליסט נתונים ג'וניור, עוזר מחקר, עוזר שיווק, רכז פרויקטים)", type: "text" },
-        { id: "JobMaster", label: "JobMaster", cats: "(שיווק, כלכלה ושוק ההון, מחשבים ותוכנה, חשבונאות וכספים, מדעי החברה)", type: "text" },
-        { id: "AllJobs", label: "AllJobs", cats: [
-            "פרסום שיווק ויחסי ציבור (Product Marketing, מחקרי שוק, אנליסט שיווקי)",
-            "אינטרנט ודיגיטל (Online Marketing, Marketing Automation)",
-            "מוצר (Product Manager, Product Strategy)",
-            "מערכות מידע (Business Intelligence, ניתוח מערכות מידע)",
-            "כספים וכלכלה",
-            "מדעי החברה (מחקר במדעי החברה)"
-        ], type: "list" },
-        { id: "CareerCenter", label: "Career Center - Reichman", cats: "", type: "text" }
+        { id: "Jobify", label: "Jobify", cats: "Data Analyst, אנליסט נתונים ג'וניור, עוזר מחקר, עוזר שיווק, רכז פרויקטים", type: "plain" },
+        { id: "JobMaster", label: "JobMaster", cats: "שיווק, כלכלה ושוק ההון, מחשבים ותוכנה, חשבונאות וכספים, מדעי החברה", type: "plain" },
+        { id: "AllJobs", label: "AllJobs", type: "special", groups: [
+            { parent: "פרסום שיווק ויחסי ציבור", subs: ["Product Marketing", "מחקרי שוק", "אנליסט שיווקי"] },
+            { parent: "אינטרנט ודיגיטל", subs: ["Online Marketing", "Marketing Automation"] },
+            { parent: "מוצר", subs: ["Product Manager", "Product Strategy"] },
+            { parent: "מערכות מידע", subs: ["Business Intelligence", "ניתוח מערכות מידע"] },
+            { parent: "מדעי החברה", subs: ["מחקר במדעי החברה"] }
+        ]},
+        { id: "CareerCenter", label: "Career Center - Reichman", cats: "", type: "plain" }
     ];
 
     const defEx = [
@@ -157,11 +158,7 @@
 
     function checkDailyReset() {
         const today = new Date().toLocaleDateString();
-        if (lastResetDate !== today) {
-            jobsDone = {};
-            localStorage.setItem('lastResetDate', today);
-            save();
-        }
+        if (lastResetDate !== today) { jobsDone = {}; localStorage.setItem('lastResetDate', today); save(); }
     }
 
     function save() {
@@ -191,7 +188,6 @@
     function render() {
         const now = new Date();
         document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
-        
         checkDailyReset();
 
         // בחינות
@@ -203,59 +199,51 @@
             if (diff <= 0) { c = "bg-passed"; txt = "עבר"; }
             else {
                 const d = Math.floor(diff / 86400000), h = Math.floor((diff % 86400000) / 3600000);
-                txt = d > 0 ? `${d} ימים, ${h} שעות` : `${h} שעות, ${Math.floor((diff % 3600000) / 60000)} דקות`;
+                txt = d > 0 ? `${d} ימים, ${h} שעות` : `${h} שעות`;
                 if (d <= 3) c = "bg-red"; else if (d <= 10) c = "bg-orange";
             }
-            eL.innerHTML += `<tr><td><strong>${x.t}</strong><br><small>${new Date(x.d).toLocaleDateString('he-IL')}</small></td>
-                <td style="text-align:left"><span class="timer ${c}">${txt}</span><button class="del-btn" onclick="delE(${i})">×</button></td></tr>`;
+            eL.innerHTML += `<tr><td><strong>${x.t}</strong></td><td style="text-align:left"><span class="timer ${c}">${txt}</span><button class="del-btn" onclick="delE(${i})">×</button></td></tr>`;
         });
 
         // משימות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         tasks.forEach((x, i) => {
-            tL.innerHTML += `<tr class="${x.f?'done':''}"><td onclick="togT(${i})" style="cursor:pointer">${x.t}</td>
-                <td style="text-align:left"><button class="del-btn" onclick="delT(${i})">×</button></td></tr>`;
+            tL.innerHTML += `<tr class="${x.f?'done':''}"><td onclick="togT(${i})" style="cursor:pointer">${x.t}</td><td style="text-align:left"><button class="del-btn" onclick="delT(${i})">×</button></td></tr>`;
         });
 
         // סילבוס
         const week = syllabusData[currentWeekIdx];
-        document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx + 1}`;
-        document.getElementById('week-dates').innerText = week.range;
+        document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx + 1} (${week.range})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         week.items.forEach((item, i) => {
             const isDone = syllabusDone[`w${currentWeekIdx}i${i}`];
-            sC.innerHTML += `<div class="item-row ${isDone ? 'done' : ''}" onclick="toggleSyllabusItem(${currentWeekIdx}, ${i})">
-                <input type="checkbox" ${isDone ? 'checked' : ''}><span>${item}</span></div>`;
+            sC.innerHTML += `<div class="item-row ${isDone ? 'done' : ''}" onclick="toggleSyllabusItem(${currentWeekIdx}, ${i})"><input type="checkbox" ${isDone ? 'checked' : ''}><span>${item}</span></div>`;
         });
 
         // משרות
         const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
         jobSites.forEach(site => {
             const isDone = jobsDone[site.id];
-            let catsHtml = '';
-            if (site.type === 'list' && Array.isArray(site.cats)) {
-                catsHtml = `<ul class="job-cats-list">` + site.cats.map(c => `<li>${c}</li>`).join('') + `</ul>`;
+            let innerHtml = `<strong>${site.label}</strong>`;
+            
+            if (site.type === 'special') {
+                innerHtml += site.groups.map(g => `
+                    <div class="job-group">
+                        <span class="job-parent">${g.parent}</span>
+                        <div class="tag-container">${g.subs.map(s => `<span class="job-tag">${s}</span>`).join('')}</div>
+                    </div>`).join('');
             } else if (site.cats) {
-                catsHtml = `<span class="job-cats-single">${site.cats}</span>`;
+                innerHtml += `<span class="job-cats-plain">(${site.cats})</span>`;
             }
 
-            jC.innerHTML += `
-                <div class="item-row ${isDone ? 'done' : ''}" onclick="toggleJob('${site.id}')">
-                    <input type="checkbox" ${isDone ? 'checked' : ''}>
-                    <div>
-                        <strong>${site.label}</strong>
-                        ${catsHtml}
-                    </div>
-                </div>`;
+            jC.innerHTML += `<div class="item-row ${isDone ? 'done' : ''}" onclick="toggleJob('${site.id}')"><input type="checkbox" ${isDone ? 'checked' : ''}><div>${innerHtml}</div></div>`;
         });
-
         save();
     }
 
     const startSem = new Date("2026-03-15");
     const diff = Math.floor((new Date() - startSem) / 86400000);
     if (diff >= 0) currentWeekIdx = Math.min(syllabusData.length - 1, Math.floor(diff / 7));
-
     setInterval(render, 30000); render();
 </script>
 </body>
