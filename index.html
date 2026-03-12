@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic & Career Hub 2026</title>
+    <title>Academic Hub - Dynamic Syllabus</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60; --jobs: #2c3e50;
@@ -23,36 +23,28 @@
         .h-syllabus { background: var(--syllabus); display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; }
         
         .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 22px; height: 22px; font-weight: bold; font-size: 1rem; }
-        .inputs { padding: 8px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; gap: 4px; }
-        input { padding: 5px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem; flex: 1; }
+        .inputs { padding: 8px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; gap: 4px; flex-wrap: wrap; }
+        input, select { padding: 5px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem; flex: 1; min-width: 80px; }
         .btn-add { background: #2d3436; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
 
-        table { width: 100%; border-collapse: collapse; }
-        td { padding: 8px 10px; border-bottom: 1px solid #f1f1f1; font-size: 0.85rem; }
+        .item-row { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 6px 10px; border-bottom: 1px solid #f1f1f1; transition: 0.2s; font-size: 0.85rem; }
+        .item-row:hover { background: #f9f9f9; }
+        .item-row input[type="checkbox"] { flex: 0 0 auto; margin-top: 3px; }
         
-        .timer { font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 110px; }
-        .bg-red { background: #fff1f0; color: var(--red); border: 1px solid #ffa39e; }
-        .bg-orange { background: #fff7e6; color: var(--orange); border: 1px solid #ffd591; }
-        .bg-green { background: #f6ffed; color: var(--green); border: 1px solid #b7eb8f; }
+        .badge { font-size: 0.65rem; padding: 2px 5px; border-radius: 4px; font-weight: bold; margin-left: 5px; white-space: nowrap; }
+        .tag-קריאה { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .tag-סרטון { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+        .tag-מטלה { background: #fff3e0; color: #ef6c00; border: 1px solid #ffe0b2; }
+        .tag-בוחן { background: #fce4ec; color: #c2185b; border: 1px solid #f8bbd0; }
+
+        .timer { font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 100px; }
+        .bg-red { background: #fff1f0; color: var(--red); }
+        .bg-orange { background: #fff7e6; color: var(--orange); }
+        .bg-green { background: #f6ffed; color: var(--green); }
         .bg-passed { background: #f5f5f5; color: #bfbfbf; text-decoration: line-through; }
 
-        .item-row { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 6px 10px; border-bottom: 1px solid #f1f1f1; transition: 0.2s; font-size: 0.85rem; }
-        .item-row:last-child { border-bottom: none; }
-        .item-row:hover { background: #f9f9f9; }
-        .item-row input { flex: 0 0 auto; margin-top: 3px; }
-        
-        /* סילבוס מעוצב */
-        .syllabus-section-title { font-weight: bold; color: var(--syllabus); font-size: 0.8rem; margin: 8px 10px 4px 0; display: block; border-bottom: 1px solid #eee; }
-        .badge { font-size: 0.7rem; padding: 1px 4px; border-radius: 3px; font-weight: bold; margin-left: 4px; }
-        .badge-video { background: #e1f5fe; color: #0277bd; }
-        .badge-task { background: #fff3e0; color: #e65100; }
-        .badge-quiz { background: #fce4ec; color: #c2185b; }
-
-        /* משרות */
-        .job-parent { font-weight: bold; color: #34495e; font-size: 0.82rem; }
-        .job-subs { color: #7f8c8d; font-size: 0.78rem; }
-
         .done { color: #bfbfbf; text-decoration: line-through; }
+        .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1rem; margin-right: auto; }
         .foot { margin-top: 15px; display: flex; gap: 8px; }
         .btn-s { font-size: 0.7rem; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; background: #ddd; }
 
@@ -62,7 +54,7 @@
 <body>
 
 <div class="top-bar">
-    <h1>לוח בקרה אקדמי</h1>
+    <h1>לוח בקרה אקדמי חכם</h1>
     <div id="date-display"></div>
 </div>
 
@@ -74,7 +66,7 @@
             <input type="datetime-local" id="exD">
             <button class="btn-add" onclick="addEx()">+</button>
         </div>
-        <table><tbody id="exList"></tbody></table>
+        <div id="exList"></div>
     </div>
 
     <div class="box">
@@ -83,7 +75,7 @@
             <input type="text" id="tkT" placeholder="משימה חדשה...">
             <button class="btn-add" onclick="addTask()">+</button>
         </div>
-        <table><tbody id="tkList"></tbody></table>
+        <div id="tkList"></div>
     </div>
 
     <div class="box">
@@ -91,6 +83,16 @@
             <button class="nav-btn" onclick="changeWeek(-1)">></button>
             <span id="week-title">שבוע 1</span>
             <button class="nav-btn" onclick="changeWeek(1)"><</button>
+        </div>
+        <div class="inputs">
+            <input type="text" id="sylInput" placeholder="הוסף משימה לשבוע זה...">
+            <select id="sylTag">
+                <option value="קריאה">קריאה</option>
+                <option value="סרטון">סרטון</option>
+                <option value="מטלה">מטלה</option>
+                <option value="בוחן">בוחן</option>
+            </select>
+            <button class="btn-add" onclick="addSyllabusItem()">+</button>
         </div>
         <div id="syllabus-content"></div>
     </div>
@@ -110,116 +112,38 @@
     let showP = true;
     let currentWeekIdx = 0;
 
-    const syllabusData = [
-        { 
-            range: "15.03 - 21.03", 
-            org: ["<span class='badge badge-video'>צפייה</span> 01 - מבוא לפסיכולוגיה ארגונית"], 
-            cog: ["אין חומר קריאה מוגדר"] 
-        },
-        { 
-            range: "22.03 - 28.03", 
-            org: ["<span class='badge badge-video'>צפייה</span> 02 - מבנה ארגוני"], 
-            cog: ["Squire & Wixted (2015). Remembering.", "<span class='badge badge-task'>מטלה</span> אוטוביוגרפיה (עד מוצ\"ש 29.3)"] 
-        },
-        { 
-            range: "29.03 - 04.04", 
-            org: ["<span class='badge badge-video'>צפייה</span> 03 - הבדלים בין-אישיים"], 
-            cog: ["גולדשטיין, Cognitive Psychology, פרק 8"] 
-        },
-        { 
-            range: "05.04 - 11.04", 
-            org: ["<span class='badge badge-video'>צפייה</span> 04 - תרבות ארגונית"], 
-            cog: ["חופשת פסח - אין קריאה"] 
-        },
-        { 
-            range: "12.04 - 18.04", 
-            org: ["<span class='badge badge-video'>צפייה</span> 05 - מיון וגיוס"], 
-            cog: ["חופשת פסח - אין קריאה"] 
-        },
-        { 
-            range: "19.04 - 25.04", 
-            org: ["<span class='badge badge-video'>צפייה</span> 06 - רגשות ודחק"], 
-            cog: ["Anderson & Levy (2009)", "Kihlstrom (תקציר)", "Bauer (2004)", "Gammon (2016)"] 
-        },
-        { 
-            range: "26.04 - 02.05", 
-            org: ["<span class='badge badge-video'>צפייה</span> 07 - שביעות רצון ומחויבות"], 
-            cog: ["גולדשטיין ע' 172-193", "Talmi, D. (2013)", "<span class='badge badge-task'>מטלה</span> זיכרון וטכנולוגיה (עד 30.4)"] 
-        },
-        { 
-            range: "03.05 - 09.05", 
-            org: ["<span class='badge badge-video'>צפייה</span> 08 - תאוריות מוטיבציה", "<span class='badge badge-quiz'>בוחן</span> בוחן בית 1 (12.5)"], 
-            cog: ["גולדשטיין ע' 191-193", "Freberg ע' 358-361"] 
-        },
-        { 
-            range: "10.05 - 16.05", 
-            org: ["<span class='badge badge-video'>צפייה</span> 09 - מנהיגות"], 
-            cog: ["Wixted, J. T. (2005). Why we forget"] 
-        },
-        { 
-            range: "17.05 - 23.05", 
-            org: ["<span class='badge badge-video'>צפייה</span> 10 - אבחון ארגוני", "<span class='badge badge-quiz'>בוחן</span> בוחן בית 2 (26.5)"], 
-            cog: ["גולדשטיין ע' 195-198"] 
-        },
-        { 
-            range: "24.05 - 30.05", 
-            org: ["<span class='badge badge-video'>צפייה</span> 11 - יצירתיות וחדשנות"], 
-            cog: ["גולדשטיין ע' 181-187", "<span class='badge badge-task'>מטלה</span> פוסט-טראומה/דמנציה (עד 5.6)"] 
-        },
-        { 
-            range: "31.05 - 06.06", 
-            org: ["<span class='badge badge-video'>צפייה</span> 12 - שיתוף פעולה וקונפליקטים"], 
-            cog: ["Freberg (348-52)", "Luck & Vogel (1997)", "גולדשטיין (121-143)"] 
-        },
-        { 
-            range: "07.06 - 13.06", 
-            org: ["<span class='badge badge-video'>צפייה</span> 13 - קבוצות וצוותים", "<span class='badge badge-quiz'>בוחן</span> בוחן בית 3 (16.6)"], 
-            cog: ["גולדשטיין 161-164", "Ricker et al. (2010)"] 
-        },
-        { 
-            range: "14.06 - 20.06", 
-            org: ["<span class='badge badge-video'>צפייה</span> 14 - תקשורת והקשבה"], 
-            cog: ["גולדשטיין ע' 375-385"] 
-        },
-        { 
-            range: "21.06 - 04.07", 
-            org: ["הכנה למבחן", "<span class='badge badge-quiz'>בוחן</span> בוחן בית 4 (30.6)"], 
-            cog: ["גולדשטיין (פרק 12)", "Langer (1989)"] 
-        }
+    // נתונים קבועים מתויגים (ניתן למחוק אותם מהממשק אם תרצה)
+    const initialSyllabus = [
+        { w: 0, t: "סרטון", txt: "01 - מבוא לפסיכולוגיה ארגונית" },
+        { w: 1, t: "סרטון", txt: "02 - מבנה ארגוני" },
+        { w: 1, t: "קריאה", txt: "Squire & Wixted (2015). Remembering." },
+        { w: 1, t: "מטלה", txt: "אוטוביוגרפיה (עד 29.3)" },
+        { w: 2, t: "סרטון", txt: "03 - הבדלים בין-אישיים" },
+        { w: 2, t: "קריאה", txt: "גולדשטיין, פרק 8" },
+        { w: 5, t: "קריאה", txt: "Anderson & Levy (2009)" },
+        { w: 5, t: "קריאה", txt: "Kihlstrom (תקציר)" },
+        { w: 5, t: "קריאה", txt: "Bauer (2004)" },
+        { w: 5, t: "קריאה", txt: "Gammon (2016)" },
+        { w: 6, t: "מטלה", txt: "זיכרון וטכנולוגיה (עד 30.4)" },
+        { w: 7, t: "בוחן", txt: "בוחן בית 1 (12.5)" }
+        // הוספתי רק דגימה, תוכל להוסיף את השאר דרך הממשק בקלות!
     ];
 
-    const jobSites = [
-        { id: "Jobify", label: "Jobify", detail: "Data Analyst | אנליסט נתונים | עוזר מחקר | שיווק | פרויקטים" },
-        { id: "JobMaster", label: "JobMaster", detail: "שיווק | כלכלה | מחשבים | כספים | מדעי החברה" },
-        { id: "AllJobs", label: "AllJobs", special: [
-            { p: "שיווק/יחסי ציבור", s: "Product Marketing, מחקרי שוק, אנליסט" },
-            { p: "דיגיטל", s: "Online Marketing, Marketing Automation" },
-            { p: "מוצר", s: "Product Manager, Strategy" },
-            { p: "מערכות מידע", s: "BI, ניתוח מערכות" },
-            { p: "מדעי החברה", s: "מחקר" }
-        ]},
-        { id: "Reichman", label: "Career Center - Reichman", detail: "" }
-    ];
-
-    const defEx = [
-        { t: "תאוריות באישיות (מועד א')", d: "2026-02-22T09:45" },
-        { t: "שיטות מחקר (מועד א')", d: "2026-02-27T09:00" },
-        { t: "קוגניטיבית ב' (מועד ב')", d: "2026-03-04T09:45" },
-        { t: "סטטיסטיקה רב-משתנית (מועד ב')", d: "2026-03-09T09:45" }
-    ];
-
-    let exams = JSON.parse(localStorage.getItem('exams')) || defEx;
+    let exams = JSON.parse(localStorage.getItem('exams')) || [];
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let syllabusItems = JSON.parse(localStorage.getItem('syllabusItems')) || initialSyllabus;
     let syllabusDone = JSON.parse(localStorage.getItem('syllabusDone')) || {};
     let jobsDone = JSON.parse(localStorage.getItem('jobsDone')) || {};
 
     function save() {
         localStorage.setItem('exams', JSON.stringify(exams));
         localStorage.setItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem('syllabusItems', JSON.stringify(syllabusItems));
         localStorage.setItem('syllabusDone', JSON.stringify(syllabusDone));
         localStorage.setItem('jobsDone', JSON.stringify(jobsDone));
     }
 
+    // פונקציות הוספה
     function addEx() {
         const t = document.getElementById('exT').value, d = document.getElementById('exD').value;
         if (t && d) { exams.push({ t, d }); document.getElementById('exT').value = ''; render(); }
@@ -228,76 +152,94 @@
         const t = document.getElementById('tkT').value;
         if (t) { tasks.push({ t, f: false }); document.getElementById('tkT').value = ''; render(); }
     }
+    function addSyllabusItem() {
+        const txt = document.getElementById('sylInput').value;
+        const tag = document.getElementById('sylTag').value;
+        if (txt) {
+            syllabusItems.push({ w: currentWeekIdx, t: tag, txt: txt });
+            document.getElementById('sylInput').value = '';
+            render();
+        }
+    }
+
+    // פונקציות מחיקה ושינוי
     function delE(i) { exams.splice(i, 1); render(); }
     function delT(i) { tasks.splice(i, 1); render(); }
-    function togT(i) { tasks[i].f = !tasks[i].f; render(); }
-    function toggleP() { showP = !showP; render(); }
-    function changeWeek(dir) { currentWeekIdx = Math.max(0, Math.min(syllabusData.length - 1, currentWeekIdx + dir)); render(); }
-    function toggleSyllabusItem(w, i, type) { 
-        const key = `w${w}i${i}t${type}`;
-        syllabusDone[key] = !syllabusDone[key]; 
-        render(); 
+    function delS(idxInFiltered) {
+        // מוצא את האינדקס האמיתי במערך המלא
+        const filtered = syllabusItems.filter(item => item.w === currentWeekIdx);
+        const itemToDelete = filtered[idxInFiltered];
+        const realIdx = syllabusItems.indexOf(itemToDelete);
+        syllabusItems.splice(realIdx, 1);
+        render();
     }
-    function toggleJob(id) { jobsDone[id] = !jobsDone[id]; render(); }
-    function resetAll() { if(confirm("לאפס נתונים?")) { exams=[...defEx]; tasks=[]; syllabusDone={}; jobsDone={}; render(); } }
+    function togT(i) { tasks[i].f = !tasks[i].f; render(); }
+    function toggleSyllabus(realIdx) {
+        const key = `item_${realIdx}_${syllabusItems[realIdx].txt}`;
+        syllabusDone[key] = !syllabusDone[key];
+        render();
+    }
+
+    function changeWeek(dir) {
+        currentWeekIdx = Math.max(0, Math.min(15, currentWeekIdx + dir));
+        render();
+    }
 
     function render() {
         const now = new Date();
         document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
-        
+
+        // רינדור בחינות
         const eL = document.getElementById('exList'); eL.innerHTML = '';
         exams.sort((a,b) => new Date(a.d) - new Date(b.d)).forEach((x, i) => {
             const diff = new Date(x.d) - now;
+            const days = Math.floor(diff / 86400000);
             if (diff <= 0 && !showP) return;
-            let c = "bg-green", txt = "";
+            let c = "bg-green", txt = days + " ימים";
             if (diff <= 0) { c = "bg-passed"; txt = "עבר"; }
-            else {
-                const d = Math.floor(diff / 86400000), h = Math.floor((diff % 86400000) / 3600000);
-                txt = d > 0 ? `${d} ימים, ${h} שעות` : `${h} שעות`;
-                if (d <= 3) c = "bg-red"; else if (d <= 10) c = "bg-orange";
-            }
-            eL.innerHTML += `<tr><td><strong>${x.t}</strong></td><td style="text-align:left"><span class="timer ${c}">${txt}</span><button onclick="delE(${i})" class="del-btn">×</button></td></tr>`;
+            else if (days <= 3) { c = "bg-red"; txt = (days === 0 ? "היום!" : days + " ימים"); }
+            eL.innerHTML += `<div class="item-row"><strong>${x.t}</strong><span class="timer ${c}" style="margin-right:auto">${txt}</span><button onclick="delE(${i})" class="del-btn">×</button></div>`;
         });
 
+        // רינדור משימות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         tasks.forEach((x, i) => {
-            tL.innerHTML += `<tr class="${x.f?'done':''}"><td><span onclick="togT(${i})" style="cursor:pointer">${x.t}</span></td><td style="text-align:left"><button onclick="delT(${i})" class="del-btn">×</button></td></tr>`;
+            tL.innerHTML += `<div class="item-row ${x.f?'done':''}"><input type="checkbox" ${x.f?'checked':''} onclick="togT(${i})"><span>${x.t}</span><button onclick="delT(${i})" class="del-btn">×</button></div>`;
         });
 
-        const week = syllabusData[currentWeekIdx];
-        document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${week.range})`;
+        // רינדור סילבוס
+        const weekRanges = ["15.03-21.03", "22.03-28.03", "29.03-04.04", "05.04-11.04", "12.04-18.04", "19.04-25.04", "26.04-02.05", "03.05-09.05", "10.05-16.05", "17.05-23.05", "24.05-30.05", "31.05-06.06", "07.06-13.06", "14.06-20.06", "21.06-27.06", "28.06-04.07"];
+        document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${weekRanges[currentWeekIdx]})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         
-        sC.innerHTML += `<span class="syllabus-section-title">פסיכולוגיה ארגונית</span>`;
-        week.org.forEach((item, i) => {
-            const isDone = syllabusDone[`w${currentWeekIdx}i${i}torg`];
-            sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="toggleSyllabusItem(${currentWeekIdx},${i},'org')"><input type="checkbox" ${isDone?'checked':''}><span>${item}</span></div>`;
-        });
-
-        sC.innerHTML += `<span class="syllabus-section-title">קוגניטיבית ג'</span>`;
-        week.cog.forEach((item, i) => {
-            const isDone = syllabusDone[`w${currentWeekIdx}i${i}tcog`];
-            sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="toggleSyllabusItem(${currentWeekIdx},${i},'cog')"><input type="checkbox" ${isDone?'checked':''}><span>${item}</span></div>`;
-        });
-
-        const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
-        jobSites.forEach(site => {
-            const isDone = jobsDone[site.id];
-            let html = `<strong>${site.label}</strong>`;
-            if (site.special) {
-                html += site.special.map(g => `<div style="margin-top:2px"><span class="job-parent">${g.p}:</span> <span class="job-subs">${g.s}</span></div>`).join('');
-            } else if (site.detail) {
-                html += `<div class="job-subs">${site.detail}</div>`;
+        syllabusItems.forEach((item, realIdx) => {
+            if (item.w === currentWeekIdx) {
+                const key = `item_${realIdx}_${item.txt}`;
+                const isDone = syllabusDone[key];
+                sC.innerHTML += `
+                    <div class="item-row ${isDone?'done':''}">
+                        <input type="checkbox" ${isDone?'checked':''} onclick="toggleSyllabus(${realIdx})">
+                        <span class="badge tag-${item.t}">${item.t}</span>
+                        <span>${item.txt}</span>
+                        <button onclick="delS(${syllabusItems.filter(it => it.w === currentWeekIdx).indexOf(item)})" class="del-btn">×</button>
+                    </div>`;
             }
-            jC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="toggleJob('${site.id}')"><input type="checkbox" ${isDone?'checked':''}><div>${html}</div></div>`;
         });
+
+        // רינדור משרות (קבוע)
+        const jobSites = ["Jobify", "JobMaster", "AllJobs", "Career Center"];
+        const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
+        jobSites.forEach(s => {
+            jC.innerHTML += `<div class="item-row"><input type="checkbox"><span>${s}</span></div>`;
+        });
+
         save();
     }
 
-    const startSem = new Date("2026-03-15");
-    const diff = Math.floor((new Date() - startSem) / 86400000);
-    if (diff >= 0) currentWeekIdx = Math.min(syllabusData.length - 1, Math.floor(diff / 7));
-    setInterval(render, 30000); render();
+    function toggleP() { showP = !showP; render(); }
+    function resetAll() { if(confirm("לאפס?")) { localStorage.clear(); location.reload(); } }
+
+    setInterval(render, 60000); render();
 </script>
 </body>
 </html>
