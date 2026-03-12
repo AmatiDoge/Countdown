@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Hub 2026 - Hybrid Interactive</title>
+    <title>Academic Hub 2026 - Master List</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60;
@@ -11,16 +11,16 @@
         }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
         
-        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1250px; margin-bottom: 10px; }
-        h1 { font-size: 1.1rem; margin: 0; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1300px; margin-bottom: 10px; }
+        h1 { font-size: 1.2rem; margin: 0; }
         #date-display { font-size: 0.8rem; background: #fff; padding: 4px 12px; border-radius: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        .container { display: flex; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 1250px; align-items: flex-start; justify-content: center; }
+        .container { display: flex; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 1300px; align-items: flex-start; justify-content: center; }
         
-        .box { background: var(--card); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); flex: 1; min-width: 330px; max-width: 450px; overflow: hidden; display: flex; flex-direction: column; }
+        .box { background: var(--card); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); flex: 1; min-width: 340px; max-width: 480px; overflow: hidden; display: flex; flex-direction: column; }
         .header { padding: 12px; color: white; text-align: center; font-weight: bold; font-size: 0.95rem; }
         .h-exams { background: var(--exam); } .h-tasks { background: var(--task); } 
-        .h-syllabus { background: var(--syllabus); display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; }
+        .h-syllabus { background: var(--syllabus); display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; }
         
         .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 28px; height: 28px; font-weight: bold; }
         
@@ -53,22 +53,24 @@
         .done .row-right span { text-decoration: line-through; }
         
         .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1.1rem; padding: 0 5px; }
-        .foot { margin-top: 20px; opacity: 0.5; }
+        .foot { margin-top: 20px; opacity: 0.4; }
         .btn-s { font-size: 0.75rem; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; background: #ddd; }
+
+        @media (max-width: 768px) { .container { flex-direction: column; align-items: center; } .box { min-width: 100%; } }
     </style>
 </head>
 <body>
 
 <div class="top-bar">
-    <h1>Academic Hub 2026</h1>
+    <h1>לוח בקרה אקדמי 2026</h1>
     <div id="date-display"></div>
 </div>
 
 <div class="container">
     <div class="box">
-        <div class="header h-exams">בחינות ודד-ליינים</div>
+        <div class="header h-exams">בחינות ומועדי הגשה</div>
         <div class="inputs">
-            <input type="text" id="exT" placeholder="שם האירוע">
+            <input type="text" id="exT" placeholder="שם המבחן/מטלה">
             <input type="datetime-local" id="exD">
             <select id="exTag" style="flex:0.6">
                 <option value="מבחן">מבחן</option>
@@ -83,10 +85,7 @@
 
     <div class="box">
         <div class="header h-tasks">משימות שוטפות</div>
-        <div class="inputs">
-            <input type="text" id="tkT" placeholder="משימה חדשה...">
-            <button class="btn-add" onclick="addTask()">+</button>
-        </div>
+        <div class="inputs"><input type="text" id="tkT" placeholder="משימה חדשה..."><button class="btn-add" onclick="addTask()">+</button></div>
         <div id="tkList"></div>
     </div>
 
@@ -97,7 +96,7 @@
             <button class="nav-btn" onclick="changeWeek(1)"><</button>
         </div>
         <div class="inputs">
-            <input type="text" id="sylInput" placeholder="הוסף משימה...">
+            <input type="text" id="sylInput" placeholder="הוסף משימה לשבוע...">
             <select id="sylCourse" style="flex:0.7">
                 <option value="ארגונית">ארגונית</option>
                 <option value="קוגניטיבית">קוגניטיבית</option>
@@ -119,36 +118,87 @@
 
 <script>
     let currentWeekIdx = 0;
-    const weekRanges = ["15.03-21.03", "22.03-28.03", "29.03-10.04", "12.04-18.04", "19.04-25.04", "26.04-02.05", "03.05-09.05", "10.05-16.05", "17.05-23.05", "24.05-30.05", "31.05-06.06", "07.06-13.06", "14.06-20.06", "21.06-02.07"];
+    const weekRanges = ["15.03 - 21.03", "22.03 - 28.03", "29.03 - 10.04", "12.04 - 18.04", "19.04 - 25.04", "26.04 - 02.05", "03.05 - 09.05", "10.05 - 16.05", "17.05 - 23.05", "24.05 - 30.05", "31.05 - 06.06", "07.06 - 13.06", "14.06 - 20.06", "21.06 - 02.07"];
 
-    // שכבת הברזל - נתוני קבע
+    // מועדי בחינות קבועים
     const fixedExams = [
+        { t: "שיטות מחקר (אמצע)", d: "2026-02-27T09:00", tag: "מבחן" },
         { t: "קוגניטיבית ג' (סופי)", d: "2026-07-13T15:45", tag: "מבחן" },
         { t: "פסיכולוגיה קלינית (עבודה)", d: "2026-07-21T09:45", tag: "מטלה" },
         { t: "שיטות מחקר (סופי)", d: "2026-07-26T15:45", tag: "מבחן" }
     ];
 
+    // סילבוס מלא - כל 54+ הפריטים
     const fixedSyllabus = [
-        { w: 0, c: "ארגונית", t: "שיעור", txt: "פתיחה פרונטלית (15.03)" },
+        { w: 0, c: "ארגונית", t: "שיעור", txt: "פתיחה פרונטלית - הכירות (15.03)" },
         { w: 0, c: "ארגונית", t: "סרטון", txt: "מבוא ותיאוריות בסיסיות" },
-        { w: 1, c: "ארגונית", t: "שיעור", txt: "מבוא פרונטלי (22.03)" },
+        { w: 0, c: "קוגניטיבית", t: "קריאה", txt: "אין חומר קריאה מוגדר" },
+        { w: 1, c: "ארגונית", t: "שיעור", txt: "מבוא - שיעור פרונטלי (22.03)" },
         { w: 1, c: "ארגונית", t: "בוחן", txt: "בוחן 1: נושא מבוא" },
         { w: 1, c: "ארגונית", t: "סרטון", txt: "מבנה ארגוני" },
-        { w: 1, c: "קוגניטיבית", t: "קריאה", txt: "Squire & Wixted (2015)" },
-        { w: 1, c: "קוגניטיבית", t: "מטלה", txt: "אוטוביוגרפיה (עד 29.03)" },
-        { w: 2, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית 1+2" },
+        { w: 1, c: "קוגניטיבית", t: "קריאה", txt: "קריאה: Squire & Wixted (2015)" },
+        { w: 1, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: אוטוביוגרפיה (עד 29.03, 23:00)" },
+        { w: 2, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית חלק 1" },
+        { w: 2, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית חלק 2" },
         { w: 2, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, פרק 8" },
         { w: 3, c: "ארגונית", t: "שיעור", txt: "מבנה ארגוני פרונטלי (12.04)" },
         { w: 3, c: "ארגונית", t: "בוחן", txt: "בוחן 2: מבנה ארגוני" },
-        { w: 5, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: זיכרון וטכנולוגיה" },
+        { w: 3, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית (המשך)" },
+        { w: 3, c: "קוגניטיבית", t: "שיעור", txt: "חופשת פסח - אין שיעור" },
+        { w: 4, c: "ארגונית", t: "שיעור", txt: "תרבות ארגונית פרונטלי (19.04)" },
+        { w: 4, c: "ארגונית", t: "בוחן", txt: "בוחן 3: תרבות ארגונית" },
+        { w: 4, c: "ארגונית", t: "סרטון", txt: "הבדלים בין אישיים ומיון" },
+        { w: 4, c: "קוגניטיבית", t: "קריאה", txt: "Anderson & Levy (2009)" },
+        { w: 4, c: "קוגניטיבית", t: "קריאה", txt: "Bauer (2004)" },
+        { w: 4, c: "קוגניטיבית", t: "קריאה", txt: "Gammon (2016)" },
+        { w: 5, c: "ארגונית", t: "שיעור", txt: "הבדלים ומיון פרונטלי (26.04)" },
+        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 4: הבדלים בין אישיים" },
+        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 5: מיון וגיוס" },
+        { w: 5, c: "ארגונית", t: "סרטון", txt: "רגשות ולחץ" },
+        { w: 5, c: "ארגונית", t: "סרטון", txt: "שביעות רצון ומחויבות" },
+        { w: 5, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין עמ' 172-181, 187-193" },
+        { w: 5, c: "קוגניטיבית", t: "קריאה", txt: "Talmi (2013)" },
+        { w: 5, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: זיכרון וטכנולוגיה (30.04)" },
+        { w: 6, c: "ארגונית", t: "שיעור", txt: "רגשות ושביעות רצון פרונטלי (03.05)" },
+        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 6: רגשות" },
+        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 7: שביעות רצון" },
+        { w: 6, c: "ארגונית", t: "סרטון", txt: "מוטיבציה חלק 1" },
+        { w: 6, c: "ארגונית", t: "סרטון", txt: "מוטיבציה חלק 2" },
+        { w: 6, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין 191-193" },
+        { w: 6, c: "קוגניטיבית", t: "קריאה", txt: "Freberg עמ' 358-361" },
         { w: 6, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 1 (12.05)" },
+        { w: 7, c: "ארגונית", t: "שיעור", txt: "מוטיבציה פרונטלי (10.05)" },
+        { w: 7, c: "ארגונית", t: "בוחן", txt: "בוחן 8: מוטיבציה" },
+        { w: 7, c: "ארגונית", t: "סרטון", txt: "אבחון ארגוני" },
+        { w: 7, c: "קוגניטיבית", t: "קריאה", txt: "Wixted (2005)" },
+        { w: 8, c: "ארגונית", t: "שיעור", txt: "אבחון ארגוני פרונטלי (17.05)" },
+        { w: 8, c: "ארגונית", t: "אחר", txt: "חופשת שבועות - אין לימודים (21.05)" },
+        { w: 8, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין עמ' 195-198" },
         { w: 8, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 2 (26.05)" },
+        { w: 9, c: "ארגונית", t: "שיעור", txt: "הנחיות לפרויקט מסכם (24.05)" },
+        { w: 9, c: "ארגונית", t: "סרטון", txt: "כוח ומנהיגות 1 + 2" },
+        { w: 9, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין עמ' 181-187" },
+        { w: 9, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: פוסט-טראומה/דמנציה (05.06)" },
+        { w: 10, c: "ארגונית", t: "שיעור", txt: "מנהיגות פרונטלי (31.05)" },
+        { w: 10, c: "ארגונית", t: "בוחן", txt: "בוחן 9: מנהיגות" },
+        { w: 10, c: "ארגונית", t: "סרטון", txt: "יצירתיות + קונפליקטים" },
+        { w: 10, c: "קוגניטיבית", t: "קריאה", txt: "Freberg, Luck & Vogel, גולדשטיין" },
+        { w: 11, c: "ארגונית", t: "שיעור", txt: "יצירתיות ושיתוף פרונטלי (07.06)" },
+        { w: 11, c: "ארגונית", t: "בוחן", txt: "בוחן 10: יצירתיות וחדשנות" },
+        { w: 11, c: "ארגונית", t: "בוחן", txt: "בוחן 11: שיתוף וקונפליקטים" },
+        { w: 11, c: "ארגונית", t: "סרטון", txt: "קבוצות וצוותים" },
+        { w: 11, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין 161-164, Ricker et al." },
         { w: 11, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 3 (16.06)" },
+        { w: 12, c: "ארגונית", t: "שיעור", txt: "Q&A על הפרויקט המסכם (14.06)" },
+        { w: 12, c: "ארגונית", t: "סרטון", txt: "הקשבה בישיבות צוות" },
+        { w: 12, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין עמ' 375-385" },
+        { w: 13, c: "ארגונית", t: "שיעור", txt: "צוותים והקשבה פרונטלי (21.06)" },
+        { w: 13, c: "ארגונית", t: "בוחן", txt: "בוחן 12: צוותים והקשבה" },
+        { w: 13, c: "ארגונית", t: "שיעור", txt: "סיום סמסטר - שאלות (25.06)" },
+        { w: 13, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין פרק 12, Langer (1989)" },
         { w: 13, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 4 (30.06)" }
-        // כל שאר השבועות שנתת מוטמעים כאן לוגית בלחיצה
     ];
 
-    // שכבת המשתמש - נתונים שאתה מוסיף
     let customTasks = JSON.parse(localStorage.getItem('user_tasks')) || [];
     let customExams = JSON.parse(localStorage.getItem('user_exams')) || [];
     let customSyllabus = JSON.parse(localStorage.getItem('user_syllabus')) || [];
@@ -180,7 +230,7 @@
         const now = new Date();
         document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
         
-        // רינדור בחינות (Fixed + Custom)
+        // בחינות
         const eL = document.getElementById('exList'); eL.innerHTML = '';
         const allEx = [...fixedExams, ...customExams].sort((a,b) => new Date(a.d) - now);
         allEx.forEach((x, i) => {
@@ -191,21 +241,21 @@
             eL.innerHTML += `<div class="item-row"><div class="row-right"><span class="badge tag-${x.tag}">${x.tag}</span><strong>${x.t}</strong></div><div class="row-left"><span class="timer ${statusClass}">${diff < 0 ? 'עבר' : days + ' ימים'}</span>${!isFixed ? `<button onclick="customExams.splice(${i-fixedExams.length},1); render();" class="del-btn">×</button>` : ''}</div></div>`;
         });
 
-        // רינדור משימות
+        // משימות שוטפות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         customTasks.forEach((x, i) => {
             tL.innerHTML += `<div class="item-row ${x.f?'done':''}"><div class="row-right"><span onclick="customTasks[${i}].f=!customTasks[${i}].f; render();" style="cursor:pointer">${x.t}</span></div><div class="row-left"><input type="checkbox" ${x.f?'checked':''} onclick="customTasks[${i}].f=!customTasks[${i}].f; render();"><button onclick="customTasks.splice(${i},1); render();" class="del-btn">×</button></div></div>`;
         });
 
-        // רינדור סילבוס (Fixed + Custom)
+        // סילבוס
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${weekRanges[currentWeekIdx]})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         
         ["ארגונית", "קוגניטיבית"].forEach(course => {
-            const fItems = fixedSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
-            const cItems = customSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
+            const fItems = fixedSyllabus.filter(it => it.w === currentWeekIdx && it.c === (course === "ארגונית" ? "ארגונית" : "קוגניטיבית"));
+            const cItems = customSyllabus.filter(it => it.w === currentWeekIdx && it.c === (course === "ארגונית" ? "ארגונית" : "קוגניטיבית"));
             if (fItems.length > 0 || cItems.length > 0) {
-                sC.innerHTML += `<div class="course-label">${course}</div>`;
+                sC.innerHTML += `<div class="course-label">פסיכולוגיה ${course}</div>`;
                 fItems.forEach((item, i) => {
                     const key = `f_${item.w}_${item.c}_${i}`, isDone = doneMap[key];
                     sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="doneMap['${key}']=!doneMap['${key}']; render();"><div class="row-right"><span class="badge tag-${item.t}">${item.t}</span><span>${item.txt}</span></div><div class="row-left"><input type="checkbox" ${isDone?'checked':''}></div></div>`;
