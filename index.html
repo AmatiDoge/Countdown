@@ -118,8 +118,8 @@
         },
         { 
             range: "22.03 - 28.03", 
-            org: ["<span class='badge badge-video'>צפייה</span> 02 - מבנה ארגוני", "<span class='badge badge-task'>מטלה</span> מסירת אוטוביוגרפיה (עד 29.3)"], 
-            cog: ["Squire & Wixted (2015). Remembering."] 
+            org: ["<span class='badge badge-video'>צפייה</span> 02 - מבנה ארגוני"], 
+            cog: ["Squire & Wixted (2015). Remembering.", "<span class='badge badge-task'>מטלה</span> אוטוביוגרפיה (עד מוצ\"ש 29.3)"] 
         },
         { 
             range: "29.03 - 04.04", 
@@ -143,8 +143,8 @@
         },
         { 
             range: "26.04 - 02.05", 
-            org: ["<span class='badge badge-video'>צפייה</span> 07 - שביעות רצון ומחויבות", "<span class='badge badge-task'>מטלה</span> זיכרון וטכנולוגיה (עד 30.4)"], 
-            cog: ["גולדשטיין ע' 172-193", "Talmi, D. (2013)"] 
+            org: ["<span class='badge badge-video'>צפייה</span> 07 - שביעות רצון ומחויבות"], 
+            cog: ["גולדשטיין ע' 172-193", "Talmi, D. (2013)", "<span class='badge badge-task'>מטלה</span> זיכרון וטכנולוגיה (עד 30.4)"] 
         },
         { 
             range: "03.05 - 09.05", 
@@ -163,8 +163,8 @@
         },
         { 
             range: "24.05 - 30.05", 
-            org: ["<span class='badge badge-video'>צפייה</span> 11 - יצירתיות וחדשנות", "<span class='badge badge-task'>מטלה</span> פוסט-טראומה/דמנציה (עד 5.6)"], 
-            cog: ["גולדשטיין ע' 181-187"] 
+            org: ["<span class='badge badge-video'>צפייה</span> 11 - יצירתיות וחדשנות"], 
+            cog: ["גולדשטיין ע' 181-187", "<span class='badge badge-task'>מטלה</span> פוסט-טראומה/דמנציה (עד 5.6)"] 
         },
         { 
             range: "31.05 - 06.06", 
@@ -245,7 +245,6 @@
         const now = new Date();
         document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
         
-        // בחינות
         const eL = document.getElementById('exList'); eL.innerHTML = '';
         exams.sort((a,b) => new Date(a.d) - new Date(b.d)).forEach((x, i) => {
             const diff = new Date(x.d) - now;
@@ -260,13 +259,11 @@
             eL.innerHTML += `<tr><td><strong>${x.t}</strong></td><td style="text-align:left"><span class="timer ${c}">${txt}</span><button onclick="delE(${i})" class="del-btn">×</button></td></tr>`;
         });
 
-        // משימות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         tasks.forEach((x, i) => {
             tL.innerHTML += `<tr class="${x.f?'done':''}"><td><span onclick="togT(${i})" style="cursor:pointer">${x.t}</span></td><td style="text-align:left"><button onclick="delT(${i})" class="del-btn">×</button></td></tr>`;
         });
 
-        // סילבוס
         const week = syllabusData[currentWeekIdx];
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${week.range})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
@@ -283,7 +280,6 @@
             sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="toggleSyllabusItem(${currentWeekIdx},${i},'cog')"><input type="checkbox" ${isDone?'checked':''}><span>${item}</span></div>`;
         });
 
-        // משרות
         const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
         jobSites.forEach(site => {
             const isDone = jobsDone[site.id];
