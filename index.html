@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Hub - Dynamic Syllabus</title>
+    <title>Academic Hub - Weekly Quizzes</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60; --jobs: #2c3e50;
@@ -37,12 +37,6 @@
         .tag-מטלה { background: #fff3e0; color: #ef6c00; border: 1px solid #ffe0b2; }
         .tag-בוחן { background: #fce4ec; color: #c2185b; border: 1px solid #f8bbd0; }
 
-        .timer { font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; text-align: center; display: inline-block; min-width: 100px; }
-        .bg-red { background: #fff1f0; color: var(--red); }
-        .bg-orange { background: #fff7e6; color: var(--orange); }
-        .bg-green { background: #f6ffed; color: var(--green); }
-        .bg-passed { background: #f5f5f5; color: #bfbfbf; text-decoration: line-through; }
-
         .done { color: #bfbfbf; text-decoration: line-through; }
         .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1rem; margin-right: auto; }
         .foot { margin-top: 15px; display: flex; gap: 8px; }
@@ -54,27 +48,15 @@
 <body>
 
 <div class="top-bar">
-    <h1>לוח בקרה אקדמי חכם</h1>
+    <h1>לוח בקרה אקדמי</h1>
     <div id="date-display"></div>
 </div>
 
 <div class="container">
-    <div class="box">
-        <div class="header h-exams">בחינות ודד-ליינים</div>
-        <div class="inputs">
-            <input type="text" id="exT" placeholder="אירוע חדש">
-            <input type="datetime-local" id="exD">
-            <button class="btn-add" onclick="addEx()">+</button>
-        </div>
-        <div id="exList"></div>
-    </div>
-
+    <div class="box"><div class="header h-exams">בחינות ודד-ליינים</div><div id="exList" style="padding:10px;"></div></div>
     <div class="box">
         <div class="header h-tasks">משימות שוטפות</div>
-        <div class="inputs">
-            <input type="text" id="tkT" placeholder="משימה חדשה...">
-            <button class="btn-add" onclick="addTask()">+</button>
-        </div>
+        <div class="inputs"><input type="text" id="tkT" placeholder="משימה חדשה..."><button class="btn-add" onclick="addTask()">+</button></div>
         <div id="tkList"></div>
     </div>
 
@@ -97,61 +79,55 @@
         <div id="syllabus-content"></div>
     </div>
 
-    <div class="box">
-        <div class="header h-jobs">בדיקת משרות (יומי)</div>
-        <div id="jobs-content"></div>
-    </div>
+    <div class="box"><div class="header h-jobs">בדיקת משרות (יומי)</div><div id="jobs-content"></div></div>
 </div>
 
 <div class="foot">
-    <button class="btn-s" onclick="toggleP()">הצג/הסתר עבר</button>
     <button class="btn-s" onclick="resetAll()">איפוס נתונים</button>
 </div>
 
 <script>
-    let showP = true;
     let currentWeekIdx = 0;
-
-    // נתונים קבועים מתויגים (ניתן למחוק אותם מהממשק אם תרצה)
+    
+    // רשימת בסיס הכוללת את הבחנים החדשים
     const initialSyllabus = [
         { w: 0, t: "סרטון", txt: "01 - מבוא לפסיכולוגיה ארגונית" },
+        // בחנים בפסיכולוגיה ארגונית (החל משבוע 2)
+        { w: 1, t: "בוחן", txt: "בוחן 1 (פסיכולוגיה ארגונית)" },
         { w: 1, t: "סרטון", txt: "02 - מבנה ארגוני" },
-        { w: 1, t: "קריאה", txt: "Squire & Wixted (2015). Remembering." },
-        { w: 1, t: "מטלה", txt: "אוטוביוגרפיה (עד 29.3)" },
+        { w: 1, t: "קריאה", txt: "Squire & Wixted (2015)" },
+        { w: 2, t: "בוחן", txt: "בוחן 2 (פסיכולוגיה ארגונית)" },
         { w: 2, t: "סרטון", txt: "03 - הבדלים בין-אישיים" },
-        { w: 2, t: "קריאה", txt: "גולדשטיין, פרק 8" },
-        { w: 5, t: "קריאה", txt: "Anderson & Levy (2009)" },
-        { w: 5, t: "קריאה", txt: "Kihlstrom (תקציר)" },
-        { w: 5, t: "קריאה", txt: "Bauer (2004)" },
-        { w: 5, t: "קריאה", txt: "Gammon (2016)" },
-        { w: 6, t: "מטלה", txt: "זיכרון וטכנולוגיה (עד 30.4)" },
-        { w: 7, t: "בוחן", txt: "בוחן בית 1 (12.5)" }
-        // הוספתי רק דגימה, תוכל להוסיף את השאר דרך הממשק בקלות!
+        { w: 3, t: "קריאה", txt: "חופשת פסח - אין קריאה" }, // שבוע 4
+        { w: 4, t: "קריאה", txt: "חופשת פסח - אין קריאה" }, // שבוע 5
+        { w: 5, t: "בוחן", txt: "בוחן 3 (פסיכולוגיה ארגונית)" },
+        { w: 6, t: "בוחן", txt: "בוחן 4 (פסיכולוגיה ארגונית)" },
+        { w: 7, t: "בוחן", txt: "בוחן 5 (פסיכולוגיה ארגונית)" },
+        { w: 8, t: "בוחן", txt: "בוחן 6 (פסיכולוגיה ארגונית)" },
+        { w: 9, t: "בוחן", txt: "בוחן 7 (פסיכולוגיה ארגונית)" },
+        { w: 10, t: "בוחן", txt: "בוחן 8 (פסיכולוגיה ארגונית)" },
+        { w: 11, t: "בוחן", txt: "בוחן 9 (פסיכולוגיה ארגונית)" },
+        { w: 12, t: "בוחן", txt: "בוחן 10 (פסיכולוגיה ארגונית)" },
+        { w: 13, t: "בוחן", txt: "בוחן 11 (פסיכולוגיה ארגונית)" },
+        { w: 14, t: "בוחן", txt: "בוחן 12 (פסיכולוגיה ארגונית)" },
+        { w: 15, t: "בוחן", txt: "בוחן 13 (פסיכולוגיה ארגונית)" }
     ];
 
-    let exams = JSON.parse(localStorage.getItem('exams')) || [];
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     let syllabusItems = JSON.parse(localStorage.getItem('syllabusItems')) || initialSyllabus;
     let syllabusDone = JSON.parse(localStorage.getItem('syllabusDone')) || {};
-    let jobsDone = JSON.parse(localStorage.getItem('jobsDone')) || {};
 
     function save() {
-        localStorage.setItem('exams', JSON.stringify(exams));
         localStorage.setItem('tasks', JSON.stringify(tasks));
         localStorage.setItem('syllabusItems', JSON.stringify(syllabusItems));
         localStorage.setItem('syllabusDone', JSON.stringify(syllabusDone));
-        localStorage.setItem('jobsDone', JSON.stringify(jobsDone));
     }
 
-    // פונקציות הוספה
-    function addEx() {
-        const t = document.getElementById('exT').value, d = document.getElementById('exD').value;
-        if (t && d) { exams.push({ t, d }); document.getElementById('exT').value = ''; render(); }
-    }
     function addTask() {
         const t = document.getElementById('tkT').value;
         if (t) { tasks.push({ t, f: false }); document.getElementById('tkT').value = ''; render(); }
     }
+
     function addSyllabusItem() {
         const txt = document.getElementById('sylInput').value;
         const tag = document.getElementById('sylTag').value;
@@ -162,20 +138,11 @@
         }
     }
 
-    // פונקציות מחיקה ושינוי
-    function delE(i) { exams.splice(i, 1); render(); }
     function delT(i) { tasks.splice(i, 1); render(); }
-    function delS(idxInFiltered) {
-        // מוצא את האינדקס האמיתי במערך המלא
-        const filtered = syllabusItems.filter(item => item.w === currentWeekIdx);
-        const itemToDelete = filtered[idxInFiltered];
-        const realIdx = syllabusItems.indexOf(itemToDelete);
-        syllabusItems.splice(realIdx, 1);
-        render();
-    }
+    function delS(realIdx) { syllabusItems.splice(realIdx, 1); render(); }
     function togT(i) { tasks[i].f = !tasks[i].f; render(); }
     function toggleSyllabus(realIdx) {
-        const key = `item_${realIdx}_${syllabusItems[realIdx].txt}`;
+        const key = `item_${realIdx}`;
         syllabusDone[key] = !syllabusDone[key];
         render();
     }
@@ -187,59 +154,35 @@
 
     function render() {
         const now = new Date();
-        document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
+        document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL');
 
-        // רינדור בחינות
-        const eL = document.getElementById('exList'); eL.innerHTML = '';
-        exams.sort((a,b) => new Date(a.d) - new Date(b.d)).forEach((x, i) => {
-            const diff = new Date(x.d) - now;
-            const days = Math.floor(diff / 86400000);
-            if (diff <= 0 && !showP) return;
-            let c = "bg-green", txt = days + " ימים";
-            if (diff <= 0) { c = "bg-passed"; txt = "עבר"; }
-            else if (days <= 3) { c = "bg-red"; txt = (days === 0 ? "היום!" : days + " ימים"); }
-            eL.innerHTML += `<div class="item-row"><strong>${x.t}</strong><span class="timer ${c}" style="margin-right:auto">${txt}</span><button onclick="delE(${i})" class="del-btn">×</button></div>`;
-        });
-
-        // רינדור משימות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         tasks.forEach((x, i) => {
             tL.innerHTML += `<div class="item-row ${x.f?'done':''}"><input type="checkbox" ${x.f?'checked':''} onclick="togT(${i})"><span>${x.t}</span><button onclick="delT(${i})" class="del-btn">×</button></div>`;
         });
 
-        // רינדור סילבוס
         const weekRanges = ["15.03-21.03", "22.03-28.03", "29.03-04.04", "05.04-11.04", "12.04-18.04", "19.04-25.04", "26.04-02.05", "03.05-09.05", "10.05-16.05", "17.05-23.05", "24.05-30.05", "31.05-06.06", "07.06-13.06", "14.06-20.06", "21.06-27.06", "28.06-04.07"];
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${weekRanges[currentWeekIdx]})`;
-        const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         
+        const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         syllabusItems.forEach((item, realIdx) => {
             if (item.w === currentWeekIdx) {
-                const key = `item_${realIdx}_${item.txt}`;
-                const isDone = syllabusDone[key];
+                const isDone = syllabusDone[`item_${realIdx}`];
                 sC.innerHTML += `
                     <div class="item-row ${isDone?'done':''}">
                         <input type="checkbox" ${isDone?'checked':''} onclick="toggleSyllabus(${realIdx})">
                         <span class="badge tag-${item.t}">${item.t}</span>
                         <span>${item.txt}</span>
-                        <button onclick="delS(${syllabusItems.filter(it => it.w === currentWeekIdx).indexOf(item)})" class="del-btn">×</button>
+                        <button onclick="delS(${realIdx})" class="del-btn">×</button>
                     </div>`;
             }
         });
-
-        // רינדור משרות (קבוע)
-        const jobSites = ["Jobify", "JobMaster", "AllJobs", "Career Center"];
-        const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
-        jobSites.forEach(s => {
-            jC.innerHTML += `<div class="item-row"><input type="checkbox"><span>${s}</span></div>`;
-        });
-
+        
         save();
     }
 
-    function toggleP() { showP = !showP; render(); }
-    function resetAll() { if(confirm("לאפס?")) { localStorage.clear(); location.reload(); } }
-
-    setInterval(render, 60000); render();
+    function resetAll() { if(confirm("לאפס נתונים?")) { localStorage.clear(); location.reload(); } }
+    render();
 </script>
 </body>
 </html>
