@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Hub - Weekly Quizzes</title>
+    <title>Academic Hub - Pro UX</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60; --jobs: #2c3e50;
@@ -15,32 +15,44 @@
         h1 { font-size: 1.2rem; margin: 0; }
         #date-display { font-size: 0.8rem; background: #fff; padding: 4px 12px; border-radius: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        .container { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; max-width: 1250px; align-items: flex-start; }
+        .container { display: flex; flex-wrap: wrap; gap: 12px; width: 100%; max-width: 1250px; align-items: flex-start; }
         
-        .box { background: var(--card); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex: 1; min-width: 300px; overflow: hidden; display: flex; flex-direction: column; }
+        .box { background: var(--card); border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex: 1; min-width: 320px; overflow: hidden; display: flex; flex-direction: column; }
         .header { padding: 10px; color: white; text-align: center; font-weight: bold; font-size: 0.95rem; }
         .h-exams { background: var(--exam); } .h-tasks { background: var(--task); } .h-jobs { background: var(--jobs); }
         .h-syllabus { background: var(--syllabus); display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; }
         
-        .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 22px; height: 22px; font-weight: bold; font-size: 1rem; }
-        .inputs { padding: 8px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; gap: 4px; flex-wrap: wrap; }
-        input, select { padding: 5px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem; flex: 1; min-width: 80px; }
-        .btn-add { background: #2d3436; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
-
-        .item-row { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 6px 10px; border-bottom: 1px solid #f1f1f1; transition: 0.2s; font-size: 0.85rem; }
-        .item-row:hover { background: #f9f9f9; }
-        .item-row input[type="checkbox"] { flex: 0 0 auto; margin-top: 3px; }
+        .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 24px; height: 24px; font-weight: bold; }
         
-        .badge { font-size: 0.65rem; padding: 2px 5px; border-radius: 4px; font-weight: bold; margin-left: 5px; white-space: nowrap; }
-        .tag-קריאה { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
-        .tag-סרטון { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
-        .tag-מטלה { background: #fff3e0; color: #ef6c00; border: 1px solid #ffe0b2; }
-        .tag-בוחן { background: #fce4ec; color: #c2185b; border: 1px solid #f8bbd0; }
+        .inputs { padding: 10px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; gap: 6px; flex-wrap: wrap; }
+        input, select { padding: 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem; flex: 1; }
+        .btn-add { background: #2d3436; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
 
-        .done { color: #bfbfbf; text-decoration: line-through; }
-        .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1rem; margin-right: auto; }
-        .foot { margin-top: 15px; display: flex; gap: 8px; }
-        .btn-s { font-size: 0.7rem; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; background: #ddd; }
+        /* תיקון ה-UX לשורות המשימות */
+        .item-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid #f1f1f1; transition: 0.2s; font-size: 0.88rem; }
+        .item-row:hover { background: #f9f9f9; }
+        .row-right { display: flex; align-items: center; gap: 10px; flex: 1; }
+        .row-left { display: flex; align-items: center; gap: 8px; }
+
+        .course-label { font-weight: bold; color: var(--syllabus); background: #f8f9fa; padding: 4px 12px; font-size: 0.75rem; border-bottom: 1px solid #eee; border-top: 1px solid #eee; margin-top: 5px; }
+
+        .badge { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; white-space: nowrap; }
+        .tag-קריאה { background: #e8f5e9; color: #2e7d32; }
+        .tag-סרטון { background: #e3f2fd; color: #1565c0; }
+        .tag-מטלה { background: #fff3e0; color: #ef6c00; }
+        .tag-בוחן { background: #fce4ec; color: #c2185b; }
+
+        .timer { font-weight: bold; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+        .bg-red { background: #fff1f0; color: var(--red); }
+        .bg-green { background: #f6ffed; color: var(--green); }
+        .bg-passed { background: #f5f5f5; color: #bfbfbf; text-decoration: line-through; }
+
+        .done { opacity: 0.6; }
+        .done span { text-decoration: line-through; }
+        
+        .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1.1rem; padding: 0 5px; }
+        .foot { margin-top: 20px; }
+        .btn-s { font-size: 0.75rem; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; background: #ddd; }
 
         @media (max-width: 768px) { .container { flex-direction: column; } .box { min-width: 100%; } }
     </style>
@@ -48,12 +60,21 @@
 <body>
 
 <div class="top-bar">
-    <h1>לוח בקרה אקדמי</h1>
+    <h1 id="title">My Academic Dashboard</h1>
     <div id="date-display"></div>
 </div>
 
 <div class="container">
-    <div class="box"><div class="header h-exams">בחינות ודד-ליינים</div><div id="exList" style="padding:10px;"></div></div>
+    <div class="box">
+        <div class="header h-exams">בחינות ודד-ליינים</div>
+        <div class="inputs">
+            <input type="text" id="exT" placeholder="אירוע חדש">
+            <input type="datetime-local" id="exD">
+            <button class="btn-add" onclick="addEx()">+</button>
+        </div>
+        <div id="exList"></div>
+    </div>
+
     <div class="box">
         <div class="header h-tasks">משימות שוטפות</div>
         <div class="inputs"><input type="text" id="tkT" placeholder="משימה חדשה..."><button class="btn-add" onclick="addTask()">+</button></div>
@@ -67,8 +88,12 @@
             <button class="nav-btn" onclick="changeWeek(1)"><</button>
         </div>
         <div class="inputs">
-            <input type="text" id="sylInput" placeholder="הוסף משימה לשבוע זה...">
-            <select id="sylTag">
+            <input type="text" id="sylInput" placeholder="הוסף משימה...">
+            <select id="sylCourse">
+                <option value="קוגניטיבית ג'">קוגניטיבית ג'</option>
+                <option value="פסיכולוגיה ארגונית">ארגונית</option>
+            </select>
+            <select id="sylTag" style="flex:0.6">
                 <option value="קריאה">קריאה</option>
                 <option value="סרטון">סרטון</option>
                 <option value="מטלה">מטלה</option>
@@ -79,68 +104,65 @@
         <div id="syllabus-content"></div>
     </div>
 
-    <div class="box"><div class="header h-jobs">בדיקת משרות (יומי)</div><div id="jobs-content"></div></div>
+    <div class="box">
+        <div class="header h-jobs">בדיקת משרות (יומי)</div>
+        <div id="jobs-content"></div>
+    </div>
 </div>
 
-<div class="foot">
-    <button class="btn-s" onclick="resetAll()">איפוס נתונים</button>
-</div>
+<div class="foot"><button class="btn-s" onclick="resetAll()">איפוס נתונים כללי</button></div>
 
 <script>
     let currentWeekIdx = 0;
-    
-    // רשימת בסיס הכוללת את הבחנים החדשים
+    const courses = ["קוגניטיבית ג'", "פסיכולוגיה ארגונית"];
+    const weekRanges = ["15.03-21.03", "22.03-28.03", "29.03-04.04", "05.04-11.04", "12.04-18.04", "19.04-25.04", "26.04-02.05", "03.05-09.05", "10.05-16.05", "17.05-23.05", "24.05-30.05", "31.05-06.06", "07.06-13.06", "14.06-20.06", "21.06-27.06", "28.06-04.07"];
+
+    // נתונים ראשוניים מסודרים לפי קורס
     const initialSyllabus = [
-        { w: 0, t: "סרטון", txt: "01 - מבוא לפסיכולוגיה ארגונית" },
-        // בחנים בפסיכולוגיה ארגונית (החל משבוע 2)
-        { w: 1, t: "בוחן", txt: "בוחן 1 (פסיכולוגיה ארגונית)" },
-        { w: 1, t: "סרטון", txt: "02 - מבנה ארגוני" },
-        { w: 1, t: "קריאה", txt: "Squire & Wixted (2015)" },
-        { w: 2, t: "בוחן", txt: "בוחן 2 (פסיכולוגיה ארגונית)" },
-        { w: 2, t: "סרטון", txt: "03 - הבדלים בין-אישיים" },
-        { w: 3, t: "קריאה", txt: "חופשת פסח - אין קריאה" }, // שבוע 4
-        { w: 4, t: "קריאה", txt: "חופשת פסח - אין קריאה" }, // שבוע 5
-        { w: 5, t: "בוחן", txt: "בוחן 3 (פסיכולוגיה ארגונית)" },
-        { w: 6, t: "בוחן", txt: "בוחן 4 (פסיכולוגיה ארגונית)" },
-        { w: 7, t: "בוחן", txt: "בוחן 5 (פסיכולוגיה ארגונית)" },
-        { w: 8, t: "בוחן", txt: "בוחן 6 (פסיכולוגיה ארגונית)" },
-        { w: 9, t: "בוחן", txt: "בוחן 7 (פסיכולוגיה ארגונית)" },
-        { w: 10, t: "בוחן", txt: "בוחן 8 (פסיכולוגיה ארגונית)" },
-        { w: 11, t: "בוחן", txt: "בוחן 9 (פסיכולוגיה ארגונית)" },
-        { w: 12, t: "בוחן", txt: "בוחן 10 (פסיכולוגיה ארגונית)" },
-        { w: 13, t: "בוחן", txt: "בוחן 11 (פסיכולוגיה ארגונית)" },
-        { w: 14, t: "בוחן", txt: "בוחן 12 (פסיכולוגיה ארגונית)" },
-        { w: 15, t: "בוחן", txt: "בוחן 13 (פסיכולוגיה ארגונית)" }
+        { w: 0, c: "פסיכולוגיה ארגונית", t: "סרטון", txt: "01 - מבוא לפסיכולוגיה ארגונית" },
+        { w: 1, c: "פסיכולוגיה ארגונית", t: "סרטון", txt: "02 - מבנה ארגוני" },
+        { w: 1, c: "פסיכולוגיה ארגונית", t: "בוחן", txt: "בוחן 1" },
+        { w: 1, c: "קוגניטיבית ג'", t: "קריאה", txt: "Squire & Wixted (2015)" },
+        { w: 1, c: "קוגניטיבית ג'", t: "מטלה", txt: "אוטוביוגרפיה (עד מוצ\"ש 29.3)" },
+        { w: 2, c: "פסיכולוגיה ארגונית", t: "סרטון", txt: "03 - הבדלים בין-אישיים" },
+        { w: 2, c: "פסיכולוגיה ארגונית", t: "בוחן", txt: "בוחן 2" },
+        { w: 2, c: "קוגניטיבית ג'", t: "קריאה", txt: "גולדשטיין, פרק 8" }
     ];
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let exams = JSON.parse(localStorage.getItem('exams')) || [];
     let syllabusItems = JSON.parse(localStorage.getItem('syllabusItems')) || initialSyllabus;
     let syllabusDone = JSON.parse(localStorage.getItem('syllabusDone')) || {};
 
     function save() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem('exams', JSON.stringify(exams));
         localStorage.setItem('syllabusItems', JSON.stringify(syllabusItems));
         localStorage.setItem('syllabusDone', JSON.stringify(syllabusDone));
     }
 
+    function addEx() {
+        const t = document.getElementById('exT').value, d = document.getElementById('exD').value;
+        if (t && d) { exams.push({ t, d }); document.getElementById('exT').value = ''; render(); }
+    }
     function addTask() {
         const t = document.getElementById('tkT').value;
         if (t) { tasks.push({ t, f: false }); document.getElementById('tkT').value = ''; render(); }
     }
-
     function addSyllabusItem() {
         const txt = document.getElementById('sylInput').value;
         const tag = document.getElementById('sylTag').value;
+        const course = document.getElementById('sylCourse').value;
         if (txt) {
-            syllabusItems.push({ w: currentWeekIdx, t: tag, txt: txt });
+            syllabusItems.push({ w: currentWeekIdx, c: course, t: tag, txt: txt });
             document.getElementById('sylInput').value = '';
             render();
         }
     }
 
+    function delE(i) { exams.splice(i, 1); render(); }
     function delT(i) { tasks.splice(i, 1); render(); }
     function delS(realIdx) { syllabusItems.splice(realIdx, 1); render(); }
-    function togT(i) { tasks[i].f = !tasks[i].f; render(); }
     function toggleSyllabus(realIdx) {
         const key = `item_${realIdx}`;
         syllabusDone[key] = !syllabusDone[key];
@@ -153,35 +175,58 @@
     }
 
     function render() {
-        const now = new Date();
-        document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL');
+        document.getElementById('date-display').innerText = new Date().toLocaleDateString('he-IL');
+        
+        // בחינות
+        const eL = document.getElementById('exList'); eL.innerHTML = '';
+        exams.sort((a,b) => new Date(a.d) - new Date(b.d)).forEach((x, i) => {
+            const diff = new Date(x.d) - new Date();
+            const days = Math.floor(diff/86400000);
+            eL.innerHTML += `<div class="item-row"><div class="row-right"><strong>${x.t}</strong></div><div class="row-left"><span class="timer ${days<=3?'bg-red':'bg-green'}">${days} ימים</span><button onclick="delE(${i})" class="del-btn">×</button></div></div>`;
+        });
 
+        // משימות שוטפות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         tasks.forEach((x, i) => {
-            tL.innerHTML += `<div class="item-row ${x.f?'done':''}"><input type="checkbox" ${x.f?'checked':''} onclick="togT(${i})"><span>${x.t}</span><button onclick="delT(${i})" class="del-btn">×</button></div>`;
+            tL.innerHTML += `<div class="item-row ${x.f?'done':''}"><div class="row-right"><span>${x.t}</span></div><div class="row-left"><input type="checkbox" ${x.f?'checked':''} onclick="tasks[${i}].f=!tasks[${i}].f; render();"><button onclick="delT(${i})" class="del-btn">×</button></div></div>`;
         });
 
-        const weekRanges = ["15.03-21.03", "22.03-28.03", "29.03-04.04", "05.04-11.04", "12.04-18.04", "19.04-25.04", "26.04-02.05", "03.05-09.05", "10.05-16.05", "17.05-23.05", "24.05-30.05", "31.05-06.06", "07.06-13.06", "14.06-20.06", "21.06-27.06", "28.06-04.07"];
+        // סילבוס
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${weekRanges[currentWeekIdx]})`;
-        
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
-        syllabusItems.forEach((item, realIdx) => {
-            if (item.w === currentWeekIdx) {
-                const isDone = syllabusDone[`item_${realIdx}`];
-                sC.innerHTML += `
-                    <div class="item-row ${isDone?'done':''}">
-                        <input type="checkbox" ${isDone?'checked':''} onclick="toggleSyllabus(${realIdx})">
-                        <span class="badge tag-${item.t}">${item.t}</span>
-                        <span>${item.txt}</span>
-                        <button onclick="delS(${realIdx})" class="del-btn">×</button>
-                    </div>`;
+        
+        courses.forEach(courseName => {
+            const items = syllabusItems.map((it, idx) => ({...it, realIdx: idx})).filter(it => it.w === currentWeekIdx && it.c === courseName);
+            if (items.length > 0) {
+                sC.innerHTML += `<div class="course-label">${courseName}</div>`;
+                items.forEach(item => {
+                    const isDone = syllabusDone[`item_${item.realIdx}`];
+                    sC.innerHTML += `
+                        <div class="item-row ${isDone?'done':''}">
+                            <div class="row-right">
+                                <span class="badge tag-${item.t}">${item.t}</span>
+                                <span>${item.txt}</span>
+                            </div>
+                            <div class="row-left">
+                                <input type="checkbox" ${isDone?'checked':''} onclick="toggleSyllabus(${item.realIdx})">
+                                <button onclick="delS(${item.realIdx})" class="del-btn">×</button>
+                            </div>
+                        </div>`;
+                });
             }
         });
-        
+
+        // משרות
+        const jobSites = ["Jobify", "JobMaster", "AllJobs", "Career Center"];
+        const jC = document.getElementById('jobs-content'); jC.innerHTML = '';
+        jobSites.forEach(s => {
+            jC.innerHTML += `<div class="item-row"><div class="row-right"><span>${s}</span></div><div class="row-left"><input type="checkbox"></div></div>`;
+        });
+
         save();
     }
 
-    function resetAll() { if(confirm("לאפס נתונים?")) { localStorage.clear(); location.reload(); } }
+    function resetAll() { if(confirm("לאפס הכל?")) { localStorage.clear(); location.reload(); } }
     render();
 </script>
 </body>
