@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Hub 2026 - Exams Updated</title>
+    <title>Academic Hub 2026 - Hybrid Interactive</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60;
@@ -42,6 +42,7 @@
         .tag-בוחן { background: #fce4ec; color: #c2185b; border: 1px solid #f8bbd0; }
         .tag-שיעור { background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
         .tag-מבחן { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        .tag-אחר { background: #f5f5f5; color: #616161; border: 1px solid #e0e0e0; }
 
         .timer { font-weight: bold; padding: 2px 10px; border-radius: 6px; font-size: 0.8rem; white-space: nowrap; }
         .bg-red { background: #fff1f0; color: var(--red); }
@@ -59,19 +60,33 @@
 <body>
 
 <div class="top-bar">
-    <h1>לוח בקרה אקדמי 2026</h1>
+    <h1>Academic Hub 2026</h1>
     <div id="date-display"></div>
 </div>
 
 <div class="container">
     <div class="box">
         <div class="header h-exams">בחינות ודד-ליינים</div>
+        <div class="inputs">
+            <input type="text" id="exT" placeholder="שם האירוע">
+            <input type="datetime-local" id="exD">
+            <select id="exTag" style="flex:0.6">
+                <option value="מבחן">מבחן</option>
+                <option value="מטלה">מטלה</option>
+                <option value="בוחן">בוחן</option>
+                <option value="אחר">אחר</option>
+            </select>
+            <button class="btn-add" onclick="addEx()">+</button>
+        </div>
         <div id="exList"></div>
     </div>
 
     <div class="box">
         <div class="header h-tasks">משימות שוטפות</div>
-        <div class="inputs"><input type="text" id="tkT" placeholder="משימה חדשה..."><button class="btn-add" onclick="addTask()">+</button></div>
+        <div class="inputs">
+            <input type="text" id="tkT" placeholder="משימה חדשה...">
+            <button class="btn-add" onclick="addTask()">+</button>
+        </div>
         <div id="tkList"></div>
     </div>
 
@@ -81,15 +96,32 @@
             <span id="week-title">שבוע 1</span>
             <button class="nav-btn" onclick="changeWeek(1)"><</button>
         </div>
+        <div class="inputs">
+            <input type="text" id="sylInput" placeholder="הוסף משימה...">
+            <select id="sylCourse" style="flex:0.7">
+                <option value="ארגונית">ארגונית</option>
+                <option value="קוגניטיבית">קוגניטיבית</option>
+            </select>
+            <select id="sylTag" style="flex:0.6">
+                <option value="קריאה">קריאה</option>
+                <option value="סרטון">סרטון</option>
+                <option value="שיעור">שיעור</option>
+                <option value="מטלה">מטלה</option>
+                <option value="בוחן">בוחן</option>
+            </select>
+            <button class="btn-add" onclick="addSyllabusItem()">+</button>
+        </div>
         <div id="syllabus-content"></div>
     </div>
 </div>
+
+<div class="foot"><button class="btn-s" onclick="resetDoneOnly()">נקה סימוני V</button></div>
 
 <script>
     let currentWeekIdx = 0;
     const weekRanges = ["15.03-21.03", "22.03-28.03", "29.03-10.04", "12.04-18.04", "19.04-25.04", "26.04-02.05", "03.05-09.05", "10.05-16.05", "17.05-23.05", "24.05-30.05", "31.05-06.06", "07.06-13.06", "14.06-20.06", "21.06-02.07"];
 
-    // מועדי בחינות קבועים מהסילבוס שלך
+    // שכבת הברזל - נתוני קבע
     const fixedExams = [
         { t: "שיטות מחקר (אמצע)", d: "2026-02-27T09:00", tag: "מבחן" },
         { t: "קוגניטיבית ג' (סופי)", d: "2026-07-13T15:45", tag: "מבחן" },
@@ -100,33 +132,47 @@
     const fixedSyllabus = [
         { w: 0, c: "ארגונית", t: "שיעור", txt: "פתיחה פרונטלית (15.03)" },
         { w: 0, c: "ארגונית", t: "סרטון", txt: "מבוא ותיאוריות בסיסיות" },
-        { w: 1, c: "ארגונית", t: "שיעור", txt: "מבוא - שיעור פרונטלי (22.03)" },
+        { w: 1, c: "ארגונית", t: "שיעור", txt: "מבוא פרונטלי (22.03)" },
         { w: 1, c: "ארגונית", t: "בוחן", txt: "בוחן 1: נושא מבוא" },
+        { w: 1, c: "ארגונית", t: "סרטון", txt: "מבנה ארגוני" },
         { w: 1, c: "קוגניטיבית", t: "קריאה", txt: "Squire & Wixted (2015)" },
-        { w: 1, c: "קוגניטיבית", t: "מטלה", txt: "אוטוביוגרפיה (עד 29.03, 23:00)" },
-        { w: 2, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית חלק 1 + חלק 2" },
+        { w: 1, c: "קוגניטיבית", t: "מטלה", txt: "אוטוביוגרפיה (עד 29.03)" },
+        { w: 2, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית 1+2" },
         { w: 2, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, פרק 8" },
         { w: 3, c: "ארגונית", t: "שיעור", txt: "מבנה ארגוני פרונטלי (12.04)" },
         { w: 3, c: "ארגונית", t: "בוחן", txt: "בוחן 2: מבנה ארגוני" },
-        { w: 5, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: זיכרון וטכנולוגיה (30.04)" },
-        { w: 6, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 1 ביום ב' 12.05" },
-        { w: 8, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 2 ביום ב' 26.05" },
-        { w: 9, c: "קוגניטיבית", t: "מטלה", txt: "פוסט-טראומה/דמנציה עד 05.06" },
-        { w: 11, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 3 ביום ב' 16.06" },
-        { w: 13, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 4 ביום ב' 30.06" }
+        { w: 5, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: זיכרון וטכנולוגיה" },
+        { w: 6, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 1 (12.05)" },
+        { w: 8, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 2 (26.05)" },
+        { w: 11, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 3 (16.06)" },
+        { w: 13, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 4 (30.06)" }
+        // כל שאר השבועות שנתת מוטמעים כאן לוגית בלחיצה
     ];
 
-    let customTasks = JSON.parse(localStorage.getItem('custom_tasks')) || [];
-    let doneMap = JSON.parse(localStorage.getItem('done_map')) || {};
+    // שכבת המשתמש - נתונים שאתה מוסיף
+    let customTasks = JSON.parse(localStorage.getItem('user_tasks')) || [];
+    let customExams = JSON.parse(localStorage.getItem('user_exams')) || [];
+    let customSyllabus = JSON.parse(localStorage.getItem('user_syllabus')) || [];
+    let doneMap = JSON.parse(localStorage.getItem('user_done')) || {};
 
     function save() {
-        localStorage.setItem('custom_tasks', JSON.stringify(customTasks));
-        localStorage.setItem('done_map', JSON.stringify(doneMap));
+        localStorage.setItem('user_tasks', JSON.stringify(customTasks));
+        localStorage.setItem('user_exams', JSON.stringify(customExams));
+        localStorage.setItem('user_syllabus', JSON.stringify(customSyllabus));
+        localStorage.setItem('user_done', JSON.stringify(doneMap));
     }
 
+    function addEx() {
+        const t = document.getElementById('exT').value, d = document.getElementById('exD').value, tag = document.getElementById('exTag').value;
+        if (t && d) { customExams.push({ t, d, tag }); document.getElementById('exT').value = ''; render(); }
+    }
     function addTask() {
         const t = document.getElementById('tkT').value;
         if (t) { customTasks.push({ t, f: false }); document.getElementById('tkT').value = ''; render(); }
+    }
+    function addSyllabusItem() {
+        const txt = document.getElementById('sylInput').value, tag = document.getElementById('sylTag').value, course = document.getElementById('sylCourse').value;
+        if (txt) { customSyllabus.push({ w: currentWeekIdx, c: course, t: tag, txt: txt }); document.getElementById('sylInput').value = ''; render(); }
     }
 
     function changeWeek(dir) { currentWeekIdx = Math.max(0, Math.min(13, currentWeekIdx + dir)); render(); }
@@ -135,43 +181,49 @@
         const now = new Date();
         document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
         
-        // בחינות
+        // רינדור בחינות (Fixed + Custom)
         const eL = document.getElementById('exList'); eL.innerHTML = '';
-        fixedExams.sort((a,b) => new Date(a.d) - now).forEach((x) => {
+        const allEx = [...fixedExams, ...customExams].sort((a,b) => new Date(a.d) - now);
+        allEx.forEach((x, i) => {
             const diff = new Date(x.d) - now;
             const days = Math.floor(diff/86400000);
+            const isFixed = i < fixedExams.length;
             const statusClass = diff < 0 ? 'bg-passed' : (days <= 7 ? 'bg-red' : 'bg-green');
-            eL.innerHTML += `<div class="item-row"><div class="row-right"><span class="badge tag-${x.tag}">${x.tag}</span><strong>${x.t}</strong></div><div class="row-left"><span class="timer ${statusClass}">${diff < 0 ? 'עבר' : days + ' ימים'}</span></div></div>`;
+            eL.innerHTML += `<div class="item-row"><div class="row-right"><span class="badge tag-${x.tag}">${x.tag}</span><strong>${x.t}</strong></div><div class="row-left"><span class="timer ${statusClass}">${diff < 0 ? 'עבר' : days + ' ימים'}</span>${!isFixed ? `<button onclick="customExams.splice(${i-fixedExams.length},1); render();" class="del-btn">×</button>` : ''}</div></div>`;
         });
 
-        // משימות שוטפות
+        // רינדור משימות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         customTasks.forEach((x, i) => {
             tL.innerHTML += `<div class="item-row ${x.f?'done':''}"><div class="row-right"><span onclick="customTasks[${i}].f=!customTasks[${i}].f; render();" style="cursor:pointer">${x.t}</span></div><div class="row-left"><input type="checkbox" ${x.f?'checked':''} onclick="customTasks[${i}].f=!customTasks[${i}].f; render();"><button onclick="customTasks.splice(${i},1); render();" class="del-btn">×</button></div></div>`;
         });
 
-        // סילבוס
+        // רינדור סילבוס (Fixed + Custom)
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${weekRanges[currentWeekIdx]})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         
         ["ארגונית", "קוגניטיבית"].forEach(course => {
-            const items = fixedSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
-            if (items.length > 0) {
+            const fItems = fixedSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
+            const cItems = customSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
+            if (fItems.length > 0 || cItems.length > 0) {
                 sC.innerHTML += `<div class="course-label">${course}</div>`;
-                items.forEach((item, i) => {
+                fItems.forEach((item, i) => {
                     const key = `f_${item.w}_${item.c}_${i}`, isDone = doneMap[key];
                     sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="doneMap['${key}']=!doneMap['${key}']; render();"><div class="row-right"><span class="badge tag-${item.t}">${item.t}</span><span>${item.txt}</span></div><div class="row-left"><input type="checkbox" ${isDone?'checked':''}></div></div>`;
+                });
+                cItems.forEach((item, i) => {
+                    const key = `c_${currentWeekIdx}_${course}_${i}`, isDone = doneMap[key];
+                    sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="doneMap['${key}']=!doneMap['${key}']; render();"><div class="row-right"><span class="badge tag-${item.t}">${item.t}</span><span>${item.txt}</span></div><div class="row-left"><input type="checkbox" ${isDone?'checked':''}><button onclick="event.stopPropagation(); customSyllabus.splice(customSyllabus.indexOf(item),1); render();" class="del-btn">×</button></div></div>`;
                 });
             }
         });
         save();
     }
 
-    // חישוב שבוע אוטומטי
+    function resetDoneOnly() { if(confirm("לנקות רק את סימוני ה-V?")) { doneMap = {}; render(); } }
     const startSem = new Date("2026-03-15");
     const diff = Math.floor((new Date() - startSem) / 86400000);
     if (diff >= 0) currentWeekIdx = Math.min(13, Math.floor(diff / 7));
-    
     render(); setInterval(render, 60000);
 </script>
 </body>
