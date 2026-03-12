@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Hub 2026 - 89 Items Edition</title>
+    <title>Academic Hub 2026 - 102 Items Edition</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60;
             --red: #d63031; --orange: #e67e22; --green: #2ecc71; --text: #2d3436;
-            --clinical: #e67e22;
+            --clinical: #e67e22; --resilience: #16a085;
         }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
         
@@ -38,6 +38,7 @@
         .label-org { background: var(--syllabus); }
         .label-cog { background: var(--task); }
         .label-clin { background: var(--clinical); }
+        .label-res { background: var(--resilience); }
 
         .badge { font-size: 0.62rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; white-space: nowrap; }
         .tag-קריאה { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
@@ -46,7 +47,6 @@
         .tag-בוחן { background: #fce4ec; color: #c2185b; border: 1px solid #f8bbd0; }
         .tag-שיעור { background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
         .tag-מבחן { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
-        .tag-פרויקט { background: #e0f2f1; color: #00695c; border: 1px solid #b2dfdb; }
         .tag-אחר { background: #f5f5f5; color: #616161; border: 1px solid #e0e0e0; }
 
         .timer { font-weight: bold; padding: 2px 10px; border-radius: 6px; font-size: 0.8rem; white-space: nowrap; }
@@ -81,7 +81,6 @@
                 <option value="מבחן">מבחן</option>
                 <option value="מטלה">מטלה</option>
                 <option value="בוחן">בוחן</option>
-                <option value="פרויקט">פרויקט</option>
                 <option value="אחר">אחר</option>
             </select>
             <button class="btn-add" onclick="addEx()">+</button>
@@ -107,13 +106,14 @@
                 <option value="ארגונית">ארגונית</option>
                 <option value="קוגניטיבית">קוגניטיבית</option>
                 <option value="קלינית">קלינית</option>
+                <option value="חוסן">חוסן</option>
             </select>
             <select id="sylTag" style="flex:0.6">
                 <option value="שיעור">שיעור</option>
                 <option value="קריאה">קריאה</option>
                 <option value="סרטון">סרטון</option>
-                <option value="מטלה">מטלה</option>
                 <option value="בוחן">בוחן</option>
+                <option value="מטלה">מטלה</option>
             </select>
             <button class="btn-add" onclick="addSyllabusItem()">+</button>
         </div>
@@ -125,7 +125,7 @@
 
 <script>
     let currentWeekIdx = 0;
-    const weekRanges = ["15.03-21.03", "22.03-28.03", "29.03-10.04", "12.04-18.04", "19.04-25.04", "26.04-02.05", "03.05-09.05", "10.05-16.05", "17.05-23.05", "24.05-30.05", "31.05-06.06", "07.06-13.06", "14.06-20.06", "21.06-02.07"];
+    const weekRanges = ["15.03-21.03", "22.03-28.03", "29.03-11.04", "12.04-18.04", "19.04-25.04", "26.04-02.05", "03.05-09.05", "10.05-16.05", "17.05-23.05", "24.05-30.05", "31.05-06.06", "07.06-13.06", "14.06-20.06", "21.06-02.07"];
 
     const fixedExams = [
         { t: "שיטות מחקר (אמצע)", d: "2026-02-27T09:00", tag: "מבחן" },
@@ -138,50 +138,57 @@
         // שבוע 1
         { w: 0, c: "ארגונית", t: "שיעור", txt: "פתיחה פרונטלית - הכירות (15.03)" },
         { w: 0, c: "ארגונית", t: "סרטון", txt: "מבוא ותיאוריות בסיסיות" },
-        { w: 0, c: "קוגניטיבית", t: "קריאה", txt: "אין חומר קריאה מוגדר" },
+        { w: 0, c: "קוגניטיבית", t: "אחר", txt: "אין חומר קריאה מוגדר" },
         { w: 0, c: "קלינית", t: "שיעור", txt: "מבוא והיסטוריה (15.03)" },
         { w: 0, c: "קלינית", t: "שיעור", txt: "הגדרת התפקיד (19.03)" },
+        { w: 0, c: "חוסן", t: "שיעור", txt: "מבוא והיבטי בריאות נפשית (17.03)" },
         // שבוע 2
         { w: 1, c: "ארגונית", t: "שיעור", txt: "מבוא - שיעור פרונטלי (22.03)" },
         { w: 1, c: "ארגונית", t: "בוחן", txt: "בוחן 1: נושא מבוא" },
         { w: 1, c: "ארגונית", t: "סרטון", txt: "מבנה ארגוני" },
-        { w: 1, c: "קוגניטיבית", t: "קריאה", txt: "Squire & Wixted (2015)" },
-        { w: 1, c: "קוגניטיבית", t: "מטלה", txt: "אוטוביוגרפיה (עד 29.03, 23:00)" },
+        { w: 1, c: "קוגניטיבית", t: "קריאה", txt: "קריאה: Squire & Wixted (2015)" },
+        { w: 1, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: אוטוביוגרפיה (עד 29.03)" },
         { w: 1, c: "קלינית", t: "שיעור", txt: "Scientist-Practitioner והערכה (22.03)" },
         { w: 1, c: "קלינית", t: "שיעור", txt: "DSM-5 וסיווג הפרעות (26.03)" },
-        // שבוע 3
-        { w: 2, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית חלק 1 + 2" },
+        { w: 1, c: "חוסן", t: "שיעור", txt: "בריאות נפשית ופרספקטיבה היסטורית (24.03)" },
+        // שבוע 3 (פסח)
+        { w: 2, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית 1+2" },
         { w: 2, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, פרק 8" },
         { w: 2, c: "קלינית", t: "אחר", txt: "חופשת פסח" },
+        { w: 2, c: "חוסן", t: "אחר", txt: "חופשת פסח - שיעורים מבוטלים" },
         // שבוע 4
         { w: 3, c: "ארגונית", t: "שיעור", txt: "מבנה ארגוני פרונטלי (12.04)" },
         { w: 3, c: "ארגונית", t: "בוחן", txt: "בוחן 2: מבנה ארגוני" },
         { w: 3, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית (המשך)" },
         { w: 3, c: "קוגניטיבית", t: "אחר", txt: "חופשת פסח - אין שיעור" },
         { w: 3, c: "קלינית", t: "שיעור", txt: "אבחון ASD - הרצאת אורח (12.04)" },
+        { w: 3, c: "חוסן", t: "שיעור", txt: "היבטים של חוסן אישי (14.04)" },
         // שבוע 5
         { w: 4, c: "ארגונית", t: "שיעור", txt: "תרבות ארגונית פרונטלי (19.04)" },
         { w: 4, c: "ארגונית", t: "בוחן", txt: "בוחן 3: תרבות ארגונית" },
         { w: 4, c: "ארגונית", t: "סרטון", txt: "הבדלים אישיים ומיון" },
-        { w: 4, c: "קוגניטיבית", t: "קריאה", txt: "Anderson & Levy, Bauer, Gammon" },
+        { w: 4, c: "קוגניטיבית", t: "קריאה", txt: "Anderson, Bauer, Gammon" },
         { w: 4, c: "קלינית", t: "שיעור", txt: "מסירת אבחנה פסיכיאטרית (16.04)" },
         { w: 4, c: "קלינית", t: "שיעור", txt: "פסיכודינמיקה קלאסית (19.04)" },
+        { w: 4, c: "חוסן", t: "אחר", txt: "חופשת יום העצמאות" },
         // שבוע 6
         { w: 5, c: "ארגונית", t: "שיעור", txt: "הבדלים ומיון פרונטלי (26.04)" },
-        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 4 (הבדלים) + בוחן 5 (מיון)" },
+        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 4 + בוחן 5" },
         { w: 5, c: "ארגונית", t: "סרטון", txt: "רגשות, לחץ ומחויבות" },
         { w: 5, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, Talmi (2013)" },
         { w: 5, c: "קוגניטיבית", t: "מטלה", txt: "זיכרון וטכנולוגיה (עד 30.04)" },
         { w: 5, c: "קלינית", t: "שיעור", txt: "פסיכודינמיקה בפרקטיקה (23.04)" },
         { w: 5, c: "קלינית", t: "שיעור", txt: "יחסי אובייקט ו-MBT (26.04)" },
+        { w: 5, c: "חוסן", t: "שיעור", txt: "PFA תיאוריה וסימולציה 1 (28.04)" },
         // שבוע 7
         { w: 6, c: "ארגונית", t: "שיעור", txt: "רגשות ושביעות רצון (03.05)" },
-        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 6 (רגשות) + בוחן 7 (שביעות)" },
+        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 6 + בוחן 7" },
         { w: 6, c: "ארגונית", t: "סרטון", txt: "מוטיבציה חלק 1 + 2" },
-        { w: 6, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, Freberg 358-361" },
+        { w: 6, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, Freberg" },
         { w: 6, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 1 (12.05)" },
-        { w: 6, c: "קלינית", t: "שיעור", txt: "פסיכודינמי קצר מועד (30.04)" },
+        { w: 6, c: "קלינית", t: "שיעור", txt: "טיפול פסיכודינמי קצר (30.04)" },
         { w: 6, c: "קלינית", t: "שיעור", txt: "CBT - יסודות והטיות (03.05)" },
+        { w: 6, c: "חוסן", t: "שיעור", txt: "PFA תיאוריה וסימולציה 2 (05.05)" },
         // שבוע 8
         { w: 7, c: "ארגונית", t: "שיעור", txt: "מוטיבציה פרונטלי (10.05)" },
         { w: 7, c: "ארגונית", t: "בוחן", txt: "בוחן 8: מוטיבציה" },
@@ -189,6 +196,7 @@
         { w: 7, c: "קוגניטיבית", t: "קריאה", txt: "Wixted (2005)" },
         { w: 7, c: "קלינית", t: "שיעור", txt: "ניתוח מקרים ב-CBT (07.05)" },
         { w: 7, c: "קלינית", t: "שיעור", txt: "מיינדפולנס, ACT ו-DBT (10.05)" },
+        { w: 7, c: "חוסן", t: "שיעור", txt: "גישות טיפול נוספות באסון (12.05)" },
         // שבוע 9
         { w: 8, c: "ארגונית", t: "שיעור", txt: "אבחון ארגוני פרונטלי (17.05)" },
         { w: 8, c: "ארגונית", t: "אחר", txt: "חופשת שבועות (21.05)" },
@@ -196,53 +204,58 @@
         { w: 8, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 2 (26.05)" },
         { w: 8, c: "קלינית", t: "שיעור", txt: "מקרה בוחן ב-ACT (14.05)" },
         { w: 8, c: "קלינית", t: "שיעור", txt: "טיפול משפחתי והדרכת הורים (17.05)" },
+        { w: 8, c: "חוסן", t: "שיעור", txt: "שחיקה ותמיכה במגיבים (19.05)" },
         // שבוע 10
         { w: 9, c: "ארגונית", t: "שיעור", txt: "הנחיות לפרויקט מסכם (24.05)" },
         { w: 9, c: "ארגונית", t: "סרטון", txt: "כוח ומנהיגות חלק 1 + 2" },
         { w: 9, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין עמ' 181-187" },
-        { w: 9, c: "קוגניטיבית", t: "מטלה", txt: "פוסט-טראומה/דמנציה (עד 05.06)" },
+        { w: 9, c: "קוגניטיבית", t: "מטלה", txt: "פוסט-טראומה/דמנציה (05.06)" },
         { w: 9, c: "קלינית", t: "שיעור", txt: "טיפול משפחתי ללהט\"ב (21.05)" },
         { w: 9, c: "קלינית", t: "שיעור", txt: "טיפול זוגי EFT (24.05)" },
+        { w: 9, c: "חוסן", t: "שיעור", txt: "חוסן ומוזיקה 1 - ד\"ר לשמן (26.05)" },
         // שבוע 11
         { w: 10, c: "ארגונית", t: "שיעור", txt: "מנהיגות פרונטלי (31.05)" },
         { w: 10, c: "ארגונית", t: "בוחן", txt: "בוחן 9: מנהיגות" },
         { w: 10, c: "ארגונית", t: "סרטון", txt: "יצירתיות וקונפליקטים" },
-        { w: 10, c: "קוגניטיבית", t: "קריאה", txt: "Freberg, Luck & Vogel, גולדשטיין" },
-        { w: 10, c: "קלינית", t: "שיעור", txt: "מחקר על תוצאות פסיכותרפיה (28.05)" },
-        { w: 10, c: "קלינית", t: "שיעור", txt: "טיפול אונליין ואתיקה (31.05)" },
+        { w: 10, c: "קוגניטיבית", t: "קריאה", txt: "Luck & Vogel, גולדשטיין" },
+        { w: 10, c: "קלינית", t: "שיעור", txt: "תוצאות פסיכותרפיה (28.05)" },
+        { w: 10, c: "קלינית", t: "שיעור", txt: "פסיכותרפיה אונליין ואתיקה (31.05)" },
+        { w: 10, c: "חוסן", t: "שיעור", txt: "חוסן ומוזיקה 2 (02.06)" },
         // שבוע 12
         { w: 11, c: "ארגונית", t: "שיעור", txt: "יצירתיות ושיתוף (07.06)" },
         { w: 11, c: "ארגונית", t: "בוחן", txt: "בוחן 10 + בוחן 11" },
         { w: 11, c: "ארגונית", t: "סרטון", txt: "קבוצות וצוותים" },
-        { w: 11, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, Ricker et al." },
         { w: 11, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 3 (16.06)" },
-        { w: 11, c: "קלינית", t: "שיעור", txt: "טיפול אונליין - הרצאת אורח (04.06)" },
-        { w: 11, c: "קלינית", t: "שיעור", txt: "עזרה ראשונה פסיכולוגית (07.06)" },
+        { w: 11, c: "קלינית", t: "שיעור", txt: "טיפול אונליין - אורח (04.06)" },
+        { w: 11, c: "קלינית", t: "שיעור", txt: "התערבות בעקבות ה-7.10 (07.06)" },
+        { w: 11, c: "חוסן", t: "בוחן", txt: "מבחן פנימי חוסן (09.06)" },
         // שבוע 13
-        { w: 12, c: "ארגונית", t: "שיעור", txt: "Q&A על הפרויקט המסכם (14.06)" },
-        { w: 12, c: "ארגונית", t: "סרטון", txt: "הקשבה בישיבות צוות" },
+        { w: 12, c: "ארגונית", t: "שיעור", txt: "Q&A פרויקט מסכם (14.06)" },
+        { w: 12, c: "ארגונית", t: "סרטון", txt: "הקשבה בישיבות" },
         { w: 12, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין 375-385" },
         { w: 12, c: "קלינית", t: "שיעור", txt: "טיפול במשפחות חטופים (11.06)" },
-        { w: 12, c: "קלינית", t: "שיעור", txt: "פסיכותרפיה במשבר לאומי (14.06)" },
+        { w: 12, c: "קלינית", t: "שיעור", txt: "פסיכותרפיה במציאות משותפת (14.06)" },
+        { w: 12, c: "חוסן", t: "שיעור", txt: "נושאים שונים (16.06)" },
         // שבוע 14
         { w: 13, c: "ארגונית", t: "שיעור", txt: "צוותים והקשבה (21.06)" },
         { w: 13, c: "ארגונית", t: "בוחן", txt: "בוחן 12: צוותים והקשבה" },
         { w: 13, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 4 (30.06)" },
-        { w: 13, c: "קלינית", t: "שיעור", txt: "מנהיגות פסיכולוגית בעת משבר (18.06)" },
+        { w: 13, c: "קלינית", t: "שיעור", txt: "מנהיגות בעת משבר (18.06)" },
         { w: 13, c: "קלינית", t: "שיעור", txt: "סיום טיפול ואתיקה (21.06)" },
-        { w: 13, c: "קלינית", t: "שיעור", txt: "סיכום הקורס (25.06)" }
+        { w: 13, c: "קלינית", t: "שיעור", txt: "סיכום הקורס (25.06)" },
+        { w: 13, c: "חוסן", t: "שיעור", txt: "סיכום קורס חוסן (23.06)" }
     ];
 
-    let userTasks = JSON.parse(localStorage.getItem('user_tasks')) || [];
-    let userExams = JSON.parse(localStorage.getItem('user_exams')) || [];
-    let userSyllabus = JSON.parse(localStorage.getItem('user_syllabus')) || [];
-    let doneMap = JSON.parse(localStorage.getItem('done_map_v89')) || {};
+    let userTasks = JSON.parse(localStorage.getItem('user_tasks_v102')) || [];
+    let userExams = JSON.parse(localStorage.getItem('user_exams_v102')) || [];
+    let userSyllabus = JSON.parse(localStorage.getItem('user_syllabus_v102')) || [];
+    let doneMap = JSON.parse(localStorage.getItem('done_map_v102')) || {};
 
     function save() {
-        localStorage.setItem('user_tasks', JSON.stringify(userTasks));
-        localStorage.setItem('user_exams', JSON.stringify(userExams));
-        localStorage.setItem('user_syllabus', JSON.stringify(userSyllabus));
-        localStorage.setItem('done_map_v89', JSON.stringify(doneMap));
+        localStorage.setItem('user_tasks_v102', JSON.stringify(userTasks));
+        localStorage.setItem('user_exams_v102', JSON.stringify(userExams));
+        localStorage.setItem('user_syllabus_v102', JSON.stringify(userSyllabus));
+        localStorage.setItem('done_map_v102', JSON.stringify(doneMap));
     }
 
     function addEx() {
@@ -264,38 +277,33 @@
         const now = new Date();
         document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
         
-        // בחינות
         const eL = document.getElementById('exList'); eL.innerHTML = '';
         const allEx = [...fixedExams, ...userExams].sort((a,b) => new Date(a.d) - now);
         allEx.forEach((x, i) => {
-            const diff = new Date(x.d) - now;
-            const days = Math.floor(diff/86400000);
-            const isFixed = i < fixedExams.length;
+            const diff = new Date(x.d) - now, days = Math.floor(diff/86400000), isFixed = i < fixedExams.length;
             const statusClass = diff < 0 ? 'bg-passed' : (days <= 7 ? 'bg-red' : 'bg-green');
             eL.innerHTML += `<div class="item-row"><div class="row-right"><span class="badge tag-${x.tag}">${x.tag}</span><strong>${x.t}</strong></div><div class="row-left"><span class="timer ${statusClass}">${diff < 0 ? 'עבר' : days + ' ימים'}</span>${!isFixed ? `<button onclick="userExams.splice(${i-fixedExams.length},1); render();" class="del-btn">×</button>` : ''}</div></div>`;
         });
 
-        // משימות שוטפות
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         userTasks.forEach((x, i) => {
             tL.innerHTML += `<div class="item-row ${x.f?'done':''}"><div class="row-right"><span onclick="userTasks[${i}].f=!userTasks[${i}].f; render();" style="cursor:pointer">${x.t}</span></div><div class="row-left"><input type="checkbox" ${x.f?'checked':''} onclick="userTasks[${i}].f=!userTasks[${i}].f; render();"><button onclick="userTasks.splice(${i},1); render();" class="del-btn">×</button></div></div>`;
         });
 
-        // סילבוס
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${weekRanges[currentWeekIdx]})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         
-        ["ארגונית", "קוגניטיבית", "קלינית"].forEach(course => {
+        ["ארגונית", "קוגניטיבית", "קלינית", "חוסן"].forEach(course => {
             const fItems = fixedSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
-            const cItems = userSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
-            if (fItems.length > 0 || cItems.length > 0) {
-                const labelClass = course === 'ארגונית' ? 'label-org' : (course === 'קוגניטיבית' ? 'label-cog' : 'label-clin');
+            const uItems = userSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
+            if (fItems.length > 0 || uItems.length > 0) {
+                const labelClass = course==='ארגונית'?'label-org':course==='קוגניטיבית'?'label-cog':course==='קלינית'?'label-clin':'label-res';
                 sC.innerHTML += `<div class="course-label ${labelClass}">פסיכולוגיה ${course}</div>`;
                 fItems.forEach((item, i) => {
                     const key = `f_${item.w}_${item.c}_${i}`, isDone = doneMap[key];
                     sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="doneMap['${key}']=!doneMap['${key}']; render();"><div class="row-right"><span class="badge tag-${item.t}">${item.t}</span><span>${item.txt}</span></div><div class="row-left"><input type="checkbox" ${isDone?'checked':''}></div></div>`;
                 });
-                cItems.forEach((item, i) => {
+                uItems.forEach((item, i) => {
                     const key = `u_${currentWeekIdx}_${course}_${i}`, isDone = doneMap[key];
                     sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="doneMap['${key}']=!doneMap['${key}']; render();"><div class="row-right"><span class="badge tag-${item.t}">${item.t}</span><span>${item.txt}</span></div><div class="row-left"><input type="checkbox" ${isDone?'checked':''}><button onclick="event.stopPropagation(); userSyllabus.splice(userSyllabus.indexOf(item),1); render();" class="del-btn">×</button></div></div>`;
                 });
@@ -304,7 +312,7 @@
         save();
     }
 
-    function resetDoneOnly() { if(confirm("לנקות סימוני V?")) { doneMap = {}; render(); } }
+    function resetDoneOnly() { if(confirm("נקה V?")) { doneMap = {}; render(); } }
     const startSem = new Date("2026-03-15");
     const diff = Math.floor((new Date() - startSem) / 86400000);
     if (diff >= 0) currentWeekIdx = Math.min(13, Math.floor(diff / 7));
