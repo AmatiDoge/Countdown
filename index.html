@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Hub 2026 - Exams Updated</title>
+    <title>Academic Hub 2026 - All Items Preserved</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60;
             --red: #d63031; --orange: #e67e22; --green: #2ecc71; --text: #2d3436;
             --clinical: #e67e22; --resilience: #16a085;
+            --methods: #3f51b5; /* צבע כחול-רויאל לשיטות מחקר */
         }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
         
@@ -39,6 +40,7 @@
         .label-cog { background: var(--task); }
         .label-clin { background: var(--clinical); }
         .label-res { background: var(--resilience); }
+        .label-meth { background: var(--methods); }
 
         .badge { font-size: 0.62rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; white-space: nowrap; }
         .tag-קריאה { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
@@ -111,6 +113,7 @@
                 <option value="קוגניטיבית">קוגניטיבית</option>
                 <option value="קלינית">קלינית</option>
                 <option value="חוסן">חוסן</option>
+                <option value="שיטות מחקר">שיטות מחקר</option>
             </select>
             <select id="sylTag" style="flex:0.6">
                 <option value="שיעור">שיעור</option>
@@ -284,11 +287,12 @@
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${weekRanges[currentWeekIdx]})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         
-        ["ארגונית", "קוגניטיבית", "קלינית", "חוסן"].forEach(course => {
+        // הוספתי את "שיטות מחקר" לרשימת הרינדור
+        ["ארגונית", "קוגניטיבית", "קלינית", "חוסן", "שיטות מחקר"].forEach(course => {
             const fItems = fixedSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
             const uItems = userSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
             if (fItems.length > 0 || uItems.length > 0) {
-                const labelClass = course==='ארגונית'?'label-org':course==='קוגניטיבית'?'label-cog':course==='קלינית'?'label-clin':'label-res';
+                const labelClass = course==='ארגונית'?'label-org':course==='קוגניטיבית'?'label-cog':course==='קלינית'?'label-clin':course==='שיטות מחקר'?'label-meth':'label-res';
                 sC.innerHTML += `<div class="course-label ${labelClass}">פסיכולוגיה ${course}</div>`;
                 fItems.forEach((item, i) => {
                     const key = `f_${item.w}_${item.c}_${i}`, isDone = doneMap[key];
