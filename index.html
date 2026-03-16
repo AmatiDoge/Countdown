@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Hub 2026 - All Items Preserved</title>
+    <title>Academic Hub 2026 - Optimized</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60;
             --red: #d63031; --orange: #e67e22; --green: #2ecc71; --text: #2d3436;
-            --clinical: #e67e22; --resilience: #16a085;
-            --methods: #3f51b5; /* צבע כחול-רויאל לשיטות מחקר */
+            --clinical: #e67e22; --resilience: #16a085; --methods: #3f51b5;
         }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
         
@@ -50,7 +49,6 @@
         .tag-שיעור { background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
         .tag-מבחן { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
         .tag-מועד-ב { background: #eceff1; color: #37474f; border: 1px solid #cfd8dc; }
-        .tag-פרויקט { background: #e0f2f1; color: #00695c; border: 1px solid #b2dfdb; }
         .tag-אחר { background: #f5f5f5; color: #616161; border: 1px solid #e0e0e0; }
 
         .timer { font-weight: bold; padding: 2px 10px; border-radius: 6px; font-size: 0.8rem; white-space: nowrap; }
@@ -60,7 +58,6 @@
 
         .done { opacity: 0.5; }
         .done .row-right span { text-decoration: line-through; }
-        
         .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1.1rem; padding: 0 5px; }
         .foot { margin-top: 20px; opacity: 0.3; }
         .btn-s { font-size: 0.75rem; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; background: #ddd; }
@@ -86,8 +83,6 @@
                 <option value="מועד-ב">מועד ב'</option>
                 <option value="מטלה">מטלה</option>
                 <option value="בוחן">בוחן</option>
-                <option value="פרויקט">פרויקט</option>
-                <option value="אחר">אחר</option>
             </select>
             <button class="btn-add" onclick="addEx()">+</button>
         </div>
@@ -144,59 +139,70 @@
     ];
 
     const fixedSyllabus = [
+        // שבוע 1
         { w: 0, c: "ארגונית", t: "שיעור", txt: "פתיחה פרונטלית (15.03)" },
         { w: 0, c: "ארגונית", t: "סרטון", txt: "מבוא ותיאוריות בסיסיות" },
         { w: 0, c: "קוגניטיבית", t: "אחר", txt: "אין חומר קריאה מוגדר" },
         { w: 0, c: "קלינית", t: "שיעור", txt: "מבוא והיסטוריה (15.03)" },
         { w: 0, c: "קלינית", t: "שיעור", txt: "הגדרת התפקיד (19.03)" },
         { w: 0, c: "חוסן", t: "שיעור", txt: "מבוא והיבטי בריאות נפשית (17.03)" },
+        // שבוע 2
         { w: 1, c: "ארגונית", t: "שיעור", txt: "מבוא - שיעור פרונטלי (22.03)" },
-        { w: 1, c: "ארגונית", t: "בוחן", txt: "בוחן 1: נושא מבוא" },
+        { w: 1, c: "ארגונית", t: "בוחן", txt: "בוחן 1 (מבוא) - 22.03" },
         { w: 1, c: "ארגונית", t: "סרטון", txt: "מבנה ארגוני" },
         { w: 1, c: "קוגניטיבית", t: "קריאה", txt: "קריאה: Squire & Wixted (2015)" },
         { w: 1, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: אוטוביוגרפיה (עד 29.03)" },
         { w: 1, c: "קלינית", t: "שיעור", txt: "Scientist-Practitioner והערכה (22.03)" },
         { w: 1, c: "קלינית", t: "שיעור", txt: "DSM-5 וסיווג הפרעות (26.03)" },
         { w: 1, c: "חוסן", t: "שיעור", txt: "בריאות נפשית ופרספקטיבה (24.03)" },
+        // שבוע 3
         { w: 2, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית 1+2" },
         { w: 2, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, פרק 8" },
         { w: 2, c: "קלינית", t: "אחר", txt: "חופשת פסח" },
         { w: 2, c: "חוסן", t: "אחר", txt: "חופשת פסח - מבוטל" },
+        // שבוע 4
         { w: 3, c: "ארגונית", t: "שיעור", txt: "מבנה ארגוני פרונטלי (12.04)" },
-        { w: 3, c: "ארגונית", t: "בוחן", txt: "בוחן 2: מבנה ארגוני" },
+        { w: 3, c: "ארגונית", t: "בוחן", txt: "בוחן 2 (מבנה) - 12.04" },
         { w: 3, c: "ארגונית", t: "סרטון", txt: "תרבות ארגונית (המשך)" },
         { w: 3, c: "קלינית", t: "שיעור", txt: "אבחון ASD - אורח (12.04)" },
         { w: 3, c: "חוסן", t: "שיעור", txt: "היבטים של חוסן אישי (14.04)" },
+        // שבוע 5
         { w: 4, c: "ארגונית", t: "שיעור", txt: "תרבות ארגונית פרונטלי (19.04)" },
-        { w: 4, c: "ארגונית", t: "בוחן", txt: "בוחן 3: תרבות ארגונית" },
+        { w: 4, c: "ארגונית", t: "בוחן", txt: "בוחן 3 (תרבות ארגונית) - 19.04" },
         { w: 4, c: "ארגונית", t: "סרטון", txt: "הבדלים אישיים ומיון" },
         { w: 4, c: "קוגניטיבית", t: "קריאה", txt: "Anderson, Bauer, Gammon" },
         { w: 4, c: "קלינית", t: "שיעור", txt: "מסירת אבחנה פסיכיאטרית (16.04)" },
         { w: 4, c: "קלינית", t: "שיעור", txt: "פסיכודינמיקה קלאסית (19.04)" },
         { w: 4, c: "חוסן", t: "אחר", txt: "חופשת יום העצמאות" },
+        // שבוע 6
         { w: 5, c: "ארגונית", t: "שיעור", txt: "הבדלים ומיון פרונטלי (26.04)" },
-        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 4 + בוחן 5" },
+        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 4 (הבדלים בין אישיים) - 26.04" },
+        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 5 (מיון וגיוס) - 26.04" },
         { w: 5, c: "ארגונית", t: "סרטון", txt: "רגשות, לחץ ומחויבות" },
         { w: 5, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, Talmi (2013)" },
         { w: 5, c: "קוגניטיבית", t: "מטלה", txt: "זיכרון וטכנולוגיה (עד 30.04)" },
         { w: 5, c: "קלינית", t: "שיעור", txt: "פסיכודינמיקה בפרקטיקה (23.04)" },
         { w: 5, c: "קלינית", t: "שיעור", txt: "יחסי אובייקט ו-MBT (26.04)" },
         { w: 5, c: "חוסן", t: "שיעור", txt: "PFA תיאוריה וסימולציה 1 (28.04)" },
+        // שבוע 7
         { w: 6, c: "ארגונית", t: "שיעור", txt: "רגשות ושביעות רצון (03.05)" },
-        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 6 + בוחן 7" },
+        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 6 (רגשות) - 03.05" },
+        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 7 (שביעות רצון) - 03.05" },
         { w: 6, c: "ארגונית", t: "סרטון", txt: "מוטיבציה חלק 1 + 2" },
         { w: 6, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, Freberg" },
         { w: 6, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 1 (12.05)" },
         { w: 6, c: "קלינית", t: "שיעור", txt: "טיפול פסיכודינמי קצר (30.04)" },
         { w: 6, c: "קלינית", t: "שיעור", txt: "CBT - יסודות והטיות (03.05)" },
         { w: 6, c: "חוסן", t: "שיעור", txt: "PFA תיאוריה וסימולציה 2 (05.05)" },
+        // שבוע 8
         { w: 7, c: "ארגונית", t: "שיעור", txt: "מוטיבציה פרונטלי (10.05)" },
-        { w: 7, c: "ארגונית", t: "בוחן", txt: "בוחן 8: מוטיבציה" },
+        { w: 7, c: "ארגונית", t: "בוחן", txt: "בוחן 8 (מוטיביציה) - 10.05" },
         { w: 7, c: "ארגונית", t: "סרטון", txt: "אבחון ארגוני" },
         { w: 7, c: "קוגניטיבית", t: "קריאה", txt: "Wixted (2005)" },
         { w: 7, c: "קלינית", t: "שיעור", txt: "ניתוח מקרים ב-CBT (07.05)" },
         { w: 7, c: "קלינית", t: "שיעור", txt: "מיינדפולנס, ACT ו-DBT (10.05)" },
         { w: 7, c: "חוסן", t: "שיעור", txt: "גישות טיפול נוספות (12.05)" },
+        // שבוע 9
         { w: 8, c: "ארגונית", t: "שיעור", txt: "אבחון ארגוני פרונטלי (17.05)" },
         { w: 8, c: "ארגונית", t: "אחר", txt: "חופשת שבועות (21.05)" },
         { w: 8, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין 195-198" },
@@ -204,6 +210,7 @@
         { w: 8, c: "קלינית", t: "שיעור", txt: "מקרה בוחן ב-ACT (14.05)" },
         { w: 8, c: "קלינית", t: "שיעור", txt: "טיפול משפחתי והדרכה (17.05)" },
         { w: 8, c: "חוסן", t: "שיעור", txt: "שחיקה ותמיכה במגיבים (19.05)" },
+        // שבוע 10
         { w: 9, c: "ארגונית", t: "שיעור", txt: "הנחיות לפרויקט מסכם (24.05)" },
         { w: 9, c: "ארגונית", t: "סרטון", txt: "כוח ומנהיגות חלק 1 + 2" },
         { w: 9, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין עמ' 181-187" },
@@ -211,28 +218,33 @@
         { w: 9, c: "קלינית", t: "שיעור", txt: "טיפול למשפחות להט\"ב (21.05)" },
         { w: 9, c: "קלינית", t: "שיעור", txt: "טיפול זוגי EFT (24.05)" },
         { w: 9, c: "חוסן", t: "שיעור", txt: "חוסן ומוזיקה 1 - לשמן (26.05)" },
+        // שבוע 11
         { w: 10, c: "ארגונית", t: "שיעור", txt: "מנהיגות פרונטלי (31.05)" },
-        { w: 10, c: "ארגונית", t: "בוחן", txt: "בוחן 9: מנהיגות" },
+        { w: 10, c: "ארגונית", t: "בוחן", txt: "בוחן 9 (מנהיגות) - 31.05" },
         { w: 10, c: "ארגונית", t: "סרטון", txt: "יצירתיות וקונפליקטים" },
         { w: 10, c: "קוגניטיבית", t: "קריאה", txt: "Luck & Vogel, גולדשטיין" },
         { w: 10, c: "קלינית", t: "שיעור", txt: "תוצאות פסיכותרפיה (28.05)" },
         { w: 10, c: "קלינית", t: "שיעור", txt: "טיפול אונליין ואתיקה (31.05)" },
         { w: 10, c: "חוסן", t: "שיעור", txt: "חוסן ומוזיקה 2 (02.06)" },
+        // שבוע 12
         { w: 11, c: "ארגונית", t: "שיעור", txt: "יצירתיות ושיתוף (07.06)" },
-        { w: 11, c: "ארגונית", t: "בוחן", txt: "בוחן 10 + בוחן 11" },
+        { w: 11, c: "ארגונית", t: "בוחן", txt: "בוחן 10 (יצירתיות וחדשנות) - 07.06" },
+        { w: 11, c: "ארגונית", t: "בוחן", txt: "בוחן 11 (שיתוף וקונפליקטים) - 07.06" },
         { w: 11, c: "ארגונית", t: "סרטון", txt: "קבוצות וצוותים" },
         { w: 11, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 3 (16.06)" },
         { w: 11, c: "קלינית", t: "שיעור", txt: "טיפול אונליין - אורח (04.06)" },
         { w: 11, c: "קלינית", t: "שיעור", txt: "התערבות בעקבות ה-7.10 (07.06)" },
         { w: 11, c: "חוסן", t: "בוחן", txt: "מבחן פנימי חוסן (09.06)" },
+        // שבוע 13
         { w: 12, c: "ארגונית", t: "שיעור", txt: "Q&A פרויקט מסכם (14.06)" },
         { w: 12, c: "ארגונית", t: "סרטון", txt: "הקשבה בישיבות" },
         { w: 12, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין 375-385" },
         { w: 12, c: "קלינית", t: "שיעור", txt: "טיפול במשפחות חטופים (11.06)" },
         { w: 12, c: "קלינית", t: "שיעור", txt: "פסיכותרפיה במציאות משותפת (14.06)" },
         { w: 12, c: "חוסן", t: "שיעור", txt: "נושאים שונים (16.06)" },
+        // שבוע 14
         { w: 13, c: "ארגונית", t: "שיעור", txt: "צוותים והקשבה (21.06)" },
-        { w: 13, c: "ארגונית", t: "בוחן", txt: "בוחן 12: צוותים והקשבה" },
+        { w: 13, c: "ארגונית", t: "בוחן", txt: "בוחן 12 (צוותים והקשבה) - 21.06" },
         { w: 13, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 4 (30.06)" },
         { w: 13, c: "קלינית", t: "שיעור", txt: "מנהיגות בעת משבר (18.06)" },
         { w: 13, c: "קלינית", t: "שיעור", txt: "סיום טיפול ואתיקה (21.06)" },
@@ -240,16 +252,16 @@
         { w: 13, c: "חוסן", t: "שיעור", txt: "סיכום קורס חוסן (23.06)" }
     ];
 
-    let userTasks = JSON.parse(localStorage.getItem('user_tasks_v102')) || [];
-    let userExams = JSON.parse(localStorage.getItem('user_exams_v102')) || [];
-    let userSyllabus = JSON.parse(localStorage.getItem('user_syllabus_v102')) || [];
-    let doneMap = JSON.parse(localStorage.getItem('done_map_v102')) || {};
+    let userTasks = JSON.parse(localStorage.getItem('hub_tasks')) || [];
+    let userExams = JSON.parse(localStorage.getItem('hub_exams')) || [];
+    let userSyllabus = JSON.parse(localStorage.getItem('hub_syl')) || [];
+    let doneMap = JSON.parse(localStorage.getItem('hub_done')) || {};
 
     function save() {
-        localStorage.setItem('user_tasks_v102', JSON.stringify(userTasks));
-        localStorage.setItem('user_exams_v102', JSON.stringify(userExams));
-        localStorage.setItem('user_syllabus_v102', JSON.stringify(userSyllabus));
-        localStorage.setItem('done_map_v102', JSON.stringify(doneMap));
+        localStorage.setItem('hub_tasks', JSON.stringify(userTasks));
+        localStorage.setItem('hub_exams', JSON.stringify(userExams));
+        localStorage.setItem('hub_syl', JSON.stringify(userSyllabus));
+        localStorage.setItem('hub_done', JSON.stringify(doneMap));
     }
 
     function addEx() {
@@ -287,7 +299,6 @@
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${weekRanges[currentWeekIdx]})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         
-        // הוספתי את "שיטות מחקר" לרשימת הרינדור
         ["ארגונית", "קוגניטיבית", "קלינית", "חוסן", "שיטות מחקר"].forEach(course => {
             const fItems = fixedSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
             const uItems = userSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
@@ -309,8 +320,8 @@
 
     function resetDoneOnly() { if(confirm("נקה V?")) { doneMap = {}; render(); } }
     const startSem = new Date("2026-03-15");
-    const diff = Math.floor((new Date() - startSem) / 86400000);
-    if (diff >= 0) currentWeekIdx = Math.min(13, Math.floor(diff / 7));
+    const diffDays = Math.floor((new Date() - startSem) / 86400000);
+    if (diffDays >= 0) currentWeekIdx = Math.min(13, Math.floor(diffDays / 7));
     render(); setInterval(render, 60000);
 </script>
 </body>
