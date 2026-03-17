@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Hub 2026 - Cognitive Updated</title>
+    <title>Academic Hub 2026 - Final Stable</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --exam: #8e44ad; --task: #2980b9; --syllabus: #27ae60;
@@ -17,8 +17,7 @@
         .container { display: flex; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 1400px; align-items: flex-start; justify-content: center; }
         .box { background: var(--card); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); flex: 1; min-width: 350px; max-width: 480px; overflow: hidden; display: flex; flex-direction: column; }
         .header { padding: 12px; color: white; text-align: center; font-weight: bold; font-size: 0.95rem; }
-        .h-exams { background: var(--exam); } .h-tasks { background: var(--task); } 
-        .h-syllabus { background: var(--syllabus); display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; }
+        .h-exams { background: var(--exam); } .h-tasks { background: var(--task); } .h-syllabus { background: var(--syllabus); display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; }
         .nav-btn { background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; border-radius: 50%; width: 28px; height: 28px; font-weight: bold; }
         .inputs { padding: 10px; background: #fafafa; border-bottom: 1px solid #eee; display: flex; gap: 6px; flex-wrap: wrap; }
         input, select { padding: 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.8rem; flex: 1; }
@@ -40,6 +39,8 @@
         .bg-red { background: #fff1f0; color: var(--red); } .bg-green { background: #f6ffed; color: var(--green); } .bg-passed { background: #f5f5f5; color: #bfbfbf; }
         .done { opacity: 0.5; } .done .row-right span { text-decoration: line-through; }
         .del-btn { color: #ff4d4f; cursor: pointer; border: none; background: none; font-size: 1.1rem; padding: 0 5px; }
+        .foot { margin-top: 20px; opacity: 0.3; }
+        .btn-s { font-size: 0.75rem; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; background: #ddd; }
         @media (max-width: 768px) { .container { flex-direction: column; align-items: center; } .box { min-width: 100%; } }
     </style>
 </head>
@@ -56,6 +57,13 @@
         <div class="inputs">
             <input type="text" id="exT" placeholder="שם האירוע">
             <input type="datetime-local" id="exD">
+            <select id="exTag" style="flex:0.6">
+                <option value="מבחן">מבחן</option>
+                <option value="מועד-ב">מועד ב'</option>
+                <option value="מטלה">מטלה</option>
+                <option value="בוחן">בוחן</option>
+                <option value="אחר">אחר</option>
+            </select>
             <button class="btn-add" onclick="addEx()">+</button>
         </div>
         <div id="exList"></div>
@@ -82,11 +90,20 @@
                 <option value="חוסן">חוסן</option>
                 <option value="שיטות מחקר">שיטות מחקר</option>
             </select>
+            <select id="sylTag" style="flex:0.6">
+                <option value="שיעור">שיעור</option>
+                <option value="קריאה">קריאה</option>
+                <option value="מטלה">מטלה</option>
+                <option value="בוחן">בוחן</option>
+                <option value="סרטון">סרטון</option>
+            </select>
             <button class="btn-add" onclick="addSyllabusItem()">+</button>
         </div>
         <div id="syllabus-content"></div>
     </div>
 </div>
+
+<div class="foot"><button class="btn-s" onclick="resetDoneOnly()">נקה סימוני V</button></div>
 
 <script>
     let currentWeekIdx = 0;
@@ -102,66 +119,74 @@
     ];
 
     const fixedSyllabus = [
-        // --- פסיכולוגיה קוגניטיבית (מעודכן) ---
-        { w: 0, c: "קוגניטיבית", t: "קריאה", txt: "Squire & Wixted (2015). Remembering" },
-        { w: 0, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: אוטוביוגרפיה (עד 22.3, 23:00)" },
+        // --- קוגניטיבית (חדש ומעודכן) ---
+        { w: 0, c: "קוגניטיבית", t: "קריאה", txt: "Squire & Wixted (2015). Remembering." },
+        { w: 0, c: "קוגניטיבית", t: "מטלה", txt: "אוטוביוגרפיה (עד 22.3 בשעה 23:00)" },
         { w: 1, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, פרק 8" },
         { w: 2, c: "קוגניטיבית", t: "אחר", txt: "חופשת פסח - אין לימודים" },
         { w: 3, c: "קוגניטיבית", t: "אחר", txt: "חופשת פסח - אין לימודים" },
-        { w: 4, c: "קוגניטיבית", t: "קריאה", txt: "קריאה: Anderson, Kihlstrom, Bauer, Gammon" },
+        { w: 4, c: "קוגניטיבית", t: "קריאה", txt: "Anderson & Levy, Kihlstrom, Bauer, Gammon" },
         { w: 4, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 1 (16.4)" },
-        { w: 5, c: "קוגניטיבית", t: "אחר", txt: "יום הזיכרון והעצמאות - אין לימודים" },
-        { w: 6, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין 172-181, 187-193 + Talmi + Freberg" },
+        { w: 5, c: "קוגניטיבית", t: "אחר", txt: "אין לימודים (יום הזיכרון/עצמאות)" },
+        { w: 6, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין (172-193), Talmi, Freberg" },
         { w: 6, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: זיכרון וטכנולוגיה (עד 29.4)" },
-        { w: 7, c: "קוגניטיבית", t: "קריאה", txt: "Wixted (2005) + גולדשטיין 195-198" },
-        { w: 8, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין עמ' 181-187" },
+        { w: 7, c: "קוגניטיבית", t: "קריאה", txt: "Wixted (2005), גולדשטיין 195-198" },
+        { w: 8, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין 181-187" },
         { w: 8, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 2 (14.5)" },
-        { w: 9, c: "קוגניטיבית", t: "קריאה", txt: "Freberg 348-352 + גולדשטיין 121-143" },
-        { w: 10, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין 161-164 + Luck & Vogel + Ricker" },
+        { w: 9, c: "קוגניטיבית", t: "קריאה", txt: "Freberg 348-352, גולדשטיין 121-143" },
+        { w: 10, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין, Luck & Vogel, Ricker" },
         { w: 10, c: "קוגניטיבית", t: "מטלה", txt: "מטלה: פוסט-טראומה/דמנציה (עד 30.5)" },
-        { w: 11, c: "קוגניטיבית", t: "קריאה", txt: "Einstein & McDaniel (2005). Prospective memory" },
+        { w: 11, c: "קוגניטיבית", t: "קריאה", txt: "Einstein & McDaniel (2005)" },
         { w: 11, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 3 (4.6)" },
-        { w: 12, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין עמ' 375-385" },
+        { w: 12, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין 375-385" },
         { w: 13, c: "קוגניטיבית", t: "קריאה", txt: "גולדשטיין פרק 12" },
         { w: 13, c: "קוגניטיבית", t: "בוחן", txt: "בוחן בית 4 (18.6)" },
-        { w: 14, c: "קוגניטיבית", t: "קריאה", txt: "Langer (1989) + שיעור חזרה למבחן" },
+        { w: 14, c: "קוגניטיבית", t: "קריאה", txt: "Langer (1989) + שיעור חזרה" },
 
-        // --- פסיכולוגיה ארגונית (כל הבחנים והתכנים) ---
+        // --- ארגונית (נשמר במלואו) ---
         { w: 0, c: "ארגונית", t: "שיעור", txt: "פתיחה פרונטלית (15.03)" },
-        { w: 1, c: "ארגונית", t: "בוחן", txt: "בוחן 1 (מבוא) - 22.03" },
-        { w: 3, c: "ארגונית", t: "בוחן", txt: "בוחן 2 (מבנה) - 12.04" },
-        { w: 4, c: "ארגונית", t: "בוחן", txt: "בוחן 3 (תרבות) - 19.04" },
-        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 4 (הבדלים) - 26.04" },
-        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 5 (מיון) - 26.04" },
-        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 6 (רגשות) - 03.05" },
-        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 7 (שביעות רצון) - 03.05" },
-        { w: 7, c: "ארגונית", t: "בוחן", txt: "בוחן 8 (מוטיביציה) - 10.05" },
-        { w: 10, c: "ארגונית", t: "בוחן", txt: "בוחן 9 (מנהיגות) - 31.05" },
-        { w: 11, c: "ארגונית", t: "בוחן", txt: "בוחן 10 (יצירתיות) - 07.06" },
-        { w: 11, c: "ארגונית", t: "בוחן", txt: "בוחן 11 (שיתוף וקונפליקטים) - 07.06" },
-        { w: 13, c: "ארגונית", t: "בוחן", txt: "בוחן 12 (צוותים והקשבה) - 21.06" },
-
-        // --- פסיכולוגיה קלינית ---
+        { w: 1, c: "ארגונית", t: "בוחן", txt: "בוחן 1: נושא מבוא" },
+        { w: 3, c: "ארגונית", t: "בוחן", txt: "בוחן 2: מבנה ארגוני" },
+        { w: 4, c: "ארגונית", t: "בוחן", txt: "בוחן 3: תרבות ארגונית" },
+        { w: 5, c: "ארגונית", t: "בוחן", txt: "בוחן 4 + בוחן 5" },
+        { w: 6, c: "ארגונית", t: "בוחן", txt: "בוחן 6 + בוחן 7" },
+        { w: 7, c: "ארגונית", t: "בוחן", txt: "בוחן 8: מוטיבציה" },
+        { w: 10, c: "ארגונית", t: "בוחן", txt: "בוחן 9: מנהיגות" },
+        { w: 11, c: "ארגונית", t: "בוחן", txt: "בוחן 10 + בוחן 11" },
+        { w: 13, c: "ארגונית", t: "בוחן", txt: "בוחן 12: צוותים והקשבה" },
+        
+        // --- קלינית וחוסן (נשמר) ---
         { w: 0, c: "קלינית", t: "שיעור", txt: "מבוא והיסטוריה (15.03)" },
-        { w: 1, c: "קלינית", t: "שיעור", txt: "DSM-5 וסיווג הפרעות (26.03)" },
         { w: 3, c: "קלינית", t: "שיעור", txt: "אבחון ASD - אורח (12.04)" },
-
-        // --- חוסן ---
-        { w: 0, c: "חוסן", t: "שיעור", txt: "מבוא והיבטי בריאות נפשית (17.03)" },
-        { w: 5, c: "חוסן", t: "שיעור", txt: "PFA תיאוריה וסימולציה 1 (28.04)" }
+        { w: 0, c: "חוסן", t: "שיעור", txt: "מבוא והיבטי בריאות נפשית (17.03)" }
     ];
 
-    let userTasks = JSON.parse(localStorage.getItem('hub_tasks')) || [];
-    let userExams = JSON.parse(localStorage.getItem('hub_exams')) || [];
-    let userSyllabus = JSON.parse(localStorage.getItem('hub_syl')) || [];
-    let doneMap = JSON.parse(localStorage.getItem('hub_done')) || {};
+    let userTasks = JSON.parse(localStorage.getItem('hub_tasks_v102')) || [];
+    let userExams = JSON.parse(localStorage.getItem('hub_exams_v102')) || [];
+    let userSyllabus = JSON.parse(localStorage.getItem('hub_syl_v102')) || [];
+    let doneMap = JSON.parse(localStorage.getItem('hub_done_v102')) || {};
 
     function save() {
-        localStorage.setItem('hub_tasks', JSON.stringify(userTasks));
-        localStorage.setItem('hub_exams', JSON.stringify(userExams));
-        localStorage.setItem('hub_syl', JSON.stringify(userSyllabus));
-        localStorage.setItem('hub_done', JSON.stringify(doneMap));
+        localStorage.setItem('hub_tasks_v102', JSON.stringify(userTasks));
+        localStorage.setItem('hub_exams_v102', JSON.stringify(userExams));
+        localStorage.setItem('hub_syl_v102', JSON.stringify(userSyllabus));
+        localStorage.setItem('hub_done_v102', JSON.stringify(doneMap));
     }
+
+    function addEx() {
+        const t = document.getElementById('exT').value, d = document.getElementById('exD').value, tag = document.getElementById('exTag').value;
+        if (t && d) { userExams.push({ t, d, tag }); document.getElementById('exT').value = ''; render(); }
+    }
+    function addTask() {
+        const t = document.getElementById('tkT').value;
+        if (t) { userTasks.push({ t, f: false }); document.getElementById('tkT').value = ''; render(); }
+    }
+    function addSyllabusItem() {
+        const txt = document.getElementById('sylInput').value, tag = document.getElementById('sylTag').value, course = document.getElementById('sylCourse').value;
+        if (txt) { userSyllabus.push({ w: currentWeekIdx, c: course, t: tag, txt: txt }); document.getElementById('sylInput').value = ''; render(); }
+    }
+
+    function changeWeek(dir) { currentWeekIdx = Math.max(0, Math.min(14, currentWeekIdx + dir)); render(); }
 
     function render() {
         const now = new Date();
@@ -170,39 +195,47 @@
         const eL = document.getElementById('exList'); eL.innerHTML = '';
         const allEx = [...fixedExams, ...userExams].sort((a,b) => new Date(a.d) - now);
         allEx.forEach((x, i) => {
-            const diff = new Date(x.d) - now, days = Math.floor(diff/86400000);
+            const diff = new Date(x.d) - now, days = Math.floor(diff/86400000), isFixed = i < fixedExams.length;
             const statusClass = diff < 0 ? 'bg-passed' : (days <= 7 ? 'bg-red' : 'bg-green');
-            eL.innerHTML += `<div class="item-row"><div class="row-right"><span class="badge tag-${x.tag || 'אחר'}">${x.tag || 'מבחן'}</span><strong>${x.t}</strong></div><div class="row-left"><span class="timer ${statusClass}">${diff < 0 ? 'עבר' : days + ' ימים'}</span></div></div>`;
+            eL.innerHTML += `<div class="item-row"><div class="row-right"><span class="badge tag-${x.tag}">${x.tag}</span><strong>${x.t}</strong></div><div class="row-left"><span class="timer ${statusClass}">${diff < 0 ? 'עבר' : days + ' ימים'}</span>${!isFixed ? `<button onclick="userExams.splice(${i-fixedExams.length},1); render();" class="del-btn">×</button>` : ''}</div></div>`;
         });
 
         const tL = document.getElementById('tkList'); tL.innerHTML = '';
         userTasks.forEach((x, i) => {
-            tL.innerHTML += `<div class="item-row ${x.f?'done':''}"><div class="row-right"><span>${x.t}</span></div></div>`;
+            tL.innerHTML += `<div class="item-row ${x.f?'done':''}"><div class="row-right"><span onclick="userTasks[${i}].f=!userTasks[${i}].f; render();" style="cursor:pointer">${x.t}</span></div><div class="row-left"><input type="checkbox" ${x.f?'checked':''} onclick="userTasks[${i}].f=!userTasks[${i}].f; render();"><button onclick="userTasks.splice(${i},1); render();" class="del-btn">×</button></div></div>`;
         });
 
         document.getElementById('week-title').innerText = `שבוע ${currentWeekIdx+1} (${weekRanges[currentWeekIdx] || ''})`;
         const sC = document.getElementById('syllabus-content'); sC.innerHTML = '';
         
-        ["קוגניטיבית", "ארגונית", "קלינית", "חוסן", "שיטות מחקר"].forEach(course => {
-            const items = fixedSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
-            if (items.length > 0) {
+        const courses = ["ארגונית", "קוגניטיבית", "קלינית", "חוסן", "שיטות מחקר"];
+        courses.forEach(course => {
+            const fItems = fixedSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
+            const uItems = userSyllabus.filter(it => it.w === currentWeekIdx && it.c === course);
+            
+            if (fItems.length > 0 || uItems.length > 0) {
                 const labelClass = course==='ארגונית'?'label-org':course==='קוגניטיבית'?'label-cog':course==='קלינית'?'label-clin':course==='שיטות מחקר'?'label-meth':'label-res';
                 sC.innerHTML += `<div class="course-label ${labelClass}">פסיכולוגיה ${course}</div>`;
-                items.forEach((item, i) => {
+                
+                fItems.forEach((item, i) => {
                     const key = `f_${item.w}_${item.c}_${i}`, isDone = doneMap[key];
-                    sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="toggleDone('${key}')"><div class="row-right"><span class="badge tag-${item.t}">${item.t}</span><span>${item.txt}</span></div><div class="row-left"><input type="checkbox" ${isDone?'checked':''}></div></div>`;
+                    sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="doneMap['${key}']=!doneMap['${key}']; render();"><div class="row-right"><span class="badge tag-${item.t || 'אחר'}">${item.t || 'משימה'}</span><span>${item.txt}</span></div><div class="row-left"><input type="checkbox" ${isDone?'checked':''}></div></div>`;
+                });
+                
+                uItems.forEach((item, i) => {
+                    const key = `u_${currentWeekIdx}_${course}_${i}`, isDone = doneMap[key];
+                    sC.innerHTML += `<div class="item-row ${isDone?'done':''}" onclick="doneMap['${key}']=!doneMap['${key}']; render();"><div class="row-right"><span class="badge tag-${item.t}">${item.t}</span><span>${item.txt}</span></div><div class="row-left"><input type="checkbox" ${isDone?'checked':''}><button onclick="event.stopPropagation(); userSyllabus.splice(userSyllabus.indexOf(item),1); render();" class="del-btn">×</button></div></div>`;
                 });
             }
         });
+        save();
     }
 
-    function toggleDone(key) { doneMap[key] = !doneMap[key]; save(); render(); }
-    function changeWeek(dir) { currentWeekIdx = Math.max(0, Math.min(14, currentWeekIdx + dir)); render(); }
-
+    function resetDoneOnly() { if(confirm("נקה V?")) { doneMap = {}; render(); } }
     const startSem = new Date("2026-03-15");
     const diffDays = Math.floor((new Date() - startSem) / 86400000);
     if (diffDays >= 0) currentWeekIdx = Math.min(14, Math.floor(diffDays / 7));
-    render();
+    render(); setInterval(render, 60000);
 </script>
 </body>
 </html>
