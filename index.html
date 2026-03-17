@@ -37,6 +37,7 @@
         .tag-שיעור { background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
         .tag-תרגול { background: #e0f2f1; color: #00796b; border: 1px solid #b2dfdb; }
         .tag-מבחן { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        .tag-מועד-ב { background: #eceff1; color: #37474f; border: 1px solid #cfd8dc; }
         .tag-אחר { background: #f5f5f5; color: #616161; border: 1px solid #e0e0e0; }
         .timer { font-weight: bold; padding: 2px 10px; border-radius: 6px; font-size: 0.8rem; white-space: nowrap; }
         .bg-red { background: #fff1f0; color: var(--red); } .bg-green { background: #f6ffed; color: var(--green); } .bg-passed { background: #f5f5f5; color: #bfbfbf; }
@@ -270,18 +271,19 @@
         localStorage.setItem('hub_done_v122', JSON.stringify(doneMap));
     }
 
+    // --- עדכון: פונקציית הוספה עם מיון כרונולוגי ---
     function addEx() {
-    const t = document.getElementById('exT').value;
-    const d = document.getElementById('exD').value;
-    const tag = document.getElementById('exTag').value;
-    if (t && d) {
-        userExams.push({ t, d, tag });
-        document.getElementById('exT').value = '';
-        document.getElementById('exD').value = '';
-        render();
+        const t = document.getElementById('exT').value;
+        const d = document.getElementById('exD').value;
+        const tag = document.getElementById('exTag').value;
+        if (t && d) {
+            userExams.push({ t, d, tag });
+            document.getElementById('exT').value = '';
+            document.getElementById('exD').value = '';
+            render();
+        }
     }
-}
-    }
+
     function addTask() {
         const t = document.getElementById('tkT').value;
         if (t) { userTasks.push({ t, f: false }); document.getElementById('tkT').value = ''; render(); }
@@ -298,7 +300,10 @@
         document.getElementById('date-display').innerText = now.toLocaleDateString('he-IL') + " | " + now.toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'});
         
         const eL = document.getElementById('exList'); eL.innerHTML = '';
+        
+        // --- עדכון: מיון כרונולוגי אמיתי (מבחנים קרובים קודם) ---
         const allEx = [...fixedExams, ...userExams].sort((a, b) => new Date(a.d) - new Date(b.d));
+        
         allEx.forEach((x, i) => {
             const diff = new Date(x.d) - now, days = Math.floor(diff/86400000);
             const statusClass = diff < 0 ? 'bg-passed' : (days <= 7 ? 'bg-red' : 'bg-green');
