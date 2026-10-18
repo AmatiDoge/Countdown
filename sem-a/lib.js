@@ -51,18 +51,25 @@ export function totalWeeks(semester) {
 
 const minutes = hm => { const [h, m] = hm.split(':').map(Number); return h * 60 + m; };
 
-export function todayClasses(date, schedule) {
+export function isNoClassDay(date, semester) {
+  const day = startOfDay(date);
+  return (semester?.breaks || []).find(b => day >= parseDate(b.from) && day <= parseDate(b.to)) || null;
+}
+
+export function todayClasses(date, schedule, semester) {
+  if (isNoClassDay(date, semester)) return [];
   const now = date.getHours() * 60 + date.getMinutes();
   return schedule
     .filter(s => s.day === date.getDay() && minutes(s.end) > now)
     .sort((a, b) => minutes(a.start) - minutes(b.start));
 }
 
-export function nextClass(date, schedule) {
+export function nextClass(date, schedule, semester) {
   if (!schedule.length) return null;
   const now = date.getHours() * 60 + date.getMinutes();
-  for (let offset = 0; offset < 8; offset++) {
+  for (let offset = 0; offset < 22; offset++) {
     const d = new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset);
+    if (isNoClassDay(d, semester)) continue;
     const cands = schedule
       .filter(s => s.day === d.getDay() && (offset > 0 || minutes(s.start) > now))
       .sort((a, b) => minutes(a.start) - minutes(b.start));
@@ -80,4 +87,15 @@ export function upcoming(date, items, field = 'due') {
 
 export function daysUntil(date, target) {
   return Math.ceil((startOfDay(target) - startOfDay(date)) / DAY);
+}
+
+// Dates the course's main meeting (first lecture/seminar/workshop slot) actually happens.
+export function courseMeetings(course, schedule, semester) {
+  const slots = schedule.filter(s => s.course === course);
+  const main = slots.find(s => s.type !== 'practice') || slots[0];
+  if (!main) return [];
+  const out = [], end = parseDate(semester.end);
+  for (let d = parseDate(semester.start); d <= end; d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1))
+    if (d.getDay() === main.day && !isNoClassDay(d, semester)) out.push(d);
+  return out;
 }

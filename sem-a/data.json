@@ -1,2 +1,504 @@
-{ "generated": "", "semester": { "start": "2026-10-25", "end": "2027-01-29", "breaks": [] },
-  "courses": [], "schedule": [], "exams": [], "assignments": [], "weekly": [] }
+{
+ "generated": "2026-10-18T13:30:35.055Z",
+ "semester": {
+  "start": "2026-10-18",
+  "end": "2027-01-16",
+  "breaks": [
+   {
+    "from": "2026-10-27",
+    "to": "2026-10-27",
+    "label": "יום הבחירות — אין לימודים"
+   },
+   {
+    "from": "2026-12-06",
+    "to": "2026-12-06",
+    "label": "אין לימודים (לפי המרכז האישי)"
+   }
+  ]
+ },
+ "courses": [
+  {
+   "id": "abnormal",
+   "name": "פסיכולוגיה אבנורמלית א׳",
+   "color": "#e67e22",
+   "lecturer": "ד״ר יהושע וייס"
+  },
+  {
+   "id": "multivariate",
+   "name": "סטטיסטיקה רב-משתנית",
+   "color": "#3f51b5",
+   "lecturer": "פרופ׳ גורית בירנבוים"
+  },
+  {
+   "id": "sport",
+   "name": "מבוא לפסיכולוגיה של הספורט",
+   "color": "#27ae60",
+   "lecturer": "ד״ר רועי דוד סמואל"
+  },
+  {
+   "id": "ethics-ai",
+   "name": "שימוש אתי בבינה מלאכותית",
+   "color": "#8e44ad"
+  },
+  {
+   "id": "pbls",
+   "name": "Psychology, Brain and Life Science",
+   "color": "#2980b9",
+   "lecturer": "ד״ר ליאור כרמי"
+  },
+  {
+   "id": "skills-field",
+   "name": "כישורים פסיכולוגיים והתנסות בשדה",
+   "color": "#16a085",
+   "lecturer": "ד״ר אוסנת ים"
+  },
+  {
+   "id": "honors",
+   "name": "סמינר מחקרי הונרס שנה ג׳",
+   "color": "#b8860b",
+   "lecturer": "פרופ׳ בועז בן דוד"
+  }
+ ],
+ "schedule": [
+  {
+   "course": "abnormal",
+   "day": 0,
+   "start": "13:45",
+   "end": "15:15",
+   "type": "lecture",
+   "room": "SL101",
+   "source": "portal"
+  },
+  {
+   "course": "multivariate",
+   "day": 0,
+   "start": "17:30",
+   "end": "19:00",
+   "type": "lecture",
+   "room": "A318",
+   "source": "portal"
+  },
+  {
+   "course": "honors",
+   "day": 0,
+   "start": "19:15",
+   "end": "20:45",
+   "type": "seminar",
+   "room": "A322",
+   "source": "portal"
+  },
+  {
+   "course": "ethics-ai",
+   "day": 2,
+   "start": "11:30",
+   "end": "13:00",
+   "type": "seminar",
+   "room": "C.110",
+   "source": "portal"
+  },
+  {
+   "course": "pbls",
+   "day": 2,
+   "start": "17:30",
+   "end": "20:45",
+   "type": "lecture",
+   "room": "A109",
+   "source": "portal"
+  },
+  {
+   "course": "multivariate",
+   "day": 3,
+   "start": "08:00",
+   "end": "11:15",
+   "type": "practice",
+   "room": "S2 (ספרייה)",
+   "source": "portal"
+  },
+  {
+   "course": "skills-field",
+   "day": 4,
+   "start": "09:45",
+   "end": "11:15",
+   "type": "workshop",
+   "room": "A320",
+   "source": "portal"
+  },
+  {
+   "course": "sport",
+   "day": 4,
+   "start": "13:45",
+   "end": "15:15",
+   "type": "lecture",
+   "room": "האנגר H2",
+   "source": "portal"
+  }
+ ],
+ "exams": [
+  {
+   "course": "multivariate",
+   "moed": "A",
+   "date": "2027-01-25",
+   "time": "15:45",
+   "source": "portal"
+  },
+  {
+   "course": "abnormal",
+   "moed": "A",
+   "date": "2027-01-28",
+   "time": "09:45",
+   "source": "portal"
+  },
+  {
+   "course": "sport",
+   "moed": "A",
+   "date": "2027-02-17",
+   "time": "15:45",
+   "source": "portal"
+  },
+  {
+   "course": "multivariate",
+   "moed": "B",
+   "date": "2027-02-28",
+   "time": "09:45",
+   "source": "calendar"
+  },
+  {
+   "course": "abnormal",
+   "moed": "B",
+   "date": "2027-02-28",
+   "time": "15:45",
+   "source": "calendar"
+  },
+  {
+   "course": "sport",
+   "moed": "B",
+   "date": "2027-03-26",
+   "time": "09:00",
+   "source": "calendar"
+  }
+ ],
+ "assignments": [],
+ "weekly": [
+  {
+   "week": 1,
+   "course": "pbls",
+   "topic": "מבוא לקורס – מדעי המוח: מהפילוסופיה לימינו",
+   "items": [
+    {
+     "text": "Carlson & Birkett פרק 1 (עמ׳ 16–22 רכה / 28–34 קשה)",
+     "tag": "קריאה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 3,
+   "course": "pbls",
+   "topic": "מבנה התא והנוירון",
+   "items": [
+    {
+     "text": "Carlson & Birkett פרק 2, עמ׳ 35–46 (עד communication within the neuron)",
+     "tag": "קריאה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 4,
+   "course": "pbls",
+   "topic": "התפתחות מערכת העצבים · ארגון המוח",
+   "items": [
+    {
+     "text": "Kolb & Whishaw — פרקים נבחרים",
+     "tag": "קריאה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 5,
+   "course": "pbls",
+   "topic": "התפתחות מערכת העצבים · ארגון המוח",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 6,
+   "course": "pbls",
+   "topic": "התפתחות מערכת העצבים · ארגון המוח",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 7,
+   "course": "pbls",
+   "topic": "שעונים ביולוגיים · שינה וערות",
+   "items": [
+    {
+     "text": "Carlson & Birkett פרק 9 (עמ׳ 261–295 רכה / 275–309 קשה)",
+     "tag": "קריאה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 8,
+   "course": "pbls",
+   "topic": "שעונים ביולוגיים · שינה וערות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 9,
+   "course": "pbls",
+   "topic": "אכילה",
+   "items": [
+    {
+     "text": "Carlson & Birkett פרק 12",
+     "tag": "קריאה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 10,
+   "course": "pbls",
+   "topic": "אכילה",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 11,
+   "course": "pbls",
+   "topic": "מערכת התגמול והתמכרות",
+   "items": [
+    {
+     "text": "Carlson & Birkett פרק 18 (עמ׳ 589–601 / 602–615)",
+     "tag": "קריאה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 12,
+   "course": "pbls",
+   "topic": "מערכת התגמול והתמכרות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 13,
+   "course": "pbls",
+   "topic": "סטרס ו-PTSD",
+   "items": [
+    {
+     "text": "Carlson & Birkett פרק 17 (עמ׳ 553–567 / 566–582)",
+     "tag": "קריאה"
+    },
+    {
+     "text": "Shalev, Gilboa & Rasmusson (2011) — Neurobiology of PTSD",
+     "tag": "קריאה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 1,
+   "course": "multivariate",
+   "topic": "חזרה על ANOVA חד-כיווני והשוואות מתוכננות / פוסט-הוק",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 2,
+   "course": "multivariate",
+   "topic": "חזרה על ANOVA חד-כיווני והשוואות מתוכננות / פוסט-הוק",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 3,
+   "course": "multivariate",
+   "topic": "ANOVA דו-כיווני: אפקטים עיקריים, פשוטים ואינטראקציות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 4,
+   "course": "multivariate",
+   "topic": "ANOVA דו-כיווני: אפקטים עיקריים, פשוטים ואינטראקציות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 5,
+   "course": "multivariate",
+   "topic": "ANOVA תלת-כיווני",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 6,
+   "course": "multivariate",
+   "topic": "ANOVA למדידות חוזרות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 7,
+   "course": "multivariate",
+   "topic": "ANOVA למדידות חוזרות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 9,
+   "course": "multivariate",
+   "topic": "חי בריבוע לטיב התאמה ולאי-תלות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 10,
+   "course": "multivariate",
+   "topic": "חי בריבוע לטיב התאמה ולאי-תלות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 11,
+   "course": "multivariate",
+   "topic": "רגרסיה לינארית פשוטה",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 12,
+   "course": "multivariate",
+   "topic": "רגרסיה לינארית פשוטה",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 13,
+   "course": "multivariate",
+   "topic": "רגרסיה מרובה בו-זמנית",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 1,
+   "course": "ethics-ai",
+   "topic": "מבוא, תמונת המצב והפסיכולוגיה של AI באקדמיה",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 3,
+   "course": "ethics-ai",
+   "topic": "המודל כפרטנר לחשיבה וגיבוש שאלת מחקר",
+   "items": [
+    {
+     "text": "מטלה 1: שאלת מחקר ברת-הפרכה + יומן פרומפטים (5%)",
+     "tag": "מטלה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 4,
+   "course": "ethics-ai",
+   "topic": "ביקורת עמיתים על שאלות המחקר · אסטרטגיית חיפוש",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 5,
+   "course": "ethics-ai",
+   "topic": "מנועי חיפוש מבוססי AI, אימות מקורות והטיות",
+   "items": [
+    {
+     "text": "מטלה 2: 3 מאמרים אמפיריים מאומתים + השוואת כלי חיפוש (5%)",
+     "tag": "מטלה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 6,
+   "course": "ethics-ai",
+   "topic": "קריאה ביקורתית: Grounded AI מול מודל כללי",
+   "items": [
+    {
+     "text": "מטלה 3: סיכום 3 המאמרים + השוואת NotebookLM מול מודל כללי (5%)",
+     "tag": "מטלה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 7,
+   "course": "ethics-ai",
+   "topic": "פוסט-מורטם של קריאה ומעבר לסינתזה",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 8,
+   "course": "ethics-ai",
+   "topic": "כתיבה אקדמית ופירוק Hollow Density",
+   "items": [
+    {
+     "text": "מטלה 4: סינתזה 2–3 עמ׳ + AI Use Statement (5%)",
+     "tag": "מטלה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 9,
+   "course": "ethics-ai",
+   "topic": "מעבדת ביקורת עמיתים והשקת פרויקט הסיום",
+   "items": [
+    {
+     "text": "פרויקט סיום: דוח מסכם (40%) — מועד הגשה לא צוין",
+     "tag": "מטלה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 10,
+   "course": "ethics-ai",
+   "topic": "סימפוזיון סיום — פרזנטציות",
+   "items": [
+    {
+     "text": "פרזנטציה כיתתית 10+5 דק׳ (40%) — באחד המפגשים",
+     "tag": "פרזנטציה"
+    }
+   ],
+   "source": "syllabus"
+  },
+  {
+   "week": 11,
+   "course": "ethics-ai",
+   "topic": "סימפוזיון סיום — פרזנטציות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 12,
+   "course": "ethics-ai",
+   "topic": "סימפוזיון סיום — פרזנטציות",
+   "items": [],
+   "source": "syllabus"
+  },
+  {
+   "week": 13,
+   "course": "ethics-ai",
+   "topic": "סימפוזיון סיום — פרזנטציות",
+   "items": [],
+   "source": "syllabus"
+  }
+ ]
+}

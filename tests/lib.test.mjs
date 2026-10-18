@@ -54,3 +54,29 @@ test('item due today still counts as upcoming', () => {
 test('daysUntil', () => {
   assert.equal(daysUntil(at('2026-10-26', '12:00'), parseDate('2026-10-28')), 2);
 });
+
+// --- single-day cancellations & course meetings ---
+import { isNoClassDay, courseMeetings } from '../sem-a/lib.js';
+const sem2 = { start: '2026-10-18', end: '2027-01-16',
+  breaks: [{ from: '2026-10-27', to: '2026-10-27', label: 'בחירות' }] };
+const sched2 = [{ course: 'e', day: 2, start: '11:30', end: '13:00', type: 'seminar' }];
+
+test('isNoClassDay: single-day break', () => {
+  assert.equal(isNoClassDay(parseDate('2026-10-27'), sem2)?.label, 'בחירות');
+  assert.equal(isNoClassDay(parseDate('2026-10-28'), sem2), null);
+});
+test('single-day break does not consume a week number', () => {
+  assert.deepEqual(weekInfo(at('2026-10-27'), sem2), { status: 'active', week: 2 });
+});
+test('todayClasses is empty on a cancelled day', () => {
+  assert.deepEqual(todayClasses(at('2026-10-27', '08:00'), sched2, sem2), []);
+});
+test('nextClass skips a cancelled day', () => {
+  const n = nextClass(at('2026-10-26', '20:00'), sched2, sem2);
+  assert.equal(n.date.getDate(), 3); // 3.11, not 27.10
+});
+test('courseMeetings skips cancelled days', () => {
+  const m = courseMeetings('e', sched2, sem2).map(d => `${d.getDate()}.${d.getMonth() + 1}`);
+  assert.deepEqual(m.slice(0, 3), ['20.10', '3.11', '10.11']);
+  assert.equal(m.length, 12);
+});
