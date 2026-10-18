@@ -45,7 +45,7 @@
                     "type": "lecture|practice|workshop", "room": "", "source": "" }],
   "exams":       [{ "course": "id", "moed": "A|B", "date": "YYYY-MM-DD", "time": "HH:MM", "source": "" }],
   "assignments": [{ "course": "id", "title": "", "due": "YYYY-MM-DD", "weight": "", "source": "" }],
-  "weekly":      [{ "week": 1, "course": "id", "topic": "", "readings": [""], "source": "" }]
+  "weekly":      [{ "week": 1, "course": "id", "topic": "", "items": [{ "text": "", "tag": "קריאה" }], "source": "" }]
 }
 ```
 
