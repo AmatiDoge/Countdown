@@ -56,8 +56,14 @@ export function isNoClassDay(date, semester) {
   return (semester?.breaks || []).find(b => day >= parseDate(b.from) && day <= parseDate(b.to)) || null;
 }
 
+function outsideSemester(date, semester) {
+  if (!semester) return false;
+  const day = startOfDay(date);
+  return day < parseDate(semester.start) || day > parseDate(semester.end);
+}
+
 export function todayClasses(date, schedule, semester) {
-  if (isNoClassDay(date, semester)) return [];
+  if (outsideSemester(date, semester) || isNoClassDay(date, semester)) return [];
   const now = date.getHours() * 60 + date.getMinutes();
   return schedule
     .filter(s => s.day === date.getDay() && minutes(s.end) > now)
@@ -67,9 +73,9 @@ export function todayClasses(date, schedule, semester) {
 export function nextClass(date, schedule, semester) {
   if (!schedule.length) return null;
   const now = date.getHours() * 60 + date.getMinutes();
-  for (let offset = 0; offset < 22; offset++) {
+  for (let offset = 0; offset < 60; offset++) {
     const d = new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset);
-    if (isNoClassDay(d, semester)) continue;
+    if (outsideSemester(d, semester) || isNoClassDay(d, semester)) continue;
     const cands = schedule
       .filter(s => s.day === d.getDay() && (offset > 0 || minutes(s.start) > now))
       .sort((a, b) => minutes(a.start) - minutes(b.start));
@@ -86,7 +92,7 @@ export function upcoming(date, items, field = 'due') {
 }
 
 export function daysUntil(date, target) {
-  return Math.ceil((startOfDay(target) - startOfDay(date)) / DAY);
+  return Math.round((startOfDay(target) - startOfDay(date)) / DAY);
 }
 
 // Dates the course's main meeting (first lecture/seminar/workshop slot) actually happens.

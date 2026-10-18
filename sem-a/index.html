@@ -50,6 +50,9 @@
 </head>
 <body>
 
+<div id="boot" class="empty">טוען את הלו״ז…</div>
+<script>setTimeout(() => { if (!window.render) location.reload(); }, 60000);</script>
+
 <div class="top-bar">
     <h1>לו״ז שנה ג׳ · סמסטר א׳</h1>
     <div id="date-display"></div>
@@ -92,15 +95,20 @@
 <script type="module">
 import { parseDate, weekInfo, totalWeeks, todayClasses, nextClass, upcoming, daysUntil, isNoClassDay } from './lib.js';
 
-let data;
-try {
+async function loadData() {
     const r = await fetch('./data.json', { cache: 'no-store' });
     if (!r.ok) throw new Error(r.status);
-    data = await r.json();
+    return r.json();
+}
+let data;
+try {
+    data = await loadData();
 } catch (e) {
-    document.body.innerHTML = '<div class="box" style="margin:40px auto;padding:20px;text-align:center">לא הצלחתי לטעון את הלו״ז (data.json). בדוק חיבור לאינטרנט.</div>';
+    document.body.innerHTML = '<div class="box" style="margin:40px auto;padding:20px;text-align:center">לא הצלחתי לטעון את הלו״ז (data.json). בדוק חיבור לאינטרנט — מנסה שוב בעוד דקה.</div>';
+    setTimeout(() => location.reload(), 60_000);
     throw e;
 }
+document.getElementById('boot')?.remove();
 
 const store = {
     get(k, d) { try { return JSON.parse(localStorage.getItem('sem_a_' + k)) ?? d; } catch { return d; } },
@@ -126,15 +134,16 @@ const row = (left, right, key) => `<div class="item-row${key && done[key] ? ' do
     <div class="row-right">${key ? `<input type="checkbox" data-key="${esc(key)}"${done[key] ? ' checked' : ''}>` : ''}${right}</div>${left}</div>`;
 
 const sylTasks = () => data.weekly.flatMap(w => (w.items || [])
-    .filter(it => it.tag === 'מטלה' || it.tag === 'פרזנטציה')
-    .map((it, i) => ({ ...it, week: w.week, course: w.course, key: `t_${w.course}_${w.week}_${i}` })));
+    .map((it, i) => ({ ...it, week: w.week, course: w.course, key: `t_${w.course}_${w.week}_${i}` }))
+    .filter(it => it.tag === 'מטלה' || it.tag === 'פרזנטציה'));
 
-let shownWeek = null;
+let shownWeek = null, lastCurWeek = null;
 
 function render(now = new Date()) {
     const sem = data.semester, total = totalWeeks(sem), wi = weekInfo(now, sem);
     const curWeek = wi.status === 'active' ? wi.week : wi.status === 'before' ? 1 : wi.status === 'after' ? total : null;
-    if (shownWeek === null) shownWeek = curWeek ?? 1;
+    if (shownWeek === null || (curWeek !== lastCurWeek && shownWeek === lastCurWeek)) shownWeek = curWeek ?? 1;
+    lastCurWeek = curWeek;
 
     const off = isNoClassDay(now, sem);
     document.getElementById('date-display').textContent = `יום ${DAYS[now.getDay()]} ${fmt(now)} · ` + (
@@ -218,7 +227,14 @@ document.addEventListener('click', e => {
 
 window.render = render;
 render();
-setInterval(() => render(), 60_000);
+let lastFetch = Date.now();
+setInterval(async () => {
+    if (Date.now() - lastFetch > 30 * 60_000) {
+        lastFetch = Date.now();
+        try { data = await loadData(); } catch {}
+    }
+    render();
+}, 60_000);
 </script>
 </body>
 </html>
