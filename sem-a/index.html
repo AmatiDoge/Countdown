@@ -123,6 +123,7 @@ const TYPES = { lecture: 'שיעור', practice: 'תרגול', workshop: 'סדנ
 const course = id => data.courses.find(c => c.id === id) || { name: id || '', color: '#95a5a6' };
 const fmt = d => `${d.getDate()}.${d.getMonth() + 1}`;
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const withCourse = (text, id) => `<span>${text}${id ? `<br><span class="muted">${esc(course(id).name)}</span>` : ''}</span>`;
 const chip = id => `<span class="chip" style="background:${course(id).color}"></span>`;
 const timer = (now, dateStr) => {
     const n = daysUntil(now, parseDate(dateStr));
@@ -167,8 +168,8 @@ function render(now = new Date()) {
     const ne = upcoming(now, allExams, 'date')[0], nt = upcoming(now, allTasks, 'due')[0];
     const weekTasks = sylTasks().filter(t => t.week === curWeek && !done[t.key]);
     document.getElementById('nextList').innerHTML =
-        (nt ? row(timer(now, nt.due), `${chip(nt.course)}<span>הגשה: ${esc(nt.title)}</span>`) : '') +
-        weekTasks.map(t => row('<span class="muted">השבוע</span>', `${chip(t.course)}<span>${esc(t.text)}</span>`)).join('') +
+        (nt ? row(timer(now, nt.due), `${chip(nt.course)}${withCourse('הגשה: ' + esc(nt.title), nt.course)}`) : '') +
+        weekTasks.map(t => row('<span class="muted">השבוע</span>', `${chip(t.course)}${withCourse(esc(t.text), t.course)}`)).join('') +
         (ne ? row(timer(now, ne.date), `${chip(ne.course)}<span>מבחן: ${esc(ne.title || course(ne.course).name)}${ne.moed === 'B' ? ' (מועד ב׳)' : ''}</span>`) : '') ||
         '<div class="empty">אין פריטים קרובים</div>';
 
@@ -184,10 +185,10 @@ function render(now = new Date()) {
     const dated = allTasks.slice().sort((a, b) => parseDate(a.due) - parseDate(b.due)).map(t => {
         const key = t.user ? `u_${t.title}_${t.due}` : `a_${t.course}_${t.title}`;
         return row(timer(now, t.due) + (t.user ? `<button class="del-btn" data-del-task="${userTasks.indexOf(t)}">×</button>` : ''),
-            `${chip(t.course)}<span>${esc(t.title)}</span>${t.weight ? `<span class="muted">${esc(t.weight)}</span>` : ''}`, key);
+            `${chip(t.course)}${withCourse(esc(t.title), t.course)}${t.weight ? `<span class="muted">${esc(t.weight)}</span>` : ''}`, key);
     }).join('');
     const fromSyl = sylTasks().map(t => row(`<span class="muted">שבוע ${t.week}</span>`,
-        `${chip(t.course)}<span>${esc(t.text)}</span><span class="badge tag-${t.tag}">${t.tag}</span>`, t.key)).join('');
+        `${chip(t.course)}${withCourse(esc(t.text), t.course)}<span class="badge tag-${t.tag}">${t.tag}</span>`, t.key)).join('');
     document.getElementById('tkList').innerHTML = (dated + fromSyl) || '<div class="empty">אין מטלות</div>';
 
     // Weekly
